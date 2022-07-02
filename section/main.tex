@@ -1,0 +1,68 @@
+%\documentclass[uplatex]{jsarticle}
+\documentclass[a4paper,11pt,dvipdfmx]{jsarticle}
+\usepackage{listings,jlisting}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{url}
+\usepackage{amsthm}
+\usepackage{framed}
+\usepackage{svg}
+
+\newtheorem{theo}{定理}[section]
+\newtheorem{defi}{定義}[section]
+\newtheorem{lemm}{補題}[section]
+\newtheorem{hypoth}{仮説}[section]
+%\newtheorem{Proof}{証明}[section]
+\renewcommand\proofname{\bf 証明}
+
+% https://oku.edu.mie-u.ac.jp/tex/mod/forum/discuss.php?d=2390
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+\newenvironment{myitemize}{%
+\begin{description}}{\end{description}}
+\tcolorboxenvironment{myitemize}{blanker,
+before skip=6pt,after skip=12pt,top=5ex,
+bottom=5ex,
+borderline west={1mm}{0pt}{black!50}}
+\parindent=0pt\relax % 「Some text.」と「More text.」の先頭のインデントを0にする
+
+
+\newtcolorbox{mybox}[1][]{colback=red!5!white,
+blanker,
+before skip=6pt,after skip=12pt,top=1ex,
+bottom=1ex,
+borderline west={1mm}{0pt}{black!50},
+%colback=white!10!white,
+#1}
+
+\usepackage{enumerate}
+\lstset{
+language = python,   
+breaklines = true,
+numbers = left,
+frame = tbrl,
+tabsize = 4,
+captionpos = t
+}
+
+
+%% https://www.kerislab.jp/posts/2019-01-14-vscode-latex/
+%% 
+% 数式
+\usepackage{amsmath,amsfonts}
+\usepackage{bm}
+% 画像
+\usepackage[dvipdfmx]{graphicx}
+
+\begin{document}
+
+\title{科学統計教程}
+\author{Idiot}
+%\date{2020/6/29}
+\maketitle
+%% TODO QQplot,検出力,確率密度関数,分散分析,t分布
+\input{section0}
+
+\bibliography{ref} %hoge.bibから拡張子を外した名前
+\bibliographystyle{junsrt}
+
+\end{document}
