@@ -14,8 +14,14 @@
 %\newtheorem{Proof}{証明}[section]
 \renewcommand\proofname{\bf 証明}
 
+%\usepackage[showframe]{geometry}
+\usepackage{tikz} 
+%\usepackage{showframe}
+\usepackage[breakable]{tcolorbox}
+%\usepackage{needspace}
+
 % https://oku.edu.mie-u.ac.jp/tex/mod/forum/discuss.php?d=2390
-\usepackage{tcolorbox}
+%\usepackage{tcolorbox}
 \tcbuselibrary{skins}
 \newenvironment{myitemize}{%
 \begin{description}}{\end{description}}
@@ -27,12 +33,107 @@ borderline west={1mm}{0pt}{black!50}}
 
 
 \newtcolorbox{mybox}[1][]{colback=red!5!white,
-blanker,
+breakable,
+%blanker,
 before skip=6pt,after skip=12pt,top=1ex,
 bottom=1ex,
 borderline west={1mm}{0pt}{black!50},
+%left=50mm,
 %colback=white!10!white,
 #1}
+
+\usepackage {blindtext} 
+
+\newtcolorbox{brokenbox}[1][]{width=0.8\linewidth, colback=blue!20!white, colframe=blue!70!white, boxrule=0.3mm, toptitle=1.5mm, bottomtitle=1.5mm,breakable,enlarge left by=0.1\linewidth,#1}
+
+
+\definecolor{myblue}{RGB}{139,66,58}
+\tcbset{
+shortmessagestyle/.style={
+    breakable,
+    %enhanced,
+    %outer arc=0pt,
+    %arc=0pt,
+    colframe=myblue,
+    colback=white,%myblue!20,
+    %colback=red!5!white,
+    before skip=6pt,after skip=12pt,top=2ex,
+    bottom=2ex,left=2ex,
+    boxrule=-1pt,
+    borderline west={1mm}{0pt}{myblue},
+    %attach boxed title to top left,
+    %boxed title style={
+        %colback=myblue,
+        %outer arc=0pt,
+        %arc=0pt,
+    %},
+    title=Example~\thetcbcounter,
+    fonttitle=\sffamily,
+    colupper=black,
+    %colframe=black,fonttitle=\bfseries,
+    colbacktitle=white,
+    coltitle=black,
+}}
+
+\newtcolorbox[auto counter,number within=section]{SMbox}[2][]{
+  shortmessagestyle,
+  title=■#2,%~\thetcbcounter,
+  #1
+  }
+
+
+  \definecolor{bubblegreen}{RGB}{103,184,104}
+  \definecolor{bubblegray}{RGB}{241,240,240}
+  \definecolor{bubbleblue}{RGB}{0,172,238}  
+  \tcbset{
+    commonoptions/.style={
+      enhanced,
+      enhanced jigsaw,    
+      fonttitle=\bfseries,
+      boxed title style={opacityback=0, opacityframe=0},
+      sharp corners,
+      arc=4mm,
+      %opacityframe=0,
+      after skip=0mm,
+      colframe=bubbleblue,
+      colback=white,
+      %left=10mm,
+      %left=20mm,
+      %leftrule=10mm,
+      before skip=6pt,after skip=12pt,top=2ex,
+      },
+    }
+    \newtcolorbox{rightbubbles}[4][]{
+        commonoptions,    
+        attach boxed title to top right={yshift=-7mm, xshift=-2mm},
+        top=6mm,
+        right skip=1.5cm,
+        %width=.8\textwidth,
+        %valign=center,
+        %left=10ex,
+        %halign=flush center,
+        %before=\par\smallskip\centering,
+        finish={\node[anchor=north west, yshift=-2mm] at (frame.north east) {\includegraphics[width=10mm]{#4}};},
+        title={#3:}, 
+        rounded corners=north, rounded corners=southwest,
+        colupper=white, colupper=black, colbacktitle=white,
+        coltitle=black,
+        before skip=1mm,
+        #1}
+
+
+\NewEnviron{rightbubbleslittle}[2]{\vspace{1mm}%
+\tcbox[commonoptions,    
+    finish={\node[anchor=north west, yshift=2mm] at (frame.north east) ;},%{\includegraphics{#2}};},
+    rounded corners,
+    colback=#1,
+    colupper=white,
+    before=\hfill,
+    right skip=1.5cm,
+    varwidth upper]
+    {\BODY}
+}    
+
 
 \usepackage{enumerate}
 \lstset{
