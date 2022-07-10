@@ -1,0 +1,124 @@
+
+
+\section{２標本の検定}
+\subsection{正規分布を含んだ統計モデル}
+我々は普段、男女の身長をみているから男性と女性を同じ統計モデルを用いて推測することは、到底無理だと言える。だが、あえて統計モデルを一つ構築して、男女の身長について推測を試みる。
+\begin{quote}
+    \begin{enumerate}[(1)]
+\item i.i.d
+\item 正規分布
+\item 正規分布母数$\mu,\sigma=5.7$
+\end{enumerate}
+\end{quote}
+この統計モデルを$M(\mu)$とかく。データを元にして、標準偏差は男女の差がほとんどなく、$5.7$程度であった。男性に対して制度の良い推測を行えていた$M(170)$を使って、女性の身長について推測してみる。女性で、$170cm$以上はどのくらいの頻度で現れるのか、$P(x>170)=0.5$である。一方で、データでは、$0.0179$である。また、平均身長は、データでは$157.8cm$程度である。このことから、統計モデルとデータが乖離していることがわかる。
+
+
+\if 0
+このように、二つの標本が異なることがわかっている、データでは、同じ統計モデルで予測するとデータに一致しないことがわかる。
+\fi
+
+
+以上は、サンプルサイズが十分に大きい場合の平均値と分散を知っているから一つの統計モデルを使って男と女の身長を推測することが難しいことを示唆した。
+
+
+一方で、サンプルサイズが十分ではない、言い換えれば、分布の特徴が掴みにくい場合、２標本を一つの統計モデルで推測するとまずいことがわかるのだろうか？
+男と女、それぞれ５人から計測を行った、上が男、下が女の標本である。
+\begin{lstlisting}
+
+[161.92083043 162.3764036  170.60849829 166.64996998 164.83863778]
+[159.58195311 152.93245418 159.18632478 145.77567615 152.13809195]
+\end{lstlisting}
+
+
+統計モデルにより、$x_1,x_2,\cdots,x_n$,$y_1,y_2,\cdots,y_n$とサンプリングされたとする。次の統計量を定義する、
+$$
+Z=(\bar{x}-\bar{y})\frac{\sqrt{mn}}{\sigma\sqrt{m+n}}
+$$
+ただし、$\bar{x}=\frac{1}{n}\sum_{i=0}^{n} x_i,\bar{y}=\frac{1}{m}\sum_{i=0}^m y_i$である。
+$Z$は、$Z\sim N(0,1)$となることがわかっている。
+
+絶対にダメな統計モデルの範囲は、$Z$の大きさ$|Z|$によって決まる。
+$p=0.05$とすると、
+\begin{eqnarray*}
+    &|Z|& < z_{0.025}\\
+    &\rightarrow & |\bar{x}-\bar{y}|\frac{\sqrt{mn}}{\sigma\sqrt{m+n}} < z_{0.025}\\
+    &\rightarrow& |\bar{x}-\bar{y}| <z_{0.025}\frac{ \sigma\sqrt{m+n} }{ \sqrt{mn }}\\
+\end{eqnarray*}
+
+
+数式を書き換えれば、$|\bar{x}-\bar{y}|$の大きさによって決まることがわかる。
+無作為抽出したデータの平均値$\bar{X},\bar{Y}$の差の絶対値がこの範囲に収まらなければ、この統計モデルは、現実を捉えていないと判断され、棄却される。
+
+無作為抽出されたデータを用いて検定にかけてみると、$p=0.004$となり、$p=0.05$よりも小さいことがわかった。
+統計モデルの仮説が妥当であることを確認する。仮定(1)は満たされるように無作為抽出を行い計測したので、問題ないと考える。仮定(2)については、サンプルサイズを大きくしたときに、正規分布による予測がよく当たることを知っているので、この仮説も大きく外れているとは言い切れない。最後に、仮説(3)が間違っていることが示唆される。
+以上によって、帰無仮説が棄却される。
+
+
+
+\begin{lstlisting}
+def tTest(X,Y,sigma):
+    x_bar,y_bar = np.average(X),np.average(Y)
+    M,N = len(X),len(Y)
+    Z = (x_bar-y_bar)*np.sqrt(M*N)/(sigma*np.sqrt(M+N))
+    p=norm.cdf(Z,0,1)
+    return 1-p
+tTest(X,Y,5.7)
+\end{lstlisting}
+
+
+\begin{lstlisting}
+def rejectRange(X,Y,sigma):
+    M,N = len(X),len(Y)
+    Z = sigma*(np.sqrt(M+N))/np.sqrt(M*N)
+    za,zb= norm.interval(0.95,0,1)
+    return Z*za,Z*zb
+rejectRange(X,Y,5.7)
+\end{lstlisting}
+\subsubsection{信頼区間}
+平均母数$\mu_1,\mu_2(\mu_1\neq \mu_2)$のときに、式を変形していくと、次がわかる
+\begin{equation*}
+    (\bar{X}-\bar{Y})-z_{0.025}\sigma\sqrt{\frac{1}{n_1}+\frac{1}{n_2}} \leq \mu_1-\mu_2 \leq (\bar{X}-\bar{Y})+z_{0.025}\sigma\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}.
+\end{equation*}
+これは、$\bar{X},\bar{Y}$を得たときに、$\mu_1-\mu_2$がこの範囲にあれば、$\mu_1=\mu_2$という統計モデルは棄却できない。
+
+もう一度、式変形をしてみると、次の式を得る。
+\begin{equation*}
+    (\bar{\mu_1}-\bar{\mu_2})-z_{0.025}\sigma\sqrt{\frac{1}{n_1}+\frac{1}{n_2}} \leq \bar{X}-\bar{Y} \leq (\bar{\mu_1}-\bar{\mu_2})+z_{0.025}\sigma\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}.
+\end{equation*}
+この式は、標本を繰り返し得ていくと$\bar{X}-\bar{Y}$がこの範囲の中に$95\%$の確率で得られることを示唆している。
+
+\subsubsection{検出力}
+二つの統計モデル$M(\mu,\mu),M(\mu_1,\mu_2)$において、$M(\mu,\mu)$を元に、検出力を計算する。
+$M(\mu,\mu)$における信頼区間は、統計量を$Z$とすると、
+\begin{equation*}
+    -z_{\alpha/2}U \leq Z\leq z_{\alpha/2}U
+\end{equation*}
+ここで、$U=\sqrt{\frac{\sigma^2_1}{n_1}+\frac{\sigma^2_2}{n_2}}$である。
+また、$M(\mu_1,\mu_2)$における統計量を$Z$とすると、$Z = \frac{\bar{x}-\bar{y}}{U}\sim N(0,1)$であるので、$a \sim N(\mu_1-\mu_2,U^2)$ならば、
+\begin{eqnarray*}
+    A &=& \frac{(a-(\mu_1-\mu_2))}{U} \\
+      &=& (\mu_1-\mu_2)/U-z_{\alpha/2}
+\end{eqnarray*}
+同様に、
+\begin{eqnarray*}
+    B &=& \frac{(b-(\mu_1-\mu_2))}{U} \\
+      &=& (\mu_1-\mu_2)/U-z_{\alpha/2}
+\end{eqnarray*}
+よって、
+\begin{equation*}
+    \beta = \varPhi(B)-\varPhi(A)
+\end{equation*}
+である。
+
+\subsection{母分散が未知のときの統計モデル}
+
+
+\subsubsection{信頼区間}
+
+
+\subsection{統計的仮説検定の手順}
+
+
+
+\subsubsection{分散未知の場合}
+%[統計学 講義](http://www3.u-toyama.ac.jp/kkarato/2020/statistics/handout/Statistics[B]-2020-25-0722.pdf)
