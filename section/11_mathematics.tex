@@ -1,7 +1,7 @@
 
-\section{数理統計の補足}
+\chapter{数理統計の補足}
 
-      
+\section{正規分布の検定1}
 
 また、母数分散$\sigma$について次が成り立つ。
 \begin{theo}\label{normal_sigma_chi2}
@@ -15,10 +15,14 @@
 
 %https://ds.machijun.net/clear-exercise-of-statistics/%E7%AC%AC7%E7%AB%A0-%E6%8C%87%E6%95%B0%E6%AF%8D%E9%9B%86%E5%9B%A3ex%CE%BC%EF%BC%89%E3%81%AE%E6%AF%8D%E5%B9%B3%E5%9D%87%E3%81%AE%E4%BF%A1%E9%A0%BC%E5%8C%BA%E9%96%93%E3%81%A8%E6%A4%9C%E5%AE%9Ap128/
 
+\section{指数分布を含むモデル}
+
+\begin{theo}
+    $x_1,x_2,\cdots,x_n \sim Ex(\lambda)$とする。
+    $x_1+x_2+\cdots+x_n \sim \gamma(n,\lambda)$である
+\end{theo}
 
 $n$を自然数とし、ガンマ分布$Ga(\frac{n}{2},2)$を特に、カイ２乗分布といい、$\chi ^2_n$で表す。
-
-
 
 \begin{theo}
 $n$を自然数とする。$G\sim\Gamma(\frac{n}{2},\beta),Y_n\sim \chi^2_n$とすると、$P(G\leq w) = P(Y_n \leq 2\beta w)$
@@ -33,9 +37,8 @@ $w >0$に対して、
 \end{eqnarray*}
 \end{proof}
 
-
-
-$n\bar{x}\sim \Gamma(n,\lambda)$である。このとき、$\lambda$の信頼区間を求める。$\lambda$の下限は、
+以上より$n\bar{x}\sim \Gamma(n,\lambda)$である。
+このとき、$\lambda$の信頼区間を求める。$\lambda$の下限は、
 \begin{equation}
     P(G\leq n\bar{x}) = \frac{\alpha}{2}
 \end{equation}
@@ -60,6 +63,7 @@ P(G\leq n\bar{x}) = 1-\frac{\alpha}{2}
 \end{eqnarray*}
 以上によって、$\frac{1}{\lambda}$の信頼区間は、
 \begin{equation}
+    \label{exp_model_confidence_interval}
     \frac{2n\bar{x}}{\chi^2_{2n}(\alpha/2)} \leq \frac{1}{\lambda} \leq \frac{2n\bar{x}}{\chi^2_{2n}(1-\alpha/2)}
 \end{equation}
 
@@ -141,8 +145,8 @@ $Z=\frac{n\bar{X}}{n\bar{X}+m\bar{Y}}\sim Beta(n,m)$である。このことか�
 
 統計学のユーザーの中には、次のことが成立すると考えている\footnote{
     中心極限仮説が成り立つと考えている人は多い。
-    \url{http://www.ner.takushoku-u.ac.jp/masano/class_material/waseda/keiryo/R10_inference.html#3_%E4%B8%AD%E5%BF%83%E6%A5%B5%E9%99%90%E5%AE%9A%E7%90%86} .
-    \url{https://yukiyanai.github.io/stat2/clt.html}.
+    \\ \url{http://www.ner.takushoku-u.ac.jp/masano/class_material/waseda/keiryo/R10_inference.html#3_%E4%B8%AD%E5%BF%83%E6%A5%B5%E9%99%90%E5%AE%9A%E7%90%86} .
+    \\ \url{https://yukiyanai.github.io/stat2/clt.html}.
     }。
 \begin{hypoth}[中心極限仮説]
     一般のデータについて、データのサンプルサイズを大きくすると、その平均$\bar{x}$は、$\bar{x}\sim N(\mu,\sigma^2/n)$。
@@ -156,14 +160,10 @@ $Z=\frac{n\bar{X}}{n\bar{X}+m\bar{Y}}\sim Beta(n,m)$である。このことか�
 これも間違いである。中心極限定理の前提のもと、標本平均を集めると正規分布に近づくことはありえる。
 
 
-
+\if 0
 \subsubsection{ サンプルサイズが大きくなるとデータの構造がわかる}
 サンプルサイズが増えると、正規分布を仮定できると書いてある文献もあるが、これは大数極限定理が成立する状況に限られるので、一般の母集団の特徴は正規分布を仮定した統計モデルで捉えるられるとは言い切れない。
 
-\if 0
-信頼区間が狭くなるというふうに書いてあることもあるが、これも正しくないはず。
-Cauchy分布を使って確かめてみる。
-\fi 
 
 サンプルサイズが増えることの利点として、おおよその分布の形がわかるということが挙げられる。
 分布の形がわかれば、尤度ひを使った検定が可能になり、棄却すべき統計モデルがわかるようになる。
@@ -171,8 +171,12 @@ Cauchy分布を使って確かめてみる。
 もう一つ利点をあげるなら、比較したい分布との違いを表示することで明らかにできるという点である。
 言い換えると、少数のサンプルサイズのときに検定を使うことで、統計モデルの母数を検定することに意味があったのだが、
 サンプルサイズが大きくなることで、プロットすれば分布の形の違いが現れるので、検定する意味がなくなる。
+\fi
 
-
+\if 0
+信頼区間が狭くなるというふうに書いてあることもあるが、これも正しくないはず。
+Cauchy分布を使って確かめてみる。
+\fi 
 
 
 \if 0
