@@ -440,153 +440,85 @@ $X_1,X_2,\cdots,X_n \sim N(\mu,\sigma^2)$とする。統計量$T$を、
 \end{eqnarray*}
 である。
 
-\section{問題意識}
-確率変数$x_1$または、$x_1,x_2,\cdots,x_n$を得たとき、それらが独立同分布に従うという前提のもと、ある母数をもつ分布関数に従う、または従わないと推測することは可能であるだろうか。
-最尤推定から、確率変数を得たなら、最尤推定を行って、母数を推測可能な場合がある。
-具体的には、正規分布から得られた確率変数については、その平均と分散は、$(\mu,\sigma^2)=(\bar{x},\sum_{i=1}^{n} (x_i-\bar{x})^2/n)$である。
+\section{尤度・対数尤度・AIC}
+\begin{defi}
+    確率変数の組み$(x_1,x_2,x_3,\cdots,x_n)$が、ある同時確率密度関数$P(X_1,\cdots,X_n|\theta)$から得られたとする。ここで、$\theta$は密度関数$P(X)$の母数。このとき、$\theta$を変数として考えるとき、次を尤度関数という\footnote{wikipediaにて尤度を調べると、尤もらしさの指標と出る。\url{https://ja.wikipedia.org/wiki/尤度関数}. この言い換えは適切であるとは言えない。尤度は確率密度関数の積で、密度関数の母数を変数にした関数である。}。
+    \begin{equation*}
+        L(\theta) = P(X_1,\cdots,X_n|\theta)
+    \end{equation*}
+    ここで、$x_1,x_2,\cdots,x_n$が独立であるならば、同時確率密度関数は、$X_i$の密度関数の積に等しいので、尤度関数は次の形に書き換えられる。
+    \begin{equation*}
+        L(\theta ) = P(X_1|\theta)P(X_2|\theta)\cdots P(X_n|\theta)
+    \end{equation*}
+    尤度関数に対数をつけたものを、対数尤度関数という。
+    \begin{equation*}
+        l(\theta) = \sum_{i=0}^n \log f(x_i|\theta)
+    \end{equation*}
+\end{defi}
 
-この問題に対して、
-正規分布から確率変数を得たとき、ある母数平均$\mu$をもつ正規分布からサンプリングされていないということはできるだろうか。これを議論する。
-
-%\subsection{言葉の準備}
-
-
-\section{ひとつの確率変数から推測する}
-ひとつの確率変数$x$が$N(\mu,\sigma^2)$に従わないことを推定したい。
-$N(\mu,\sigma^2)$から得られる確率変数は、$95\%$の確率で、$\mu-\sigma z_{0.025}\sim \mu-\sigma z_{0.025}$の間で見つかる。
-$\sigma^2=1$とすると、$95\%$の確率で、確率変数は、$\mu-1.96\sim\mu+1.96$の間で見つかる。
-$\mu=0$なら、$x=0.1$は、この区間の中にあるので、$x$は、$N(0,1)$では良く見つかる値になる。
-%この基準では、複数の$\mu$で$x=0.1$はよく見つかる範囲に入る。例えば、$\mu=0.1$でも良く確率変数が見つかる区間は、$-1.85\sim 2.05$なので、確率変数は、$N(0.1,1)$に従うとしても問題ない。
-$x=0.1$がその区間に入らない母数は、$\mu=z_{0.025}+0.1$のときで、区間は$0.10003\sim4.01$で、この区間に$x$は入ってません。
-これを言い換えれば、母数$x-z_{0.025}\leq\mu\leq x+z_{0.025}$の間でよくある値になり、この間から外れた母数をもつ$N(\mu,1)$に従っていいないと推測できる。
-
-我々の科学では、このようなたったひとつの値から、分布関数の母数を推測することはしません。
-例えば、$x=1.97$が得られたとすると、$N(0,1)$のよく出る値の範囲は、$-1.96\sim1.96$であることから、母数$0$ではないと判断できます。
-一方で、$N(0,1)$で$x=1.97$は、サンプルサイズが$20$であれば、そのうち$1$回は、$1.97$をとる値です。もしももう一度サンプリングできたとして、その値が$0$になることもあり得ます。
-以上のことから、$1$回のサンプリングだけで判断しません。
-
-\section{複数の確率変数から推測する}
-複数の確率変数$x_1,x_2,\cdots,x_n$が$N(\mu,\sigma^2)$に従わないことを推定したい。
-
-サンプルサイズが大きいときは、最尤推定を行い、$\mu_1=\bar{x},\sigma_1^2=\sum_{i=1}^{n} (x_i-\bar{x})^2/n$を計算し、その値が、$\mu,\sigma^2$と著しく異なっていれば、$N(\mu,\sigma^2)$に従わないと言えそうである。
-例えば、図\ref{fig:maximum_likelihood_0}は、正規分布$N(170,6.8^2)$からサンプルサイズ$100$の標本を得たとき、図\ref{fig:maximum_likelihood_1}は、サンプルサイズ$30$、そしてそのデータの分布と、最尤推定量から予測されるも確率密度関数、$N(168,6.8^2),N(171,6.8^2)$を表している。図\ref{fig:maximum_likelihood_0}をみると、最尤推定した確率密度関数がデータの出現頻度をよく表していること、そして、周辺の二つの正規分布$N(168,6.8^2),N(171,6.8^2)$とデータが乖離していることがわかる。
-一方、図\ref{fig:maximum_likelihood_1}では、データが$N(171,6.8^2)$に従っているのではないかという疑惑が残る。
-
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/02_/maximum_likelihood_0.pdf}
-        \caption{$N(170,6.8^2)$からサンプルサイズ$100$の標本を得たときの分布。その最尤推定量により求められる分布関数。$N(168,6.8^2),N(171,6.8^2)$の分布関数を示す}
-        \label{fig:maximum_likelihood_0}
-    \end{center}
-\end{figure}
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/02_/maximum_likelihood_1.pdf}
-        \caption{$N(170,6.8^2)$からサンプルサイズ$30$の標本を得たときの分布。その最尤推定量により求められる分布関数。$N(168,6.8^2),N(171,6.8^2)$の分布関数を示す}
-        \label{fig:maximum_likelihood_1}
-    \end{center}
-\end{figure}
-
-このように、サンプルサイズが大きいと、最尤推定により推測した確率密度関数を見れば、そのほかの母数に従わないことがわかる場合がある。
-また、より近くにある母数の確率密度関数と区別することは難しいこともわかる。
-
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/02_/maximum_likelihood_3.pdf}
-        \caption{$N(170,6.8^2)$からサンプルサイズ$3$の標本を得たときの分布。その最尤推定量により求められる分布関数。$N(168,6.8^2),N(171,6.8^2)$の分布関数を示す}
-        \label{fig:maximum_likelihood_0}
-    \end{center}
-\end{figure}
-
-\section{全然違うはなんとなくわかる}
-図\ref{fig:maximum_likelihood_false_3},\ref{fig:maximum_likelihood_false_30}は、$N(170,6.8^2)$からサンプリングしたデータの度数分布と、その確率密度関数とは著しく異なる確率密度関数を表示したものです。
-
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/02_/maximum_likelihood_false_3.pdf}
-        \caption{$N(170,6.8^2)$からサンプルサイズ$3$の標本を得たときの分布。その最尤推定量により求められる分布関数。$N(168,6.8^2),N(171,6.8^2)$の分布関数を示す}
-        \label{fig:maximum_likelihood_false_3}
-    \end{center}
-\end{figure}
-
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/02_/maximum_likelihood_false_30.pdf}
-        \caption{$N(170,6.8^2)$からサンプルサイズ$3$の標本を得たときの分布。その最尤推定量により求められる分布関数。$N(168,6.8^2),N(171,6.8^2)$の分布関数を示す}
-        \label{fig:maximum_likelihood_false_30}
-    \end{center}
-\end{figure}
-
-\clearpage
-\section{再生性}
-\subsubsection{$(\star)$ $N(\mu,\sigma^2)$に従う確率変数であることを判定できるか}
-$N(0,1)$に従う確率$x_1,x_2,\cdots,x_n$から計算した統計量、$z=\frac{\bar{X}-0}{\sqrt{\frac{1}{n}}}$は、$N(0,1)$に従い、$z$が$95\%$の確率で見つかる範囲は$[-1.96,1.96]$である。
-同様に、$y_1,y_2,\cdots,y_n \sim N(1.96,1)$であるならば、$z=\frac{\bar{Y}-1.96}{\sqrt{\frac{1}{n}}}$は、$N(0,1)$に従う。
-
-確率変数から、特定の母数を持つ正規分布に従わないことを示すことはできるだろうか。
-具体的な問題設定として、
-$y_1,y_2,\cdots,y_n$を正規分布に従う確率変数とする。そのとき、$y_1,y_2,\cdots,y_n$が$N(\mu,\sigma^2)$に従わないことを判断する良い方法はどのようなものだろうか。
-
-ここで、$y_1,y_2,\cdots,y_m \sim N(1.96,1)$にもかかわらず、$N(0,1)$に従うと推測した場合、$z=\frac{\bar{Y}-0}{\frac{1}{\sqrt{n}}} \sim N(0,1)$であると考えられる。
-$z$の分子の$\mu$が$0$になっていることに注意が必要である。
-実際に、$y_1,y_2,\cdots y_{100}$を$N(1.96,1)$からサンプリングした標本を$100$個作ってみると、およそ$19$を中心に分布することがわかる。
-このことは、$y_1,y_2,\cdots,y_m\sim N(0,1)$であるならば、$z$は、$[-1.96,1.96]$の間で$95\%$の確率で入るので、この推測が間違いであることが推測される。
-以上の考察から、$y_1,y_2\cdots,y_n\sim N(0,1)$ではないと判断する。
-
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/02_/normal_distribution_test.pdf}
-        \caption{(a)$N(1.96)$に従う確率変数を100個サンプリングし、その標本を1000個集めたときの$z=\sqrt{100}(\bar{X}-0)$のヒストグラム (b)$N(0,1)$に従う確率変数を100個サンプリングし、その標本を1000個集めたときの$z=\sqrt{100}(\bar{X}-0)$値のヒストグラム}
-    \end{center}
-\end{figure}
+$N(0,1)$において、確率変数$X^1=(x_1,x_2,x_3)=(0,0,0)$を得たとする。$N(0,1)$において$0$の出現確率は$P(0)=0.398$である。このことから、尤度はその積で計算でき、$L(0)=0.398^3=0.063$である。
+また、別の確率変数の組$X^2=(x_1,x_2,x_3)=(1.96,1.96,1.96)$を得たとすると、$N(0,1)$における$1.96$の出現確率は、$P(1.96)=0.058$より、尤度は、$L(0)=0.05^3=0.0001$である。
+このことは、確率変数$X^1$は$X^2$よりも得られやすいことを示唆する。
+もしもこの$X^1,X^2$が、$N(1.96,1)$において得られた場合は、尤度はそれぞれ、$0.0001,0.063$となり、尤度の大小関係が逆転する。
+言い換えれば、密度関数の母数を変数にすることで、確率変数がそれぞれの母数において得られやすさを示す指標となっている。
 
 
-もう一つ例を挙げる。
-$y_1,y_2,\cdots,y_n \sim N(170,5.8)$とする。このとき、この標本が$N(168,5.8)$によりサンプリングされたものではなくことを示すことはできるだろうか。
-$z=\sqrt{n}\frac{\bar{y}-168}{\sigma}$を計算すればよい。
-図には、$N(170,5.8)$に従う確率変数を100個サンプリングし、その標本を1000個集め、ヒストグラムを描いた。
-これをみると、$0.5$を中心に分布が広がることがわかる。$z=\frac{\bar{X}-168}{\sqrt{\frac{5.8}{n}}}\sim N(0,1)$であるはずである。
-複数回、標本を得た場合でも、$z$が$[-1.96,1.96]$の範囲に収まっている。このことは、$N(168,5.8)$ではないと判断できないことを示唆している。
-
-
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/02_/normal_distribution_test2.pdf}
-        \caption{$N(170,5.8)$に従う確率変数を100個サンプリングし、その標本を1000個集めたときの$z=\sqrt{100}(\bar{X}-168)$のヒストグラム}
-    \end{center}
-\end{figure}
-
-
-ある正規分布に従う確率変数$x_1,x_2,\cdots,x_n$が母数の異なる正規分布で得られる確率も計算できる。具体的には、$x_1,x_2,\cdots,x_n\sim N(\mu,\sigma^2)$とし、これが$N(\mu_1,\sigma_1^2)$で得られるとすると、そのときの統計量は、$z=\frac{\bar{x}-\mu_1}{\frac{\sigma_1}{n}}$である。この$z$は、$N(0,1)$に従うと考えられるので、$\phi(|z|>Z)$となる確率を計算すれば良い。
-
-\begin{theo}
-    確率変数$x_1,x_2,\cdots,x_n \sim N(\mu,\sigma^2)$ならば、$z=\frac{\bar{X}-\mu}{\sqrt{\frac{\sigma}{n}}} \sim N(0,1)$である。
-    一方で、確率変数$x_1,x_2,\cdots,x_n \sim N(\mu,\sigma^2)$とする。$N(\mu_1,\sigma_1^2)$は正規分布とする。ただし、$\mu\neq \mu_1, \sigma =\sigma_1$このとき、$z=\frac{\bar{X}-\mu_1}{\sqrt{\frac{\sigma_1}{n}}} \sim N(0,1)$ではない。
-\end{theo}
-$\mu$と$ \mu_1$が極めて近い値のとき、$z=\frac{\bar{X}-\mu_1}{\sqrt{\frac{\sigma_1}{n}}} $も$N(0,1)$におけるよくある値になる言い換えれば、$\phi(|z|>Z)$は十分大きい。
-一方で、$\mu$と$ \mu_1$が離れた値を取ると、$\phi(|z|>Z)$は小さな値になる。
-
-
-\subsection{$(\star)$ $Exp(\lambda)$に従う確率変数であることを判定できるか}
-$x_1,x_2,\cdots,x_n \sim Exp(\lambda)$であるとき、$n\bar{x}\sim Ga(n,\frac{1}{\lambda})$である。
-母数不明の指数分布に従う確率変数が、$x_1,x_2,\cdots,x_n \sim Exp(\lambda)$と仮定したとき、$n\bar{x}\sim Ga(n,\frac{1}{\lambda})$でないならば、$x_1,x_2,\cdots,x_n \sim Exp(\lambda)$ではないと判断できるだろうか。シミュレーションによって確認してみよう。
-
-この論法は、母数が不明の指数分布に従う確率変数を得たとき、その指数分布の母数が特定の値ではないことを示すためにこの論法を利用する。ここでは、母数が$\lambda=1,2,5,10,100$からサンプルサイズ4の標本を$1000$生成し、それら標本の統計量$n\bar{X}$のヒストグラムと、ガンマ関数$Ga(100,1)$の確率密度関数を比較する。
+具体的に、標準正規分布から100個の確率変数をサンプリングし、正規分布$N(\theta,1)$の確率密度関数における対数尤度関数を計算し、尤度関数の変化を図示した(図\ref{fig:loglikelihood_function})。これを見ると、上に凸な２次関数のように見える。実際に、対数尤度関数を展開してみると、$l(\theta)$が$\theta$に関する2次関数になっていることがわかる。
+\begin{eqnarray}
+    l(\theta) &=& \sum_{i=0}^{100} \log f(x_i|\theta) \\
+    &=& \sum_{i=0}^{100} \log \frac{1}{\sqrt{2\pi}}\exp\left( \frac{-(x_i-\theta)^2}{2} \right) \\
+    &=&  -\frac{100}{2}\log(2\pi)+\sum_{i=0}^{100}\frac{(x_i-\theta)^2}{2}
+\end{eqnarray}
+この式より、2次関数であることは明らかである。
 
 \begin{figure}
     \centering
-    \includegraphics[width=15cm]{./image/02_/Exp_Gamma_simulation.pdf}
-    \caption{(a)$Ga(10,1)$の確率密度関数。(b-e)指数分布からサンプルサイズ$4$の標本を$1000$回生成し、その統計量$n\bar{x}$のヒストグラム}
-    \label{fig:exp_gamma_simulation}
+    \includegraphics[width=15cm]{./image/02_/loglikelihood_function.pdf}
+    \caption{$N(\theta,1)$における対数尤度関数。確率変数は、$N(0,1)$からサンプリングした。}
+    \label{fig:loglikelihood_function}
 \end{figure}
 
-図\ref{fig:exp_gamma_simulation}(a)は、指数分布$Exp(\lambda=1)$の確率密度関数を示している。
-図\ref{fig:exp_gamma_simulation}b-eは、シミュレーションの結果を示している。
-図\ref{fig:exp_gamma_simulation}(b)には、指数分布$Exp(1)$に従う確率変数の統計量$n\bar{x}$が確かに、$Ga(100,1)$に従うことが確かめれる。
-図\ref{fig:exp_gamma_simulation}(c-e)では、指数分布の$\lambda$が$1/2,1/5,1/10$のときの統計量のヒストグラムである。これらと、図\ref{fig:exp_gamma_simulation}(a)を比較すると、分布が異なっているので、確かに、$Ga(100,1)$には従わないことがわかる。
+\subsection{最尤推定}
+\begin{defi}
+    尤度関数$l(\theta)$を最大にする$\theta$を最尤推定量という。
+\end{defi}
+正規分布における最尤推定量を計算してみる。正規分布は、母数を二つ持つので、尤度関数も2変数関数である。
+まず、対数尤度関数は、
+\begin{equation*}
+    l(\mu,\sigma^2) = -\frac{n}{2}\log(2\pi\sigma^2)-\frac{1}{2\sigma^2}\sum_{i=1}^n(x_i-\mu)^2 
+\end{equation*}
+$l(\mu,\sigma^2)$を$\mu$で微分する。
+\begin{equation*}
+    \frac{\partial l(\mu,\sigma^2)}{\partial \mu} = \frac{\sum_i(x_i-\mu)}{\sigma^2}
+\end{equation*}
+$\frac{\partial l(\mu,\sigma^2)}{\partial \mu} = 0$とおいて、$\mu$について解くと、
+\begin{equation*}
+    \mu_{ML} = \frac{\sum_i x_i}{n}
+\end{equation*}\footnote{最尤がmaximum likelihoodなので頭文字を取ったMLを$\mu$の足に書いておいた}
+%言い換えれば、最尤推定量
 
+同様に$\sigma^2$に関する微分を行う。
+\begin{equation*}
+    \frac{\partial l(\mu,\sigma^2)}{\partial \sigma^2} = -\frac{n}{2\sigma^2}+\frac{1}{2\sigma^4}\sum_i(x_i-\mu)
+\end{equation*}
+これが$0$と等しいとき、$\sigma^2$について解く。
+\begin{equation*}
+    \sigma^2_{ML} = \frac{\sum_i(x_i-\mu)^2}{n}
+\end{equation*}
 
+最尤推定量は、分布関数によって異なるので、計算してみるとよい。
 
-\subsection{問題点}
-aa
+\subsection{AIC(an information criterion)}
+確率分布から対数尤度を求め、対数尤度の低い確率分布は、その中で相対的にデータに対して当てはまりの良い確率分布であると考えることができる。
+最尤推定量を使った確率分布関数は、データを使って分布関数を決定しているので、データを使わずに求めた分布よりも、データに対して良い分布関数になりがちである。
+そこで、対数尤度に対して罰則項を加えたAICを使って、データに対する当てはまりの良さを計算することがある。
+\begin{equation*}
+    AIC = -2\log f(x|\theta)+2k
+\end{equation*}
+ここで、$k$はデータによって決まったパラメータの個数である。
+正規分布関数を使ってAICを計算する。
+母数を最尤推定により決定した分布関数のパラメータ数は2である。
+恣意的に平均$\mu$を決定し分散については最尤推定量により決定した分布関数のパラメータ数は$1$である。
+
+AICが低い分布関数は、相対的に良い分布関数であり、その分布関数からデータが生成されたことを示唆するものではない。また、AICの差が$10$あったから良いとか悪いとかではなく、AICが低いものが相対的に良いと判断されがちになるだけである。AIC差の大きさに大きな意味はない。
 
