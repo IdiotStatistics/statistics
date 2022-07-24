@@ -1,16 +1,25 @@
 
-\section{ノンパラメトリック検定}
-\begin{mybox}
-    \paragraph{正規分布じゃないからノンパラメトリック！}
-    \begin{quote}
-        サンプルサイズが大きい場合は、正規性の検定を行い、正規性でないと確認してからノンパラメトリック検定を使うと書いた文献もある\footnote{\url{https://katosei.jsbba.or.jp/view_html.php?aid=1196}.}。
-        正規分布に近いとは言えないこともある場合、ノンパラメトリック検定を勧める文献もある \url{ http://j-ca.org/wp/wp-content/uploads/2016/04/5102_51kyo2_so.pdf . 臨床研究における統計学的解析 ─推定と検定の正しい使い方─}
-        これらとは反対に、正規性検定をノンパラメトリック検定を利用するときの基準として使うべきでないと主張する論者もいる\footnote{https://biolab.sakura.ne.jp/normality-test-nonparametric.html}。
-        ノンパラメトリック検定を勧められたときには、その検定の仮定を調べて、自分のデータと仮定が妥当であることが確認できるならば、ノンパラメトリック検定を使えば良い。
-    \end{quote}
-\end{mybox}
+\chapter{ノンパラメトリック検定}
 
-\subsubsection{Shapiro-Wilk検定}
+ノンパラメトリック検定を勧められたときには、その検定の仮定を調べて、推定したいことが推定できるのかを調べて使う必要がある。
+具体的には、ノンパラメトリック検定で推定できるのは、その検定におけるモデルとデータの乖離を示す$p$値である。
+パラメトリック検定であれば、統計量が見つかりやすい区間（信頼区間）の推定やモデルが推定する確率変数をサンプリングすることが可能である。
+
+\begin{SMbox}{正規分布じゃないからノンパラメトリック！}
+    
+    正規分布に近いとは言えないこともある場合、ノンパラメトリック検定を勧める文献がある\footnote{\url{ http://j-ca.org/wp/wp-content/uploads/2016/04/5102_51kyo2_so.pdf}. 臨床研究における統計学的解析 ─推定と検定の正しい使い方─}
+    
+\end{SMbox}
+
+\begin{SMbox}{ノンパラメトリック検定によるモデルの仮定の検証}
+    モデルの仮定をデータが満たしていなければ、検定が使えないという流派がある。
+    この流派においては、正規分布を仮定したモデルを使う前に、検定を繰り返し、モデルの仮定をデータが満たしていることを調べることを勧める\footnote{\url{https://katosei.jsbba.or.jp/view_html.php?aid=1196}.}。
+    %サンプルサイズが大きい場合は、正規性の検定を行い、正規性でないと確認してからノンパラメトリック検定を使うと書いた文献もある。
+    これらとは反対に、正規性検定をノンパラメトリック検定を利用するときの基準として使うべきでないと主張する論者もいる\footnote{\url{https://biolab.sakura.ne.jp/normality-test-nonparametric.html}}。
+\end{SMbox}
+
+
+\section{Shapiro-Wilk検定}
 Shapiro-Wilk検定で使う統計モデルは、次の二つの仮定により構成されている。
 \begin{quote}
     \begin{enumerate}[(1)]
@@ -20,17 +29,15 @@ Shapiro-Wilk検定で使う統計モデルは、次の二つの仮定により�
 \end{quote}
 この検定を使うと、統計モデルの仮定(1)がクリアな場合、(2)が仮定できないと判断されます。つまり、$p$値が小さければ、正規分布ではないことが主張できます。一方で$p$値が大きい場合では、積極的に正規分布であるとは主張できません。
 
-\begin{mybox}
-    \begin{quotation}
+\if 0
+\begin{SMbox}{前検定}
 t検定を使う前提条件としてShapiro-Wilk検定を使うことを推奨している文献があるようです。
 
-
-統計モデルは真実ではありませんし、各仮定が前提である必要はありません。どのくらい正規分布から離れているかを判定するのは解析者に依存します。
+%統計モデルは真実ではありませんし、各仮定が前提である必要はありません。どのくらい正規分布から離れているかを判定するのは解析者に依存します。
 
 統計モデルには、各変数が独立であることを仮定しますが、この仮定を前提にする統計的な手法の利用は推奨されてません。統計モデルの仮定のうち一つは前提としようと努力をするのですが、独立性については無視する立場があるのも確かです。我々は、統計モデルの仮定は本当に正しいことを要求しません。
-\end{quotation}
-\end{mybox}
-
+\end{SMbox}
+\fi
 % https://biolab.sakura.ne.jp/welch-anova-statwing.html
 
 % http://ibis.t.u-tokyo.ac.jp/suzuki/lecture/2015/dataanalysis/L8.pdf
@@ -39,7 +46,7 @@ t検定を使う前提条件としてShapiro-Wilk検定を使うことを推奨�
 
 
 
-\subsubsection{ウィルコクソン(Wilcox)の符号順位検定}
+\section{ウィルコクソン(Wilcox)の符号順位検定}
 ウィルコクソンの符号順位検定で使う統計モデルを構成する仮定は次の通りです
 \begin{quote}
     \begin{enumerate}[(1)]
@@ -54,7 +61,7 @@ t検定を使う前提条件としてShapiro-Wilk検定を使うことを推奨�
 
 
 
-\subsubsection{マン・ホイットニーのU検定}
+\section{マン・ホイットニーのU検定}
 \begin{quote}
     \begin{enumerate}[(1)]
 \item 両標本が同じ分布関数から生成された(帰無仮説)
@@ -67,12 +74,12 @@ t検定を使う前提条件としてShapiro-Wilk検定を使うことを推奨�
 
 
 
-\subsubsection{対応ある t 検定}
+\section{対応ある t 検定}
 1群の（差を作った）検定なので、等分散の仮定は必要ではない。中身が0と比べつ
 % https://biolab.sakura.ne.jp/paired-t-test-two-sample-anova.html
 
 
-\subsubsection{Walchの検定}
+\section{Walchの検定}
 % https://biolab.sakura.ne.jp/maxima-welch-test.html
 % https://oku.edu.mie-u.ac.jp/~okumura/stat/ttest.html
 
