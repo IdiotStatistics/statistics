@@ -155,3 +155,20 @@ aa
 \subsection{中心極限定理により信頼区間を近似する}
 
 \section{モデルの比較}
+
+
+\section{モデルの種類}
+
+
+\begin{table}[hbtp]
+    \caption{モデル}
+    %\label{table:data_type}
+    \centering
+    \begin{tabular}{ccc}
+      \hline
+      モデルの仮定  & 棄却域  &  予測区間 \\
+      $x_1,x_2,\cdots,x_n\sim N(\mu_0,\sigma_0)$ ($\mu_0,\sigma_0$は既知とする) & $\frac{\sqrt{n}|\bar{x}-\mu_0|}{\sigma_0}\sim N(0,1)$  & $\mu_0-z_{\alpha/2}\frac{\sigma}{\sqrt{n}} <\bar{x}<\mu_0+z_{\alpha/2}\frac{\sigma}{\sqrt{n}}$ \\
+      \hline
+    \end{tabular}
+  \end{table}
+  
