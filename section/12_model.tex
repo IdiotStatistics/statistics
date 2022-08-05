@@ -61,7 +61,7 @@ $68\%$の確率でデータを含むと予測する区間が求められる。
     \mu-\sigma < x < \mu+\sigma
 \end{eqnarray*}
 
-\subsubsection{母集団の標本が指数分布的に分布していた場合}
+\subsection{母集団の標本が指数分布的に分布していた場合}
 母集団の分布形と統計モデルに含まれている確率分布関数が著しく異なる場合を考える。
 母集団分布として、指数分布を仮定しする。これは、自然から指数分布的なデータが得られたときのことを想定している。
 これを予測するモデルを正規分布の仮定されたモデルとする。
@@ -113,9 +113,9 @@ len(sample[np.where( (sample >a) & (sample<b) )])/N
 %実際のデータは図\ref{fig:sample_norm_expon_model}にある通りであり、モデルの予想とは一致しない。
 %エラーバーにSDを描くときには、特に指定がない限り、正規分布を仮定したモデルを想定しているということを想定し、その中におよそ$68\%$のデータが入るということを示すという意図がある。
 
-実際には、モデルを考えてエラーバーのSDを書いていると断言しがたい。
-SDが描かれているのに、検定においては正規分布を仮定しない統計モデルを使っていることも多々ある。
-これは、データの描画においては、正規分布を仮定しているにもかかわらず、統計においてはその仮定による推測をやめていることを意味する。
+実際の研究活動において、モデルを考えてエラーバーにSDを書いていると断言しがたい。
+例えば、SDが描かれているのに、検定においては正規分布を仮定しない統計モデルを使っていることが多々ある。
+これは、データの描画においては、正規分布を仮定しているにもかかわらず、仮説検定においては正規分布をもとにした推測をやめていることを意味する。
 この場合、著者が何を考えてSDを描いたのかを判断することが難しくなる。
 %また、データが正規分布的であることに確信を得ることは、サンプルサイズを大きくした標本から想像するしかなく、費用がかさむので行われない。
 %このこと、モデルの予測が当たることを肯定できる根拠がないことを意味する。
@@ -141,51 +141,31 @@ SDが描かれているのに、検定においては正規分布を仮定しな
     \end{figure}
 
 
+
+\subsection{ひとつのデータから推測する}
+ひとつの確率変数$x$が$N(\mu,\sigma^2)$に従わないことを推定したい。
+$N(\mu,\sigma^2)$から得られる確率変数は、$95\%$の確率で、$\mu-\sigma z_{0.025}\sim \mu-\sigma z_{0.025}$の間で見つかる。
+$\sigma^2=1$とすると、$95\%$の確率で、確率変数は、$\mu-1.96\sim\mu+1.96$の間で見つかる。
+$\mu=0$なら、$x=0.1$は、この区間の中にあるので、$x$は、$N(0,1)$では良く見つかる値になる。
+%この基準では、複数の$\mu$で$x=0.1$はよく見つかる範囲に入る。例えば、$\mu=0.1$でも良く確率変数が見つかる区間は、$-1.85\sim 2.05$なので、確率変数は、$N(0.1,1)$に従うとしても問題ない。
+$x=0.1$がその区間に入らない母数は、$\mu=z_{0.025}+0.1$のときで、区間は$0.10003\sim4.01$で、この区間に$x$は入ってません。
+これを言い換えれば、母数$x-z_{0.025}\leq\mu\leq x+z_{0.025}$の間でよくある値になり、この間から外れた母数をもつ$N(\mu,1)$に従っていいないと推測できる。
+
+我々の科学では、このようなたったひとつの値から、分布関数の母数を推測することはしません。
+例えば、$x=1.97$が得られたとすると、$N(0,1)$のよく出る値の範囲は、$-1.96\sim1.96$であることから、母数$0$ではないと判断できます。
+一方で、$N(0,1)$で$x=1.97$は、サンプルサイズが$20$であれば、そのうち$1$回は、$1.97$をとる値です。もしももう一度サンプリングできたとして、その値が$0$になることもあり得ます。
+以上のことから、$1$回のサンプリングだけで判断しません。
+
+    
+
 \subsection{平均値が出現する区間}
-今回考えている統計モデル$M(\mu)$では、次の統計量$Z$が標準正規分布$N(0,1)$に従うことが、正規分布の再生性によってわかっている。
-$$
-Z(\bar{x},\mu)=\frac{\sqrt{n}(\bar{x}-\mu)}{\sigma} \sim N(0,1)
-$$
-ここで$\bar{x}$は、統計モデル$M(\mu)$からサンプリングした標本の標本平均値(データの平均値ではない)、$\mu,\sigma$は統計モデルで設定した母数平均、母数分散。
+統計モデル$M(\mu)$では、
+\begin{equation*}
+    \rightarrow  \mu - z_{0.025} \frac{\sigma}{\sqrt{n}} < \bar{X} < \mu + z_{0.025} \frac{\sigma}{\sqrt{n}}
+\end{equation*}
 %$Z(\bar{x},\mu)$が$N(0,1)$に従うということから、$Z(\bar{X},\mu)$が$N(0,1)$における出現頻度が計算できる。
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/03_/normal_Z_frequency.pdf}
-        \label{fig:cm_standard_normal_distribution}
-      \end{center}
-    \end{figure}
-
-$Z$の出現頻度を$Z$または$\bar{x}$の値に応じて書いたものが図\ref{fig:cm_standard_normal_distribution}である。
-$Z(\bar{x},\mu)$の$95\%$予測区間が次のように求められる。
-$$
--z_{0.025}<Z(\bar{x},\mu)<z_{0.025}
-$$
-これは、サンプリングされた標本の統計量$Z(\bar{X},\mu)$が$95\%$の確率で得られる範囲である。
-統計モデルを使った判断でよく出てくる確率として分野を問わず、$95\%$が使われる。
-%この値には身長に関する経験を使わずに決定しています。
-
-
-$Z(\bar{X},\mu)$を式変形することで、標本平均が$95\%$の確率で出現する区間が推定できる。式を変形する。
-\begin{eqnarray*}
-    & -z_{0.025} < Z(\bar{X},\mu)<z_{0.025} \\
-\rightarrow & -z_{0.025} < \frac{\sqrt{n}(\bar{X}-\mu)}{\sigma}  <z_{0.025} \\
-\rightarrow & \mu - z_{0.025} \frac{\sigma}{\sqrt{n}} < \bar{X} < \mu + z_{0.025} \frac{\sigma}{\sqrt{n}}
-\end{eqnarray*}
 この統計モデルからサンプリングした標本の標本平均$\bar{x}$が$95\%$の確率で見つかる範囲のことを$95\%$信頼区間という。これも、モデルの予測である。
 
-\subsubsection{サンプルサイズによる影響}
-$95\%$信頼区間を見てわかるように、サンプルサイズ$n$が大きくなれば、$\bar{x}$が入る範囲は狭くなる。
-信頼区間がサンプルサイズに依存することを数値的に確認する。
-図\ref{fig:confidence_interval_n}は、信頼区間が$N$に応じて変化する様子を図示した。
-
-\begin{figure}
-\begin{center}
-    \includegraphics[width=15cm]{./image/03_/confidence_interval.pdf}
-%    \caption{信頼区間}
-    \caption{(A)$N=1$,(B)$N=4$,(C)$N=10$での信頼区間}
-    \label{fig:confidence_interval_n}
-  \end{center}
-\end{figure}
 
 
 \if 0
@@ -230,6 +210,62 @@ $95\%$信頼区間を見てわかるように、サンプルサイズ$n$が大�
     \end{itemize}
 \end{framed}
 \fi
+
+
+
+\subsection{複数の確率変数から推測する}
+複数の確率変数$x_1,x_2,\cdots,x_n$が$N(\mu,\sigma^2)$に従わないことを推定したい。
+
+サンプルサイズが大きいときは、最尤推定を行い、$\mu_1=\bar{x},\sigma_1^2=\sum_{i=1}^{n} (x_i-\bar{x})^2/n$を計算し、その値が、$\mu,\sigma^2$と著しく異なっていれば、$N(\mu,\sigma^2)$に従わないと言えそうである。
+例えば、図\ref{fig:maximum_likelihood_0}は、正規分布$N(170,6.8^2)$からサンプルサイズ$100$の標本を得たとき、図\ref{fig:maximum_likelihood_1}は、サンプルサイズ$30$、そしてそのデータの分布と、最尤推定量から予測されるも確率密度関数、$N(168,6.8^2),N(171,6.8^2)$を表している。図\ref{fig:maximum_likelihood_0}をみると、最尤推定した確率密度関数がデータの出現頻度をよく表していること、そして、周辺の二つの正規分布$N(168,6.8^2),N(171,6.8^2)$とデータが乖離していることがわかる。
+一方、図\ref{fig:maximum_likelihood_1}では、データが$N(171,6.8^2)$に従っているのではないかという疑惑が残る。
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=15cm]{./image/02_/maximum_likelihood_0.pdf}
+        \caption{$N(170,6.8^2)$からサンプルサイズ$100$の標本を得たときの分布。その最尤推定量により求められる分布関数。$N(168,6.8^2),N(171,6.8^2)$の分布関数を示す}
+        \label{fig:maximum_likelihood_0}
+    \end{center}
+\end{figure}
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=15cm]{./image/02_/maximum_likelihood_1.pdf}
+        \caption{$N(170,6.8^2)$からサンプルサイズ$30$の標本を得たときの分布。その最尤推定量により求められる分布関数。$N(168,6.8^2),N(171,6.8^2)$の分布関数を示す}
+        \label{fig:maximum_likelihood_1}
+    \end{center}
+\end{figure}
+
+このように、サンプルサイズが大きいと、最尤推定により推測した確率密度関数を見れば、そのほかの母数に従わないことがわかる場合がある。
+また、より近くにある母数の確率密度関数と区別することは難しいこともわかる。
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=15cm]{./image/02_/maximum_likelihood_3.pdf}
+        \caption{$N(170,6.8^2)$からサンプルサイズ$3$の標本を得たときの分布。その最尤推定量により求められる分布関数。$N(168,6.8^2),N(171,6.8^2)$の分布関数を示す}
+        \label{fig:maximum_likelihood_0}
+    \end{center}
+\end{figure}
+
+
+
+\subsection{全然違うはなんとなくわかる}
+図\ref{fig:maximum_likelihood_false_3},\ref{fig:maximum_likelihood_false_30}は、$N(170,6.8^2)$からサンプリングしたデータの度数分布と、その確率密度関数とは著しく異なる確率密度関数を表示したものです。
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=15cm]{./image/02_/maximum_likelihood_false_3.pdf}
+        \caption{$N(170,6.8^2)$からサンプルサイズ$3$の標本を得たときの分布。その最尤推定量により求められる分布関数。$N(168,6.8^2),N(171,6.8^2)$の分布関数を示す}
+        \label{fig:maximum_likelihood_false_3}
+    \end{center}
+\end{figure}
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=15cm]{./image/02_/maximum_likelihood_false_30.pdf}
+        \caption{$N(170,6.8^2)$からサンプルサイズ$3$の標本を得たときの分布。その最尤推定量により求められる分布関数。$N(168,6.8^2),N(171,6.8^2)$の分布関数を示す}
+        \label{fig:maximum_likelihood_false_30}
+    \end{center}
+\end{figure}
 
 
 \section{指数分布を含んだ統計モデル}
@@ -312,7 +348,7 @@ qqプロットについて説明する。
 (F^{-1}(j/n),X_{r(j)}) \ \ (j=0,1,\cdots,n)
 \end{equation*}
 をプロットする。
-qqプロットを図\ref{fig:qq_cummlative_30}図\ref{fig:qq_cummlative}左側に描いておいた。直線に乗っているデータは、正規分布的であると判定される。
+qqプロットを図\ref{fig:qq_cummlative_30}図\ref{fig:qq_cummlative}左側に描いておいた。直線に乗っているデータは、正規モデルの推測が当たりやすいと考えられる。
 
 \begin{figure}
     \begin{center}
