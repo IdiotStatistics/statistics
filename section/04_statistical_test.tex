@@ -78,78 +78,9 @@ $p$値が$\alpha$よりも大きい場合でも、そのままこのモデルで
 \end{defi}
 
 
-\if 0
-\section{ひとつの確率変数から推測する}
-ひとつの確率変数$x$が$N(\mu,\sigma^2)$に従わないことを推定したい。
-$N(\mu,\sigma^2)$から得られる確率変数は、$95\%$の確率で、$\mu-\sigma z_{0.025}\sim \mu-\sigma z_{0.025}$の間で見つかる。
-$\sigma^2=1$とすると、$95\%$の確率で、確率変数は、$\mu-1.96\sim\mu+1.96$の間で見つかる。
-$\mu=0$なら、$x=0.1$は、この区間の中にあるので、$x$は、$N(0,1)$では良く見つかる値になる。
-%この基準では、複数の$\mu$で$x=0.1$はよく見つかる範囲に入る。例えば、$\mu=0.1$でも良く確率変数が見つかる区間は、$-1.85\sim 2.05$なので、確率変数は、$N(0.1,1)$に従うとしても問題ない。
-$x=0.1$がその区間に入らない母数は、$\mu=z_{0.025}+0.1$のときで、区間は$0.10003\sim4.01$で、この区間に$x$は入ってません。
-これを言い換えれば、母数$x-z_{0.025}\leq\mu\leq x+z_{0.025}$の間でよくある値になり、この間から外れた母数をもつ$N(\mu,1)$に従っていいないと推測できる。
 
-我々の科学では、このようなたったひとつの値から、分布関数の母数を推測することはしません。
-例えば、$x=1.97$が得られたとすると、$N(0,1)$のよく出る値の範囲は、$-1.96\sim1.96$であることから、母数$0$ではないと判断できます。
-一方で、$N(0,1)$で$x=1.97$は、サンプルサイズが$20$であれば、そのうち$1$回は、$1.97$をとる値です。もしももう一度サンプリングできたとして、その値が$0$になることもあり得ます。
-以上のことから、$1$回のサンプリングだけで判断しません。
-\fi
-\if 0
-\section{複数の確率変数から推測する}
-複数の確率変数$x_1,x_2,\cdots,x_n$が$N(\mu,\sigma^2)$に従わないことを推定したい。
 
-サンプルサイズが大きいときは、最尤推定を行い、$\mu_1=\bar{x},\sigma_1^2=\sum_{i=1}^{n} (x_i-\bar{x})^2/n$を計算し、その値が、$\mu,\sigma^2$と著しく異なっていれば、$N(\mu,\sigma^2)$に従わないと言えそうである。
-例えば、図\ref{fig:maximum_likelihood_0}は、正規分布$N(170,6.8^2)$からサンプルサイズ$100$の標本を得たとき、図\ref{fig:maximum_likelihood_1}は、サンプルサイズ$30$、そしてそのデータの分布と、最尤推定量から予測されるも確率密度関数、$N(168,6.8^2),N(171,6.8^2)$を表している。図\ref{fig:maximum_likelihood_0}をみると、最尤推定した確率密度関数がデータの出現頻度をよく表していること、そして、周辺の二つの正規分布$N(168,6.8^2),N(171,6.8^2)$とデータが乖離していることがわかる。
-一方、図\ref{fig:maximum_likelihood_1}では、データが$N(171,6.8^2)$に従っているのではないかという疑惑が残る。
 
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/02_/maximum_likelihood_0.pdf}
-        \caption{$N(170,6.8^2)$からサンプルサイズ$100$の標本を得たときの分布。その最尤推定量により求められる分布関数。$N(168,6.8^2),N(171,6.8^2)$の分布関数を示す}
-        \label{fig:maximum_likelihood_0}
-    \end{center}
-\end{figure}
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/02_/maximum_likelihood_1.pdf}
-        \caption{$N(170,6.8^2)$からサンプルサイズ$30$の標本を得たときの分布。その最尤推定量により求められる分布関数。$N(168,6.8^2),N(171,6.8^2)$の分布関数を示す}
-        \label{fig:maximum_likelihood_1}
-    \end{center}
-\end{figure}
-
-このように、サンプルサイズが大きいと、最尤推定により推測した確率密度関数を見れば、そのほかの母数に従わないことがわかる場合がある。
-また、より近くにある母数の確率密度関数と区別することは難しいこともわかる。
-
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/02_/maximum_likelihood_3.pdf}
-        \caption{$N(170,6.8^2)$からサンプルサイズ$3$の標本を得たときの分布。その最尤推定量により求められる分布関数。$N(168,6.8^2),N(171,6.8^2)$の分布関数を示す}
-        \label{fig:maximum_likelihood_0}
-    \end{center}
-\end{figure}
-\fi 
-
-\if 0
-\section{全然違うはなんとなくわかる}
-図\ref{fig:maximum_likelihood_false_3},\ref{fig:maximum_likelihood_false_30}は、$N(170,6.8^2)$からサンプリングしたデータの度数分布と、その確率密度関数とは著しく異なる確率密度関数を表示したものです。
-
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/02_/maximum_likelihood_false_3.pdf}
-        \caption{$N(170,6.8^2)$からサンプルサイズ$3$の標本を得たときの分布。その最尤推定量により求められる分布関数。$N(168,6.8^2),N(171,6.8^2)$の分布関数を示す}
-        \label{fig:maximum_likelihood_false_3}
-    \end{center}
-\end{figure}
-
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/02_/maximum_likelihood_false_30.pdf}
-        \caption{$N(170,6.8^2)$からサンプルサイズ$3$の標本を得たときの分布。その最尤推定量により求められる分布関数。$N(168,6.8^2),N(171,6.8^2)$の分布関数を示す}
-        \label{fig:maximum_likelihood_false_30}
-    \end{center}
-\end{figure}
-\fi
-
-\if 0
 \section{再生性}
 \subsubsection{$(\star)$ $N(\mu,\sigma^2)$に従う確率変数であることを判定できるか}
 $N(0,1)$に従う確率$x_1,x_2,\cdots,x_n$から計算した統計量、$z=\frac{\bar{X}-0}{\sqrt{\frac{1}{n}}}$は、$N(0,1)$に従い、$z$が$95\%$の確率で見つかる範囲は$[-1.96,1.96]$である。
@@ -198,7 +129,7 @@ $z=\sqrt{n}\frac{\bar{y}-168}{\sigma}$を計算すればよい。
 $\mu$と$ \mu_1$が極めて近い値のとき、$z=\frac{\bar{X}-\mu_1}{\sqrt{\frac{\sigma_1}{n}}} $も$N(0,1)$におけるよくある値になる言い換えれば、$\phi(|z|>Z)$は十分大きい。
 一方で、$\mu$と$ \mu_1$が離れた値を取ると、$\phi(|z|>Z)$は小さな値になる。
 
-
+\if 0
 \subsection{$(\star)$ $Exp(\lambda)$に従う確率変数であることを判定できるか}
 $x_1,x_2,\cdots,x_n \sim Exp(\lambda)$であるとき、$n\bar{x}\sim Ga(n,\frac{1}{\lambda})$である。
 母数不明の指数分布に従う確率変数が、$x_1,x_2,\cdots,x_n \sim Exp(\lambda)$と仮定したとき、$n\bar{x}\sim Ga(n,\frac{1}{\lambda})$でないならば、$x_1,x_2,\cdots,x_n \sim Exp(\lambda)$ではないと判断できるだろうか。シミュレーションによって確認してみよう。
