@@ -15,14 +15,13 @@ $1$から累積度数を引いたものは、相補累積分布関数と呼ば�
     1-F(x) &=& f(X>x) \\
         &=& \int_{x}^{\infty} f(z)dz.
 \end{eqnarray}
-図\ref{fig:standard_normal_distribution}(c)に図示した。累積分布関数と相補累積分布関数のどちらかを表示するかは、分野によって異なる。
-生物学の分野などでは、より大きな値を得る確率を重視することがあるので、累積分布関数よりも、相補累積分布関数が好まれることがあるように私は感じている。
+図\ref{fig:standard_normal_distribution}(c)に図示した。累積分布関数と相補累積分布関数のどちらかを表示するかは、分野によって異なる\footnote{生物学の分野などでは、より大きな値を得る確率を重視することがあるので、累積分布関数よりも、相補累積分布関数が好まれることがあるように私は感じている。}。
 
 \section{確率変数}
 \subsection{確率変数がある分布関数に従う}
 確率変数$x$が、ある分布関数に従うとは、
 
-$x$をたくさん集めて、$x_1,x_2,\cdots,x_n$という標本を得たときに、その出現頻度がその分布関数に精度よく近似できる。
+%$x$をたくさん集めて、$x_1,x_2,\cdots,x_n$という標本を得たときに、その出現頻度がその分布関数に精度よく近似できる。
 
 
 \section{正規分布}
@@ -197,6 +196,50 @@ $\sigma$の定数倍の範囲に値が見つかる確率は、$\sigma$の大き�
     \end{tabular}
 \end{table}
 
+\subsection{平均値の出やすい区間}
+次の統計量$Z$が標準正規分布$N(0,1)$に従うことが、正規分布の再生性によってわかっている。
+$$
+Z(\bar{x},\mu)=\frac{\sqrt{n}(\bar{x}-\mu)}{\sigma} \sim N(0,1)
+$$
+ここで$\bar{x}$は、統計モデル$M(\mu)$からサンプリングした標本の標本平均値(データの平均値ではない)、$\mu,\sigma$は統計モデルで設定した母数平均、母数分散。
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=15cm]{./image/03_/normal_Z_frequency.pdf}
+        \label{fig:cm_standard_normal_distribution}
+      \end{center}
+    \end{figure}
+
+$Z$の出現頻度を$Z$または$\bar{x}$の値に応じて書いたものが図\ref{fig:cm_standard_normal_distribution}である。
+$Z(\bar{x},\mu)$の$95\%$予測区間が次のように求められる。
+$$
+-z_{0.025}<Z(\bar{x},\mu)<z_{0.025}
+$$
+これは、サンプリングされた標本の統計量$Z(\bar{X},\mu)$が$95\%$の確率で得られる範囲である。
+科学ではある確率変数がよく出てくる確率として分野を問わず、$95\%$が使われる。
+%この値には身長に関する経験を使わずに決定しています。
+
+$Z(\bar{X},\mu)$を式変形することで、標本平均が$95\%$の確率で出現する区間が推定できる。式を変形する。
+\begin{eqnarray*}
+    & -z_{0.025} < Z(\bar{X},\mu)<z_{0.025} \\
+\rightarrow & -z_{0.025} < \frac{\sqrt{n}(\bar{X}-\mu)}{\sigma}  <z_{0.025} \\
+\rightarrow & \mu - z_{0.025} \frac{\sigma}{\sqrt{n}} < \bar{X} < \mu + z_{0.025} \frac{\sigma}{\sqrt{n}}
+\end{eqnarray*}
+
+
+\subsubsection{サンプルサイズによる影響}
+$95\%$信頼区間を見てわかるように、サンプルサイズ$n$が大きくなれば、$\bar{x}$が入る範囲は狭くなる。
+信頼区間がサンプルサイズに依存することを数値的に確認する。
+図\ref{fig:confidence_interval_n}は、信頼区間が$N$に応じて変化する様子を図示した。
+
+\begin{figure}
+\begin{center}
+    \includegraphics[width=15cm]{./image/03_/confidence_interval.pdf}
+%    \caption{信頼区間}
+    \caption{(A)$N=1$,(B)$N=4$,(C)$N=10$での信頼区間}
+    \label{fig:confidence_interval_n}
+  \end{center}
+\end{figure}
 
 
 
