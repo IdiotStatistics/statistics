@@ -310,6 +310,35 @@ $\bar{x}=172$なら、$\phi(z>\frac{\sqrt{n}(\bar{x}-\mu)}{\sigma}) = 0.289$で�
 \end{lstlisting}
 
 
+
+
+
+これまでは、統計モデル$M(\mu)$における信頼区間・棄却域の計算を行った。今回は、$p$値を計算する。
+無作為抽出により得られたデータ$\bar{x}$がこれ以上偏る確率は、
+$\phi(z>\frac{\sqrt{n}(\bar{x}-\mu)}{\sigma})$
+である。
+
+図1は、$\mu$を変数にし、各$\mu$に対して、$\phi(z>Z(\mu))$を示します。標本平均$168.7cm$をピークに左右対象に$\phi(z>Z(\mu))$が減少している。言い換えれば、$M(168.7)$が現状のデータと最も乖離の度合いが小さい統計モデルである。
+\begin{figure}
+\begin{center}
+   \includegraphics[width=15cm]{./image/04_/p_cm.pdf}
+   %\caption{図1.p値cm}
+ \end{center}
+\end{figure}
+
+
+実際に、検定を行なっておく。$N=1,\bar{x}=181$とする。このとき、$\bar{x}\sim N(\mu,\sigma^2)$より、$\frac{\sqrt{n}(170-\bar{x})}{\sigma}=-1.61$より、$z_{0.975}=-2.241$なので、棄却域に含まれない。統計モデル$M(170)$は棄却されない。
+$N=4,\bar{x}=181$とする。このとき、$\frac{\sqrt{n}(170-\bar{x})}{\sigma}=-3.23$より、棄却されることがわかる。
+
+棄却されるモデルが観測されたデータの平均値$\bar{x}$に応じて変化することを視覚的に確認しておく。図はさまざまな$\bar{x}$を得たときにその信頼区間を描いたものである。この信頼区間の範囲内にある$\mu$であれば、統計モデル$M(\mu)$は棄却されない。例えば、$\bar{x}=170$であれば、$M(170)$は棄却されない。一方で、$\bar{x}=165$あたりであれば、その棄却域は$\mu=170$を含まないので、$M(170)$は棄却される。
+
+\begin{figure}
+\begin{center}
+    \includegraphics[width=15cm]{./image/04_/confidence_interval_model.pdf}
+    %\caption{x軸は観測されたデータの平均値、y軸はモデルの母数$\mu$。}
+  \end{center}
+\end{figure}
+
 %\section{データを元にした統計モデル}
 %\subsection{最尤推定}
 
