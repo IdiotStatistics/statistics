@@ -127,6 +127,7 @@ $M_a$に対する$M_a$の検出力$\beta$は、$1-\alpha$であり、$M_a$を棄
 
 \subsection{正規分布モデルの検出力}
 具体的に、$P_a(\mu \in R_a),P_b(\mu\in A_a)$を計算してみる。
+\if 0
 正規モデルを構築する
 \begin{quote}
     \begin{enumerate}[(1)]
@@ -135,7 +136,8 @@ $M_a$に対する$M_a$の検出力$\beta$は、$1-\alpha$であり、$M_a$を棄
 \item 母数$\mu$。$\sigma$は既知とする（一般性を持たせるために、具体的な値は書かない。$\sigma=1$と読み替えて進めても良い）
 \end{enumerate}
 \end{quote}
-このモデルを$M(\mu)$とし、$M_a=M(\mu_a),M_b=M(\mu_b)$とする。
+\fi
+$\sigma^2$がすでに与えられた正規モデルを$M(\mu)$とし、$M_a=M(\mu_a),M_b=M(\mu_b)$とする。
 $M_a$または、$M_b$からサンプリングされた確率変数$x_1,x_2,\cdots,x_n$の平均値は、それぞれ$\bar{x}_a\sim N(\mu_a,\sigma/n)$または$\bar{x}_b\sim N(\mu_b,\sigma/n)$である。
 $M_a$の信頼区間$A_a$は、$|\bar{x}_a|<\mu_a+\sigma / \sqrt{n}z_{2.5\%}$である。
 このとき、$P_a$を$N(\mu_a,\sigma)$の確率密度関数とすると、
