@@ -322,17 +322,20 @@ norm.cdf(b,0,1)-norm.cdf(a,0,1)
 
 
 \begin{SMbox}{正解と回答の違い}
-    あるデータに対して、YesまたはNoと決められた問題において、決められた手順データから回答を予測する。
-    その手順によって得た回答と、正解（真の値）の一致と不一致は以下の通りになる。
+    あるデータ群に対してそのデータの特徴を元に、YesまたはNoとアノテーションをつける。
+    データからそのYesまたはNoを予測する手順を開発する。
+    その手順によって得た回答と、正解（真の値）の一致と不一致は以下の通りになる(表\ref{table:Yes_no_answer})。
     回答と一致したら、True、一致しないならFalse。
     Yesと予測したらPositive、Noと予測したらNegativeとする。
-    回答がYesな問題に、Yesと答えることを(手順が正しい予測を行なった)、True Positiveといい、Noと答える(手順が間違えた予測を行なった)ことをFalse Negativeという。回答がNoな問題に、Yesと答えることを、False Positive、また、Noと答えることをTrue negativeという。
+    回答がYesな問題に、Yesと答えることは(手順が正しい予測を行なった)、True Positiveといい、Noと答える(手順が間違えた予測を行なった)ことはFalse Negativeという。回答がNoな問題に、Yesと答えることを、False Positive、また、Noと答えることをTrue negativeという。
+
+    モデル$M_a$の標本にYesを対応ずけ、モデル$M_b$の標本にNoを対応付ける。標本を元に、YesまたはNoを判定する手順をモデル$M_a$を元にした統計検定を利用する。この問題において回答がFPとなったものを第1'の過誤であり、FNとなったものが第2'の過誤である。
     \end{SMbox}
     
     
     \begin{table}[hbtp]
     \caption{正解と回答の違い}
-    %\label{table:data_type}
+    \label{table:Yes_no_answer}
     \centering
     \begin{tabular}{ccc}
         %\hline
