@@ -12,25 +12,50 @@
     \item 正規分布の母数はそれぞれ$\mu_1,\sigma_1^2,\mu_2,\sigma_2^2$とする。
     \end{enumerate}
 \end{quote}
-この正規2モデルを$M(\mu_1,\mu_2,\sigma_1^2,\sigma_2^2)$と書く。$\sigma_1,\sigma_2$を特定の値に設定したモデルを$M(\mu_1,\mu_2)$とし、$\mu_1,\mu_2$を特定の値に設定したモデルを$M(\sigma_1^2,\sigma_2^2)$とする。
-
-データから最尤推定を行なった母数を持つモデル$M(\mu_{1,ML},\mu_{2,ML},\sigma_{1,ML}^2,\sigma^2_{2,ML})$を最尤正規2モデルという。
+この正規2モデルを$M(\mu_1,\mu_2,\sigma_1^2,\sigma_2^2)$と書く。$\sigma_1,\sigma_2$を特定の値に設定したモデルを$M(\mu_1,\mu_2)$または、$M(\mu_1,\mu_2;\sigma^2_1,\sigma^2_2)$とし、$\mu_1,\mu_2$を特定の値に設定したモデルを$M(\sigma_1^2,\sigma_2^2)$または$M(\sigma_1^2,\sigma_2^2;\mu_1,\mu_2)$とする。
+データから最尤推定を行なった母数を持つモデル$M_{ML}=M(\mu_{1,ML},\mu_{2,ML},\sigma_{1,ML}^2,\sigma^2_{2,ML})$を最尤正規2モデルという。
 
 \subsection{信頼区間}
-統計モデルにより、$x_1,x_2,\cdots,x_n$,$y_1,y_2,\cdots,y_n$とサンプリングされたとする。次の統計量を定義する、
+統計モデル$M(\mu_1,\mu_2;\sigma^2,\sigma^2)$により、$x_1,x_2,\cdots,x_n$,$y_1,y_2,\cdots,y_m$とサンプリングされたとする。次の統計量を定義する、
 $$
-Z=(\bar{x}-\bar{y})\frac{\sqrt{mn}}{\sigma\sqrt{m+n}}
+Z=((\bar{x}-\mu_1)-(\bar{y}-\mu_2))\frac{\sqrt{mn}}{\sigma\sqrt{m+n}}
 $$
 ただし、$\bar{x}=\frac{1}{n}\sum_{i=0}^{n} x_i,\bar{y}=\frac{1}{m}\sum_{i=0}^m y_i$である。
 $Z$は、$Z\sim N(0,1)$となることがわかっている。
 
 信頼区間は、$Z$の大きさ$|Z|$によって決まる。
-$p=0.05$とすると、
+$\alpha=0.05$とすると、
 \begin{eqnarray*}
 &|Z|& < z_{0.025}\\
-&\rightarrow & |\bar{x}-\bar{y}|\frac{\sqrt{mn}}{\sigma\sqrt{m+n}} < z_{0.025}\\
-&\rightarrow& |\bar{x}-\bar{y}| <z_{0.025}\frac{ \sigma\sqrt{m+n} }{ \sqrt{mn }}\\
+&\rightarrow & |(\bar{x}-\mu_1)-(\bar{y}-\mu_2)|\frac{\sqrt{mn}}{\sigma\sqrt{m+n}} < z_{0.025}\\
+&\rightarrow& |(\bar{x}-\mu_1)-(\bar{y}-\mu_2)| <z_{0.025}\frac{ \sigma\sqrt{m+n} }{ \sqrt{mn }}\\
 \end{eqnarray*}
+式を展開すると、
+\begin{equation*}
+    (\mu_1-\mu_2)-z_{0.025}\sigma\sqrt{\frac{1}{n_1}+\frac{1}{n_2}} \leq \bar{X}-\bar{Y} \leq (\mu_1-\mu_2)+z_{0.025}\sigma\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}.
+\end{equation*}
+を得る。
+統計モデル$M(\mu_1,\mu_2)$によるサンプリングによって得られた平均値の差の大きさは、右辺よりも小さくなることが、$95\%$くらいの確率でモデル内でおこる。
+実際に、何度も統計モデルからサンプリングを行なってみると、$95\%$くらいの確率でこの等式が成り立っている。計算機で試してみる。
+\begin{lstlisting}
+mu1 = 10
+mu2 = 10
+sigma = 5
+m=10
+n=20
+
+norm1 = norm(mu1,sigma)
+norm2 = norm(mu2,sigma)
+
+sample1 = norm1.rvs(size=(m,1000))
+sample2 = norm2.rvs(size=(n,1000))
+
+xbar1 = np.average(sample1,axis=0)
+xbar2 = np.average(sample2,axis=0)
+A = np.abs(xbar1-xbar2) < norm(0,1).interval(1-0.05)[1]*sigma*np.sqrt(m+n)/np.sqrt(m*n)
+len(np.where(A==True)[0])
+\end{lstlisting}
+およそ950程度の標本で、不等式が成立していることが確かめられる。
 
 計算機で計算するには、次のコードが使える。
 \begin{lstlisting}
@@ -53,18 +78,17 @@ def rejectRange(X,Y,sigma):
 rejectRange(X,Y,5.7)
 \end{lstlisting}
 
-\subsection{信頼区間}
-平均母数$\mu_1,\mu_2(\mu_1\neq \mu_2)$のときに、式を変形していくと、次がわかる
+%\subsection{信頼区間}
+%平均母数$\mu_1,\mu_2(\mu_1\neq \mu_2)$のときに、
+
+$Z$の不等式を変形していくと、次がわかる
 \begin{equation*}
     (\bar{X}-\bar{Y})-z_{0.025}\sigma\sqrt{\frac{1}{n_1}+\frac{1}{n_2}} \leq \mu_1-\mu_2 \leq (\bar{X}-\bar{Y})+z_{0.025}\sigma\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}.
 \end{equation*}
-これは、$\bar{X},\bar{Y}$を得たときに、$\mu_1-\mu_2$がこの範囲にあれば、$\mu_1=\mu_2$という統計モデルは棄却できない。
+この式の意味は、何だっけ？？？TODO
+%これは、$\bar{X},\bar{Y}$を得たときに、%$\mu_1-\mu_2$がこの範囲にあれば、$\mu_1=\mu_2$という統計モデルは棄却できない。
 
-もう一度、式変形をしてみると、次の式を得る。
-\begin{equation*}
-    (\bar{\mu_1}-\bar{\mu_2})-z_{0.025}\sigma\sqrt{\frac{1}{n_1}+\frac{1}{n_2}} \leq \bar{X}-\bar{Y} \leq (\bar{\mu_1}-\bar{\mu_2})+z_{0.025}\sigma\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}.
-\end{equation*}
-この式は、標本を繰り返し得ていくと$\bar{X}-\bar{Y}$がこの範囲の中に$95\%$の確率で得られることを示唆している。
+
 
 \subsection{検出力}
 二つの統計モデル$M(\mu,\mu),M(\mu_1,\mu_2)$において、$M(\mu,\mu)$を元に、検出力を計算する。
