@@ -91,10 +91,33 @@ $Z$の不等式を変形していくと、次がわかる
 
 
 \subsection{検出力}
-二つの統計モデル$M(\mu,\mu),M(\mu_1,\mu_2)$において、$M(\mu,\mu)$を元に、検出力を計算する。
-$M(\mu,\mu)$における信頼区間は、統計量を$Z$とすると、
+%二つの統計モデル$M(\mu,\mu),M(\mu_1,\mu_2)$において、を元に、検出力を計算する。
+$M(\mu,\mu;\sigma^2,\sigma^2)$における統計量$Z$が、もう一つの統計モデル$M(\mu_1,\mu_2)$においての出現頻度を計算する。これは1標本のモデルと同様に検出力という。
+
+$M(\mu,\mu)$において、
 \begin{equation*}
-    -z_{\alpha/2}U \leq Z\leq z_{\alpha/2}U
+    \frac{\bar{x}-\bar{y}}{U} \sim N(0,1)
+\end{equation*}
+である。ここで、$U=\sigma\frac{\sqrt{m+n}}{\sqrt{mn}}$である。
+また、$M(\mu_1,\mu_2)$において、
+\begin{equation*}
+    \frac{\bar{x}-\bar{y}}{U}\sim N(\frac{\mu_1-\mu_2}{U},1)
+\end{equation*}
+である。上式の信頼区間$-z_{\alpha/2}\sim z_{\alpha/2}$が下式において出現するのは、確率分布が平行移動しているので、その区間を$[A,B]$とすると、ぞれぞれ
+\begin{eqnarray*}
+    A = -z_{\alpha/2}+\frac{\mu_1-\mu_2}{U}\\
+    B = z_{\alpha/2}+\frac{\mu_1-\mu_2}{U}
+\end{eqnarray*}
+である。この区間に統計量が出現する頻度は、
+\begin{equation*}
+    \beta = \varPhi(B)-\varPhi(A)
+\end{equation*}
+により計算できる。ここで、$\varPhi(x)$は、標準正規分布の累積分布関数である。
+
+\subsection{$\sigma$が異なるモデルでの検出力}
+信頼区間は、
+\begin{equation*}
+    -z_{\alpha/2} \leq \frac{\bar{x}-\bar{y}}{U} \leq z_{\alpha/2}
 \end{equation*}
 ここで、$U=\sqrt{\frac{\sigma^2_1}{n_1}+\frac{\sigma^2_2}{n_2}}$である。
 また、$M(\mu_1,\mu_2)$における統計量を$Z$とすると、$Z = \frac{\bar{x}-\bar{y}}{U}\sim N(0,1)$であるので、$a \sim N(\mu_1-\mu_2,U^2)$ならば、
