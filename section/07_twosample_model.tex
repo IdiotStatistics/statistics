@@ -15,12 +15,15 @@
 この正規2モデルを$M(\mu_1,\mu_2,\sigma_1^2,\sigma_2^2)$と書く。$\sigma_1,\sigma_2$を特定の値に設定したモデルを$M(\mu_1,\mu_2)$または、$M(\mu_1,\mu_2;\sigma^2_1,\sigma^2_2)$とし、$\mu_1,\mu_2$を特定の値に設定したモデルを$M(\sigma_1^2,\sigma_2^2)$または$M(\sigma_1^2,\sigma_2^2;\mu_1,\mu_2)$とする。
 データから最尤推定を行なった母数を持つモデル$M_{ML}=M(\mu_{1,ML},\mu_{2,ML},\sigma_{1,ML}^2,\sigma^2_{2,ML})$を最尤正規2モデルという。
 
+\section{分散について事前知識のある場合}
+分散が先行研究において明らかに成っているとき良い予測を行えるモデル$M(\mu_1,\mu_2;\sigma^2_1,\sigma^2_2)$について考える。最初に、$\sigma_1=\sigma_2$の場合、次に$\sigma_1\neq \sigma_ 2$それぞれにおける信頼区間および検出力を考える。
+
 \subsection{信頼区間}
 統計モデル$M(\mu_1,\mu_2;\sigma^2,\sigma^2)$により、$x_1,x_2,\cdots,x_n$,$y_1,y_2,\cdots,y_m$とサンプリングされたとする。次の統計量を定義する、
 $$
 Z=((\bar{x}-\mu_1)-(\bar{y}-\mu_2))\frac{\sqrt{mn}}{\sigma\sqrt{m+n}}
 $$
-ただし、$\bar{x}=\frac{1}{n}\sum_{i=0}^{n} x_i,\bar{y}=\frac{1}{m}\sum_{i=0}^m y_i$である。
+ただし、$\bar{x}=\frac{1}{n}\sum_{i=1}^{n} x_i,\bar{y}=\frac{1}{m}\sum_{i=1}^m y_i$である。
 $Z$は、$Z\sim N(0,1)$となることがわかっている。
 
 信頼区間は、$Z$の大きさ$|Z|$によって決まる。
@@ -120,7 +123,7 @@ $M(\mu,\mu)$において、
     -z_{\alpha/2} \leq \frac{\bar{x}-\bar{y}}{U} \leq z_{\alpha/2}
 \end{equation*}
 ここで、$U=\sqrt{\frac{\sigma^2_1}{n_1}+\frac{\sigma^2_2}{n_2}}$である。
-また、$M(\mu_1,\mu_2)$における統計量を$Z$とすると、$Z = \frac{\bar{x}-\bar{y}}{U}\sim N(0,1)$であるので、$a \sim N(\mu_1-\mu_2,U^2)$ならば、
+また、$M(\mu,\mu)$における統計量を$Z$とすると、$Z = \frac{\bar{x}-\bar{y}}{U}\sim N(0,1)$でり、また、モデル$M(\mu_1,\mu_2)$において$\frac{(\bar{x}-\mu_1)-(\bar{y}-\mu_2)}{U} \sim N(\mu_1-\mu_2,1)$であることから、
 \begin{eqnarray*}
     A &=& \frac{(a-(\mu_1-\mu_2))}{U} \\
         &=& (\mu_1-\mu_2)/U-z_{\alpha/2}
@@ -128,7 +131,7 @@ $M(\mu,\mu)$において、
 同様に、
 \begin{eqnarray*}
     B &=& \frac{(b-(\mu_1-\mu_2))}{U} \\
-        &=& (\mu_1-\mu_2)/U-z_{\alpha/2}
+        &=& (\mu_1-\mu_2)/U+z_{\alpha/2}
 \end{eqnarray*}
 よって、
 \begin{equation*}
@@ -138,17 +141,99 @@ $M(\mu,\mu)$において、
 
 
 
-\section{母分散が未知のときの統計モデル}
-
+\section{母分散の事前知識がないときの統計モデル}
+正規モデル$M(\mu_1,\mu_2,\sigma^2,\sigma^2)$について考える。
 
 \subsection{信頼区間}
+$t_{m+n-2}$を自由度$m+n-2$の$t$分布上の上側$100\alpha$点とする。言い換えると、$t$分布の確率密度関数を$p^t$とすると、$p^t(T > t_{m+n-2,\alpha}) = \alpha$となる点$t_{m+n-2,\alpha}$である。
+
+このとき、正規モデル$M(\mu_1,\mu_2,\sigma^2,\sigma^2)$からサンプリングを行った$x_1,x_2,\cdots,x_n,y_1,y_2,\cdots,y_m$について、
+\begin{equation*}
+    |t_0| = \frac{|\bar{x}-\bar{y}|}{S\sqrt{\frac{1}{n}+\frac{1}{m}}}\sim t_{n+m-2}
+\end{equation*}
+が成り立つ。ただし、
+\begin{eqnarray*}
+    S^2 &=& \frac{\sum_{i=1}^n(x_i-\bar{x})+\sum_{i=1}^m (y_i-\bar{y})}{n+m-2} \\
+    \bar{x} &=& \frac{1}{n}\sum_{i=1}^n x_i\\
+    \bar{y} &=& \frac{1}{m}\sum_{i=1}^n y_i\\
+\end{eqnarray*}
+である。
+以上より、信頼区間は、
+\begin{equation*}
+    |t_0| \leq t_{m+n-2,\alpha/2}
+\end{equation*}
+である。
+
+\subsection{検出力}
+検出力の計算には、$\sigma$が事前研究により明らかでなければならない。
+ここでは$\sigma$が特定できているモデルにおける検出力を調べる。
+統計モデル$M(\mu_1,\mu_2)$において、次の統計量が非心$t'$分布に従うことがわかっている。
+\begin{equation*}
+     t_0\sim t'(n+m-2,\lambda)
+\end{equation*}
+$\lambda = \sqrt{\frac{nm}{n+m}}\Delta$、$\Delta =\frac{\mu_1-\mu_2}{\sigma}$であり、$t'(n+m-2,\lambda)$を自由度$n+m-2$、非心パラメータ$\lambda$の非心$t$分布と言う。
+モデル$M(\mu,\mu)$での信頼区間は、$|t_0|<t_{n+m-2,\alpha/2}$だったので、検出力は、$P^{t'}$を非心$t'$分布の確率密度関数だとすると、
+\begin{eqnarray*}
+    1-\beta &=& 1-P^{t'}( |t| \leq t(n+m-2,\alpha/2)) \\
+    &=& P^{t'}( t \leq -t(n+m-2,\alpha/2))+P^{t'}(t \geq t(n+m-2,\alpha/2))
+\end{eqnarray*}
+である。
+ここで、確率密度関数に関する近似式
+\begin{equation*}
+    P^{t'}(t'\leq w) \approx \varPhi \left( \frac{w(1-\frac{1}{4\phi})-\lambda}{\sqrt{1+\frac{w^2}{2\phi}}} \right)
+\end{equation*}
+が成り立つ[\cite{2003サンプルサイズの決め方}]\footnote{私は証明を読んでいない。いつか読む。}。ただし、$\varPhi$は、標準正規分布の累積分布関数であり、$\phi=n+m-2$である。
+
+\cite{2003サンプルサイズの決め方}より、例題を解いてみる。
+$\alpha=0.05,n=10,m=8,\mu_1=5.6,\mu_2=5.0,\sigma=1.0,n+m-2 = 16,\lambda=\sqrt{n\times m/(n+m)} \times \frac{\mu_1-\mu_2}{\sigma} = 1.265 $とする。検出力は、
+\begin{eqnarray*}
+    1-\beta &=& P^{t'}(t \leq -t(16,0.05))+P^{t'}(t \geq t(16,0.05)) \\
+    &=& P^{t'}(t \leq -2.12)+P^{t'}(t\geq 2.12) \\
+    &=& P^{t'}(t \leq -2.12)+(1-P^{t'}(t\leq 2.12)) \\
+    &\approx& \varPhi(\frac{-2.12(1-1/(4\times 16))-1.265}{1+(-2.12)^2/(2\times 16)}) +1-\varPhi(\frac{2.12(1-1/(4\times 16))-1.265}{\sqrt{1+2.12^2/(2\times 16)}}) \\
+    &=& \varPhi(-3.139)+1-\varPhi(0.770) \\
+    &=& 0.222
+\end{eqnarray*}
+
+\subsubsection*{数値計算}
+数値計算でも確かめてみる。
+\begin{lstlisting}
+n=10
+m=8
+mu1=5.6
+mu2=5.0
+sigma = 1.0
+phi = n+m-2
+N = 10000
 
 
-%\section{統計的仮説検定の手順}
+
+sample1 = norm(mu1,sigma).rvs(size = (n,N))
+sample2 = norm(mu1,sigma).rvs(size = (m,N))
+xbar = np.average(sample1,axis=0)
+ybar = np.average(sample2,axis=0)
+S2 = (np.sum((sample1-xbar)**2,axis=0)+np.sum((sample2-ybar)**2,axis=0))/float(n+m-2)
+S = np.sqrt(S2)
+t0 = (xbar-ybar)/(S*np.sqrt(1/n+1/m))
+A,B = np.quantile(t0,q=[0.025,0.95+0.025])
+
+
+sample1 = norm(mu1,sigma).rvs(size = (n,N))
+sample2 = norm(mu2,sigma).rvs(size = (m,N))
+xbar = np.average(sample1,axis=0)
+ybar = np.average(sample2,axis=0)
+S2 = (np.sum((sample1-xbar)**2,axis=0)+np.sum((sample2-ybar)**2,axis=0))/float(n+m-2)
+S = np.sqrt(S2)
+t1 = ((xbar-ybar))/(S*np.sqrt(1/n+1/m))
+
+
+print(len(np.where((t1 < A ) | (t1 >B))[0])/N)    
+\end{lstlisting}
+$0.22$に近い値が得られる。
 
 
 
-\subsection{分散未知の場合}
+%\subsection{分散未知の場合}
 %[統計学 講義](http://www3.u-toyama.ac.jp/kkarato/2020/statistics/handout/Statistics[B]-2020-25-0722.pdf)
 
 
