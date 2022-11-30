@@ -197,6 +197,10 @@ $\alpha=0.05,n=10,m=8,\mu_1=5.6,\mu_2=5.0,\sigma=1.0,n+m-2 = 16,\lambda=\sqrt{n\
 
 \subsubsection*{数値計算}
 数値計算でも確かめてみる。
+手順は、次の通りである。
+モデルA$M(5.6,5.6;\sigma^2=1.0^2)$からサンプリングを$N=10^4$回行い、統計量$t0$を計算する。その$95\%$信頼区間$[A,B]$を求める。
+モデルB$M(5.6,5.0;\sigma^2=1.0^2)$からサンプリングを$N$回行い、統計量$t1$を計算する。$t1$の中で、信頼区間$[A,B]$の外側にあるものが検出力$1-\beta$である。
+
 \begin{lstlisting}
 n=10
 m=8
@@ -205,8 +209,6 @@ mu2=5.0
 sigma = 1.0
 phi = n+m-2
 N = 10000
-
-
 
 sample1 = norm(mu1,sigma).rvs(size = (n,N))
 sample2 = norm(mu1,sigma).rvs(size = (m,N))
@@ -217,7 +219,6 @@ S = np.sqrt(S2)
 t0 = (xbar-ybar)/(S*np.sqrt(1/n+1/m))
 A,B = np.quantile(t0,q=[0.025,0.95+0.025])
 
-
 sample1 = norm(mu1,sigma).rvs(size = (n,N))
 sample2 = norm(mu2,sigma).rvs(size = (m,N))
 xbar = np.average(sample1,axis=0)
@@ -225,7 +226,6 @@ ybar = np.average(sample2,axis=0)
 S2 = (np.sum((sample1-xbar)**2,axis=0)+np.sum((sample2-ybar)**2,axis=0))/float(n+m-2)
 S = np.sqrt(S2)
 t1 = ((xbar-ybar))/(S*np.sqrt(1/n+1/m))
-
 
 print(len(np.where((t1 < A ) | (t1 >B))[0])/N)    
 \end{lstlisting}
