@@ -22,7 +22,7 @@ iris = datasets.load_iris()
 データから平均と分散を求めると、$\bar{X}=3.05,\sigma=0.434$であった。
 このことから、最尤正規モデルを構築する$M_a=M(3.05,\sigma^2=0.434^2)$である。
 最尤正規モデルがデータに適合しているかをみる。
-このモデルの予想では、$\mu$より大きいまたは小さいデータの個数は半数程度である。
+このモデルの予想では、$\mu$より大きいまたは小さいデータの個数は半数程度である\footnote{中央値と平均値が十分近ければ割合を調べなくてもいいかも}。
 また、$\mu-\sigma \sim \mu+\sigma$の中にあるデータは$68\%$程度である。
 表\ref{table:all_spael_width_table}がデータが予測にあっているかを示している。
 どちらの指標も予想に合っている。
@@ -162,6 +162,46 @@ virginicaとothersに適合するモデルをそれぞれ構築する。
 \subsection{更なる生物学的な種の細分化}
 アヤメのothersについても細分化することになったsetosa,versicolorである。これらについて予測モデル$M_v$は良い予測をするかを調べ、予測できないと判断したのなら、モデルを構築し直す。
 
+これまでの議論はなかったことにして、アヤメという植物２種類が見つかったという状況を考える。
+この$2$種類を予測するモデルとして、正規2モデル$M_2=M(\mu,\mu,\sigma^2,\sigma^2)$とし、$M_2$によりがく弁の幅が予測できるかを考える。
+\begin{equation*}
+    t = \frac{\bar{x}-\bar{y}}{s\sqrt{\frac{1}{m} + \frac{1}{n} }} \sim t_{m+n-2}
+\end{equation*}
+ここで、$s^2=\frac{(m-1)s_x^2+(n-1)s_y^2}{m+n-2}$である。
+パラメータについては、表\ref{fig:seto_versi_speal_w_summary}にある通りである。
+これを元に計算すると、$t=9.45$程度である。
+このことから、モデル$M_2$では予測しにくいと考えられる。
+
+\begin{table}
+    \caption{setosa、versicolorのがく弁の幅のデータの統計量}
+    \label{fig:seto_versi_speal_w_summary}
+    \centering
+    \begin{tabular}{lrrr}
+        \hline
+        {} &  Ave. &  Sigma &   N \\
+        \hline \hline
+        setosa     &  3.43 &   0.38 &  50 \\
+        versicolor &  2.77 &   0.31 &  50 \\
+        setosa and versicolor &  3.10 &   0.48 &  100 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+最尤モデル$M=M(3.10,0.48^2)$のデータへの適合具合を見る。累積度数はモデルと離れていることがわかる(図\ref{fig:speal_width_setosa_versi_model})。
+以上から、$M_2$ではデータと適合していないことがわかる。
+
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=15cm]{./image/15_/speal_width_seto_versi_model.pdf}
+        \caption{データのがく弁の幅の累積度数(Data)と最尤モデルの累積度数$M$}
+        \label{fig:speal_width_setosa_versi_model}
+    \end{center}
+\end{figure}
+
+
+二つのモデルを構築し、それぞれがversicolorとsetosaのデータに適合するかを調べる。
+面倒なので勝手にやってくれ。
 
 
 \subsubsection{種が細分化されたならば、モデルも更新すべき？}
@@ -170,5 +210,6 @@ virginicaとothersに適合するモデルをそれぞれ構築する。
 
 
 TODO: モデルの分布に変更が必要な場合が考えられるデータが欲しい
+TODO: データ数が大きくて、$p<0.0000$になるので乖離している状況。その上で、予測には問題がないことを示すデータ。身長のデータがこれに当たるかな。
 
 
