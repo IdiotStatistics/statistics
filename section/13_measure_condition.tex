@@ -11,9 +11,28 @@
 \end{itemize}
 
 %みたいものを見るための計測方法がランダムサンプリングである。
+
+\begin{SMbox}{何を学ばなければならないか}
+    \cite{box1976science}から引用しておく。
+    \begin{quote}
+        We may ask of Fisher \\
+        Was he an applied statistician? \\
+        Was he a mathematical statistician?  \\
+        Was he a data analyst? \\
+        Was he a designer of investigations?\\
+        It is surely because he was all of these that he was much more than the sum of the parts. He provides an example we can seek to follow. 
+    \end{quote}
+    %Fisherみたくなるのは難しいので、実験デザインと
+\end{SMbox}
+
 \section{実験デザイン}
 わたしが扱える範囲ではないので、他書を読んだ方が良い。
 今後まとめたい。
+\begin{SMbox}{あとでまとめたいTODO}
+
+    'Pseudoreplication' problem‐接着したコドラートは何が悪いのか
+ \url{http://www.mus-nh.city.osaka.jp/iso/argo/nl02/nl02-21-32.html}
+\end{SMbox}
 
 \section{無作為抽出されていない事による過誤}
 対象を無作為に抽出できていない標本から、統計量を計算し、モデルの母数を推定したとする。
@@ -80,7 +99,9 @@ $p<\alpha$であるという標本がデータから発見されたので、標�
     HARKingについては、\cite{kerr1998harking}に詳しくまとめられている
 }。
 
-
+%https://twitter.com/Hiroshi12337131/status/1613560913889742849
+% https://twitter.com/ykamit/status/1615162295986028546
+% https://twitter.com/ykamit/status/1090791485312720896
 
 \begin{SMbox}{HARKing}
     \begin{rightbubbles}{bubblegreen}{Yuki Kamitani}{./image/Twitter_logo_EPS/2021_Twitter_logo_blue.eps}
@@ -137,3 +158,22 @@ $p$値がある値を下回ったときに、実験を終了するという操�
     %川が赤くなっているという報告が上がったこともあり、調査が行われたようである\footnote{\url{https://news.yahoo.co.jp/articles/ea20d54623642b848960d93404aad6eba3ffae4a}}
 
 \end{SMbox}
+
+\section{Garbage in, garbage out}
+以上のことを守っていないデータは、ゴミデータである。
+ゴミデータを統計処理したならば、ゴミのような推論しか得られない。
+言い換えれば、意味のある結果を返しにくくなったり、解釈が難しくなることがある。
+
+\section{みにくいアヒルの子の定理}
+特徴量の取り方
+%https://atmarkit.itmedia.co.jp/ait/articles/2007/30/news024.html
+
+\section{ノーフリーランチ定理}
+
+\if 0
+自分の言葉に書き換えよう
+\begin{quote}
+    もしアルゴリズムが、ある特定領域の問題において優れた性能を発揮しているのなら、それ以外の残り全ての問題群においては性能が低下する代償を支払う必要がある
+    \url{https://atmarkit.itmedia.co.jp/ait/articles/2007/17/news020.html}    
+\end{quote}
+\fi 
