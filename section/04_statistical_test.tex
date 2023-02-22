@@ -356,7 +356,7 @@ norm.cdf(b,0,1)-norm.cdf(a,0,1)
     その手順によって得た回答と、正解（真の値）の一致と不一致は以下の通りになる(表\ref{table:Yes_no_answer})。
     回答と一致したら、True、一致しないならFalse。
     Yesと予測したらPositive、Noと予測したらNegativeとする。
-    回答がYesな問題に、Yesと答えることは(手順が正しい予測を行なった)、True Positiveといい、Noと答える(手順が間違えた予測を行なった)ことはFalse Negativeという。回答がNoな問題に、Yesと答えることを、False Positive、また、Noと答えることをTrue negativeという。
+    回答がYesな問題に、Yesと答えることは(手順が正しい予測を行なった)、True Positiveといい、Noと答える(手順が間違えた予測を行なった)ことはFalse Negativeという。回答がNoな問題に、Yesと答えることを、False Positive、また、Noと答えることをTrue Negativeという。
 
     モデル$M_a$の標本にYesを対応ずけ、モデル$M_b$の標本にNoを対応付ける。標本を元に、YesまたはNoを判定する手順をモデル$M_a$を元にした統計検定を利用する。この問題において回答がFPとなったものを第1'の過誤であり、FNとなったものが第2'の過誤である。
     \end{SMbox}
@@ -379,11 +379,6 @@ norm.cdf(b,0,1)-norm.cdf(a,0,1)
     \end{table}
 
     
-
-\begin{SMbox}{$p<\alpha$なら違うことがわかる}
-    %もともと違うことは実験設定から明らかである。
-    モデルの上でも、モデル由来の標本であるかどうかはわからない。
-\end{SMbox}
 
 
 \section{自己否定の過推定}
