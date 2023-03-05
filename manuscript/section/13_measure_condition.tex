@@ -53,7 +53,12 @@
 国立研究開発法人　日本医療研究開発機構が出版している研究公正に関するヒヤリ・ハット集の
 「7 研究データの信頼性、再現性等 」に詳しくまとめられている\footnote{\url{https://www.amed.go.jp/content/000064531.pdf}}。
 % http://bunkei.ila.titech.ac.jp/sotsuronexcellence/class18_furui_kairi.pdf
-\subsection{後付けの母集団かつ$p<\alpha$を満たす集団}
+\subsection{HARKing}
+仮説が有無によらず、なんらかのデータを解析したあとに、その解析結果をもとにあらたな仮説を構築し、あたかも元からそのあらたな仮説を検証することを目的とし研究をおこなったかのように偽り報告をおこなうこと。
+
+
+HARKingが生じる状況をいくつか紹介する。
+\subsubsection{後付けの母集団かつ$p<\alpha$を満たす集団}
 母集団Aを設定し、標本を抽出したものを標本aとする。標本aのデータはさまざまな要素から構成されているとする。例えば、ある会社に所属する人の、身長や年収、税金の支払い履歴、ローン残高、労働部署、高校時代の部活などであるとする。
 この標本から、何らかの属性$A'$に当てはまるデータbを抽出したとする。
 データbについて特定の統計モデルとの乖離するかを調べ、乖離していることをが判明したとする（乖離を定量的に調べる方法はなんでもいいが、$p<\alpha$だったと考えても良い）。
@@ -75,7 +80,7 @@ $p<\alpha$であるという標本がデータから発見されたので、標�
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=15cm]{./image/01_/conceptual_diagram/conceptual_diagram.005.png}
+        \includegraphics[bb=0 0 1024 768,width=15cm]{./image/01_/conceptual_diagram/conceptual_diagram.005.png}
         \caption{仮説ハッキングの概念図}
         \label{fig:conceptual_diagram_HARKing}
     \end{center}
@@ -104,7 +109,8 @@ $p<\alpha$であるという標本がデータから発見されたので、標�
 % https://twitter.com/ykamit/status/1090791485312720896
 
 \begin{SMbox}{HARKing}
-    \begin{rightbubbles}{bubblegreen}{Yuki Kamitani}{./image/Twitter_logo_EPS/2021_Twitter_logo_blue.eps}
+    \begin{rightbubbles}{bubblegreen}{Yuki Kamitani}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+        %{./section/image/Twitter_logo_EPS/2021_Twitter_logo_blue.eps}
     データを操作してp値をいじる行為を不正と認識している人は多いが、HARKingが不正と思っている人は非常に少ない。私の周辺分野のシニア研究者で理解している人はほぼ皆無（問題を指摘すると一笑に付される）。研究の実践と論文フォーマットの齟齬やフェアプレー精神の問題（？）と理解している人がいた
         \begin{flushright} 
             \small	\url{https://twitter.com/ykamit/status/1077715969827528705}
@@ -113,7 +119,10 @@ $p<\alpha$であるという標本がデータから発見されたので、標�
 
     HARkingを理解するのは、難しい。無作為抽出したデータから、データを調べた後に、母集団を構成しているのだから、無作為抽出できていると考えてしまいがちになる。
 \end{SMbox}
-  
+
+
+
+
 
 \subsection{$p<\alpha$になったら無作為抽出を終える}
 $p$値がある値を下回ったときに、実験を終了するという操作を行なったとする。
@@ -159,15 +168,18 @@ $p$値がある値を下回ったときに、実験を終了するという操�
 
 \end{SMbox}
 
+
+\section{}
+
 \section{Garbage in, garbage out}
 ゴミデータを統計処理したならば、ゴミのような推論しか得られない。言い換えれば、意味のある結果を返しにくくなったり、解釈が難しくなることがある。
 
-本章で指摘したデータの取り方を守っていないならば、そのデータを用いて統計処理を行ったとしても、一般的な事柄を推測・予想することは難しくなる。
+%本章で指摘したデータの取り方を守っていないならば、そのデータを用いて統計処理を行ったとしても、一般的な事柄を推測・予想することは難しくなる。
 
 
 注意しなくてはならないことは、一般的な事柄に関する予測や推測を目的にしていないならば、本章で指摘したデータの取り方をしていないことがあり得る。
 例えば、無作為抽出することができない実験はあり得る。
-そこで得られたデータに価値が十分ある\footnote{良い例を探すべき。\url{http://www.mus-nh.city.osaka.jp/iso/argo/nl02/nl02-21-32.html}}。
+そこで得られたデータに価値が十分ある\footnote{良い例を探すべき。}。%\url{http://www.mus-nh.city.osaka.jp/iso/argo/nl02/nl02-21-32.html}}。
 
 
 \section{みにくいアヒルの子の定理}

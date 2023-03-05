@@ -5,7 +5,7 @@
 まず、その予測可能なことについて列挙する。モデルとデータが異なる場合つまり、データの出現頻度をデータが予測できない場合に生じることについて説明する。
 \begin{SMbox}{統計学に数学は必要か}
 
-    \begin{rightbubbles}{bubblegreen}{Dr$\_$slump7802}{./image/Twitter_logo_EPS/2021_Twitter_logo_blue.eps}
+    \begin{rightbubbles}{bubblegreen}{Dr$\_$slump7802}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
         理論や理屈、式の導出をブラックボックス化し、単に『この実験区なら、このデータならこの検定法、このソフト』みたいな講義になっている大学が多いので、統計学嫌いの学生が増えていく。
 
             \begin{flushright} 
@@ -13,7 +13,7 @@
             \end{flushright}    
     \end{rightbubbles}
 
-    \begin{rightbubbles}{bubblegreen}{Dr$\_$slump7802}{./image/Twitter_logo_EPS/2021_Twitter_logo_blue.eps}
+    \begin{rightbubbles}{bubblegreen}{Dr$\_$slump7802}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
         よく、『統計学に数学の知識は重要でない』と言い切る人がいるが、それは違うと思う。少なくとも分布のグラフや式がどういう関数であるかは理解する必要がある。
 
             \begin{flushright} 
@@ -21,21 +21,21 @@
             \end{flushright}    
         \end{rightbubbles}
 
-    \begin{rightbubbles}{bubblegreen}{Dr$\_$slump7802}{./image/Twitter_logo_EPS/2021_Twitter_logo_blue.eps}
+    \begin{rightbubbles}{bubblegreen}{Dr$\_$slump7802}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
         サンプルデータの条件を把握していることはもちろん前提。
             \begin{flushright} 
                 \small	\url{https://twitter.com/Drslump7802/status/1610785188879138816}
             \end{flushright}    
         \end{rightbubbles}
 
-    \begin{rightbubbles}{bubblegreen}{Dr$\_$slump7802}{./image/Twitter_logo_EPS/2021_Twitter_logo_blue.eps}
+    \begin{rightbubbles}{bubblegreen}{Dr$\_$slump7802}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
         敵は「検定法のしくみはわからなくてもいいから，実験結果を判定してくれればいいんだ」と平気で学生に語る農学系教員かな。＞負の教育拡大再生産
         \begin{flushright} 
                 \small	\url{https://twitter.com/Drslump7802/status/1610796746355126275}
             \end{flushright}    
     \end{rightbubbles}
 
-    \begin{rightbubbles}{bubblegreen}{Dr$\_$slump7802}{./image/Twitter_logo_EPS/2021_Twitter_logo_blue.eps}
+    \begin{rightbubbles}{bubblegreen}{Dr$\_$slump7802}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
         教員自身はなんとか勉強して使っているけど講義する実力はないし，専門家の非常勤講師を雇う予算もない。だから，数学なしでも成立する学部を目指そうとなっている（苦手だけど勉強するとは大違い）。
         それが現在の地方国立大学農学部の現状。
         \begin{flushright} 
@@ -43,7 +43,7 @@
         \end{flushright}    
     \end{rightbubbles}
 
-    \begin{rightbubbles}{bubblegreen}{Dr$\_$slump7802}{./image/Twitter_logo_EPS/2021_Twitter_logo_blue.eps}
+    \begin{rightbubbles}{bubblegreen}{Dr$\_$slump7802}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
         農学部や生物学科は，もともと数学から逃避した学生比率が他の理系学部より高いので，数理系基礎科目を教えるのは大変労力を要する。しかし，それが面倒なので，そもそも数学を選択にしたカリキュラムの大学も多く，学生の潜在意識どころが，本当に学部教育が「なんちゃって理系」化している。
         \begin{flushright} 
             \small	\url{https://twitter.com/Drslump7802/status/1610800417763659777}
@@ -75,12 +75,13 @@
 最尤推定量を元にした統計モデル$M(\mu_{ML},\sigma^2_{ML})$を最尤モデルと呼ぶ。
 
 \begin{SMbox}{最尤モデルが最も良い予測をするかはわからない}
-赤池は、最尤推定量がデータを推測する上で良い推定量になっているかの根拠にならないことを指摘している\ref{1570854174583769344}。
+赤池は、最尤推定量が母数を推測する上で良い推定量であるとは限らないことを指摘している\ref{1570854174583769344}。
     \begin{quote}
     R.A.Fisherの研究により、観測データxが実際に$p(x|a)$の形の確率分布に従って発生するとき、最尤法が優れた特性を示すことが示された。しかし、応用の場面では、データを生み出す確率的な構造が完全に分かっていることは無いから、Fisherの議論は、最尤法の実上用の根拠を与えない。
     \end{quote}
 
-    本書が扱うデータには、特定の分布形が指定されていないので、最尤モデルが尤もデータに当てはまるモデルを推定することはあり得ない。他の量が良い場合もある。例えば、中央値などを使ってモデルを構築した方がデータに当てはまることがある。
+    本書で扱うデータは、特定の分布形が指定されていないため、最尤推定法で得た母数を基にしたモデルが予測に適しているとは限らない。
+    例えば、中央値などの他の推定量を母数に入れたモデルの方が、良い予測が可能となることがある。
 \end{SMbox}
 
 以下では、$M(\mu)$による予測について説明する。
@@ -438,7 +439,7 @@ def cummlative_norm(data):
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=7.5cm]{./image/12_/cummlative_data_example_norm.pdf}
+        \includegraphics[width=15cm]{./image/12_/cummlative_data_example_norm.pdf}
         \label{fig:qq_ccummlative_data_example_normummlative}
         \caption{データの累積分布。Data 1は、正規分布$N(0,1)$、Data 2は正規分布$N(0,0.2)$からサンプリングした。サンプルサイズは$100$}
     \end{center}

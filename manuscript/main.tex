@@ -1,12 +1,15 @@
 %\documentclass[uplatex]{jsarticle}
-\documentclass[a4paper,11pt,dvipdfmx]{jsbook}
-\usepackage{listings,jlisting}
+%\documentclass[a4paper,11pt,dvipdfmx]{jsbook}
+\documentclass[report,12pt,uplatex,dvipdfmx]{jsbook}
+\usepackage{listings}
 \usepackage[dvipdfmx]{graphicx}
 \usepackage{url}
 \usepackage{amsthm}
 \usepackage{framed}
 \usepackage{svg}
-
+\usepackage{amsmath, amssymb}
+\usepackage{type1cm}
+\usepackage{comment} 
 \newtheorem{theo}{定理}[section]
 \newtheorem{defi}{定義}[section]
 \newtheorem{lemm}{補題}[section]
@@ -156,34 +159,37 @@ captionpos = t
 
 \begin{document}
 
-\title{統計教程
-\large{\\--- モデルによる予測 ---}}
+\title{空想統計教程}
+%\large{\\--- モデルによる予測 ---}}
 \author{Idiot}
 %\date{2020/6/29}
 \maketitle
+\tableofcontents	
 %% TODO QQplot,検出力,確率密度関数,分散分析,t分布
 %%\input{section0}
 %\input{00_comment}
 
-%\input{01_inference}
-%\input{13_measure_condition}
-%\input{05_error.tex}
-%\input{02_mathematical_statistics}
-%\input{12_model}
-%\input{04_statistical_test}
-%\input{04_01_likelihood_test}
-\input{03_normal_model}
+\input{./section/01_inference}
+\input{./section/13_measure_condition}
+
+\input{./section/12_model}
+\input{./section/04_statistical_test}
+%%%\input{05_error.tex}
+\input{./section/04_01_likelihood_test}
+\input{./section/03_normal_model}
 %\input{06_exp_model}
 
-\input{10_measure}
-%\input{07_twosample_model}
-\input{15_model_re}
+%\input{10_measure}
+\input{./section/07_twosample_model}
+\input{./section/15_model_re}
 %\input{08_non_parametric}
 %
 \appendix
-%\input{14_statistical_test_model}
-%\input{09_statistical_test_old}
-%\input{11_mathematics}
+\input{./section/02_mathematical_statistics}
+\input{./section/11_mathematics}
+%\input{./section/14_statistical_test_model} %これは消そう
+\input{./section/09_statistical_test_old}
+
 \bibliography{ref} %hoge.bibから拡張子を外した名前
 \bibliographystyle{junsrt}
 
