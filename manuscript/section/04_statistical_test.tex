@@ -481,8 +481,45 @@ $T$値が$t(n-1)$の棄却域に入っている頻度を数値計算により計
 
 $\alpha_1$がレベル$\alpha$の検定になっていない場合、$\alpha_2$はさらに有意水準$\alpha$から隔たりの多い数値になる。
 
+\subsection{最小の$p$値を採用しよう}
+固定のサンプルサイズのサンプルをいくつか生成し、それぞれのサンプルにおいて$p$値を計算し、その中で最小の$p$となるものを採用するという操作を数値実験により行う。
+具体的には、平均分散をそれぞれ$\mu=170,\sigma^2=5.8^2$とし、正規分布からサンプルを生成する。
+またサンプルサイズを$N=10$とし、サンプル数を$2$とする。それぞれのサンプルにおいて$p$値を計算し、$p$値の中で最小の$p$を採用する。
+これを$10^3$回繰り返す。
 
+\begin{lstlisting}
+  
+  mu = 170
+  sigma = 5.8
+  N = 10
+  sampleN = 2
+  p_list = []
+  repeat = 10**3
+  for i in range(repeat):
+    sample = norm(mu,sigma).rvs(size = (sampleN,N))
+    T_value = np.sqrt(N)*(np.average(sample,axis = 1) - mu) /sigma
+    p_list.append(np.min(norm.cdf(T_value)))
+  p_list
+\end{lstlisting}
 
+図\ref{fig:minimum_p_value_choice}には、数値計算の結果を示した。
+通常$p$値は一様分布するので、累積分布は傾き$1$の直線の上にのる。実際に数値計算でも同様の結果が示されている。
+一方で、最小の$p$値を選択すると、図\ref{fig:confidence_interval_model}に示したように、傾き1の直線の上に乗らない。
+これは、$p$値が一様ではなく、$p$値が小さなものが通常よりも大きな頻度で生じていることを示唆している。
+このことから、優位水準$\alpha$を定めると、$p<\alpha$となる$p$値は$\alpha$よりも大きな頻度で生じており、
+優位水準$\alpha$で検定ができないことが示される。
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=15cm]{./image/04_/Minimum-p-values-choice-exmepriment.pdf}
+    \caption{最小の$p$値を採用したときの累積分布。2つのサンプルの中から最小の$p$を選んだときの累積分布(実線)。一つのサンプルから$p$を計算した場合の累積分布(破線)}
+        \label{fig:minimum_p_value_choice}
+    \end{center}
+\end{figure}
+
+\begin{defi}
+  $p$値の分布が偏ることで、設定していた優位水準とは異る頻度で$p<\alpha$になっていることを「優位水準$\alpha$で検定ができないと言う」。
+\end{defi}
 
 \section{類似度の過誤}
 統計モデルの間の類似度を検出力といった。
