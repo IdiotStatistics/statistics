@@ -272,7 +272,82 @@ TODO:意味不明\\
 
 
 
-%\section{何度も検定しよう}
+\section{何度も検定しよう}
+
+
+\begin{SMbox}{なんども実験を繰り返す}
+\begin{rightbubbles}{bubblegreen}{Takami Sato}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+    無知を晒すけど「p値下げるために後からサンプルサイズ増やすな」って正直わかってない。後から論文を見て増やしたかどうか何てわからんし、そのデータに対するp値としては計算上正しい訳だし。「小さい差に対しても有意になるから、p値だけでなく値の差もしっかり議論しよう。」ならわかるんだが。
+    \begin{flushright} 
+        \small	\url{https://twitter.com/tkm2261/status/1640467558813028352}
+        \end{flushright}  
+\end{rightbubbles}
+
+\begin{rightbubbles}{bubblegreen}{Takami Sato}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+    元からあるデータに足さずに改めて取り直したデータだけで計算すればなんも問題ないし積極的にやっていい
+    そも、個人的には$5\%$のラインに意味はないんだから、後からサンプルサイズ足すくらいなら正直なp値（$6\%$でも$7\%$でも）で議論したらいいと思う
+    \begin{flushright} 
+        \small	\url{https://twitter.com/Daphnia_t_ponyo/status/1640843352227848193}
+        \end{flushright}  
+\end{rightbubbles}
+
+\begin{rightbubbles}{bubblegreen}{Ken McAlinn}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+    これは多重検定だからだめだよ😉
+\begin{flushright} 
+\small	\url{https://twitter.com/kenmcalinn/status/1640845051788967937}
+\end{flushright}    
+\end{rightbubbles}
+
+
+\begin{rightbubbles}{bubblegreen}{Ken McAlinn}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+  p値の分布は一様だから$5\%$棄却水準は(01上の)0.05の位置にあるんだけど、一回観測しちゃうと「そのまま」か「データを増やす」か条件がつくからどんどん分布が0のほうに歪んでく(有意じゃないとそのままを選ばないから)。そうすると0.05の位置までの確率が5$\%$以上に増えるから過誤の確率が合わない。
+\begin{flushright} 
+\small	\url{https://twitter.com/kenmcalinn/status/1640486745505427465}
+\end{flushright}    
+\end{rightbubbles}
+
+
+\begin{rightbubbles}{bubblegreen}{Ken McAlinn}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+  だから計算的には追加でも最初から全部でもp値は同じになるんだけど、追加の場合は有意水準を変えるか選択停止を考慮したp値を計算しないと過誤の確率が合わない。p値は$5\%$なのに過誤の確率が$80\%$になったりする。
+\begin{flushright} 
+\small	\url{https://twitter.com/kenmcalinn/status/1640488036164161540}
+\end{flushright}    
+\end{rightbubbles}
+
+\begin{rightbubbles}{bubblegreen}{Ken McAlinn}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+  根本的に言えば、尤度原理を満たさないp値には問題があるから尤度原理を満たすベイズファクターとかを使いましょうっていうのはtmさんの言う通り。
+\begin{flushright} 
+\small	\url{https://twitter.com/kenmcalinn/status/1640491660919422976}
+\end{flushright}    
+\end{rightbubbles}
+
+\begin{rightbubbles}{bubblegreen}{tm}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+  データが最初から全部あるときのp値と途中で増やしたときのp値は定義に戻ると別の値になります。なので単純に「途中で追加したのにも関わらず最初から全部あったかのように計算するのは間違い」です。後から増やしてもわからないのは別の問題（隠蔽）で、これを気にするならp値は原理的にダメです。
+\begin{flushright} 
+\small	\url{https://twitter.com/tmaehara/status/1640474043038986240}
+\end{flushright}    
+\end{rightbubbles}
+
+
+\begin{rightbubbles}{bubblegreen}{tm(@tmaehara)}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+  （どうデータをとったかによらず）どういうデータが得られたかだけで決まる手法は「尤度原理を満たす」といいます。尤度原理は成り立ってほしい性質ですが、帰無仮説検定はこれを満たしません。これは$p$値に対する代表的な批判ポイントです。
+\begin{flushright} 
+\small	\url{https://twitter.com/tmaehara/status/1640480964882182145}
+\end{flushright}    
+\end{rightbubbles}
+
+
+\end{SMbox}
+
+\begin{SMbox}{あらたなデータを取ってみよう}
+  \begin{quote}
+    HARKingにならないように、データ探索からわかった興味深い事実をまとめるにはどうすれば良いのでしょうか？業務でも「明確な仮説からのスタートではないが、ドメイン知識から『何となくこれを組み合わせたら何か見えないか』」で役立つことが見つかる場合がありまして。
+\\ \url{https://querie.me/answer/SqEe8Qb3Xfo8PBmyQ3RN?timestamp=1679325100}
+  \end{quote}
+  もしも、検定によって検討を行おうとするのならば、繰返し実験を行って検定を行い、$p<\alpha$となったとする。これに喜んではいけない。
+\end{SMbox}
+
+
 % 塩野義製薬の薬
 % https://mainichi.jp/articles/20220818/k00/00m/040/138000c
 %https://www.mhlw.go.jp/stf/newpage_26901.html
