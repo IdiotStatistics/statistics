@@ -460,6 +460,8 @@ $T$値が$t(n-1)$の棄却域に入っている頻度を数値計算により計
 %ここでは、$\sigma^2=10^2$とした正規モデル$M(\mu)$によって複数の標本について推測できるかを仮説検定を指標にし考える。
 %ここでは、複数の標本について、$M(\mu)$により推測できるかを
 正規モデル$M(\mu)$において、複数の標本が信頼区間に入っているかをたしかめ、それらが正規モデルのサンプルであると考えることができるだろうか。
+言い替えると、複数の標本のうち少なくとも一つは信頼区間に入っていないなら、正規モデルの標本ではないと判断すると、それは想定通り複数の試行の内$\alpha$程度がその判断に引っ掛るだろうか。
+
 標本が$3$個あるとする。このとき、それぞれの標本の統計量$T$が信頼区間に入っている確率は、$(1-\alpha)$である。全ての標本の統計量$T$が信頼区間に入っている確率は、その積$(1-\alpha)\times(1-\alpha)\times(1-\alpha)=(1-\alpha)^3$である。
 一方で、棄却される確率は、$1-(1-\alpha)^3$である。
 \begin{table}[hbtp]
@@ -481,6 +483,28 @@ $T$値が$t(n-1)$の棄却域に入っている頻度を数値計算により計
 
 $\alpha_1$がレベル$\alpha$の検定になっていない場合、$\alpha_2$はさらに有意水準$\alpha$から隔たりの多い数値になる。
 
+\subsubsection{数値計算}
+具体的に数値計算を行う。サンプルサイズ$10$の標本を$4$つ(標本数$4$)得る。
+この試行を$10^6$回繰り返す。
+各試行において、すくなくとも一つの標本の$p$値が有意水準$\alpha$を超ていることを確かめる。
+
+具体的に以下のコードを実行すればよい。
+最後の行で、1から有意水準を超ていないサンプルの割合をひいて、少なくとも一つは有意水準を超ていた試行の割合を計算している。
+\begin{lstlisting}
+repeats =10**6
+sampleN = 4
+N = 10
+alpha = 0.05
+mu=170
+sigma = 5.8
+sample = norm(mu,sigma).rvs(size=(sampleN,N,repeats)) # sample.shape = (sampleN, N , repeats)
+normal_sample = np.sqrt(N)*(np.average(sample,axis=1).T-mu)/sigma # normal_sample.shape = (repeats, sampleN)
+p_values = norm.cdf(normal_sample)
+flag = (p_values < alpha*0.5)|(p_values > 1-alpha*0.5)
+1-(np.sum(np.sum(flag,axis=1) == 0))/repeats
+\end{lstlisting}
+結果は、およそ$0.1849$程度になり、解析解と一致することがわかる。
+
 \subsection{最小の$p$値を採用しよう}
 固定のサンプルサイズのサンプルをいくつか生成し、それぞれのサンプルにおいて$p$値を計算し、その中で最小の$p$となるものを採用するという操作を数値実験により行う。
 具体的には、平均分散をそれぞれ$\mu=170,\sigma^2=5.8^2$とし、正規分布からサンプルを生成する。
@@ -488,18 +512,28 @@ $\alpha_1$がレベル$\alpha$の検定になっていない場合、$\alpha_2$�
 これを$10^3$回繰り返す。
 
 \begin{lstlisting}
-  
-  mu = 170
-  sigma = 5.8
-  N = 10
-  sampleN = 2
-  p_list = []
-  repeat = 10**3
-  for i in range(repeat):
-    sample = norm(mu,sigma).rvs(size = (sampleN,N))
-    T_value = np.sqrt(N)*(np.average(sample,axis = 1) - mu) /sigma
-    p_list.append(np.min(norm.cdf(T_value)))
-  p_list
+repeats =10**6
+sampleN = 4
+N = 10
+alpha = 0.05
+mu=170
+sigma = 5.8
+sample = norm(mu,sigma).rvs(size=(sampleN,N,repeats)) 
+normal_sample = np.sqrt(N)*(np.average(sample,axis=1).T-mu)/sigma
+p_values = norm.cdf(normal_sample)
+
+plt.figure(figsize=(12,8))
+sorted_data,x,predict_cdf =  cummlative_norm(np.min(p_values,axis=1))
+plt.plot(sorted_data,x,label="minimum p sample",lw=2,color = lc[0],linestyle = ls[0])
+
+
+sorted_data,x,predict_cdf =  cummlative_norm(p_values[:,0])
+plt.plot(sorted_data,x,label="1-sample p",lw=2,color = lc[1],linestyle = ls[1])
+
+
+plt.ylabel("Cummlative Frequency")
+plt.xlabel("$p$-value")
+plt.legend()  
 \end{lstlisting}
 
 図\ref{fig:minimum_p_value_choice}には、数値計算の結果を示した。
@@ -516,6 +550,25 @@ $\alpha_1$がレベル$\alpha$の検定になっていない場合、$\alpha_2$�
         \label{fig:minimum_p_value_choice}
     \end{center}
 \end{figure}
+
+\subsubsection{おなじ処理}
+この処理は一つ前の節で説明した事と一致する。
+具体的には、すくなくとも一つの標本において$p<\alpha$となるは、最小の$p$値を採用すると同じである。
+このことを数値計算により確かめておく。
+\begin{lstlisting}
+repeats =10**6
+sampleN = 4
+N = 10
+alpha = 0.05
+mu=170
+sigma = 5.8
+sample = norm(mu,sigma).rvs(size=(sampleN,N,repeats))
+normal_sample = np.sqrt(N)*(np.average(sample,axis=1).T-mu)/sigma
+p_values = norm.cdf(normal_sample)
+
+np.sum(np.min(p_values,axis=1)<alpha)/repeats
+\end{lstlisting}
+結果は、$0.184$であり、解析解\footnote{解析解という用語は正しいのか不明}と一致する。
 
 \begin{defi}
   $p$値の分布が偏ることで、設定していた優位水準とは異る頻度で$p<\alpha$になっていることを「優位水準$\alpha$で検定ができないと言う」。
