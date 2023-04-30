@@ -408,53 +408,7 @@ $\alpha_1$は、統計モデルと、その統計量の関数になっており�
 
 
 
-\subsection{どんな統計モデルでも$T$統計量で調べよう($\alpha_1$)}
-統計モデルの分布の仮定が正規分布以外の場合においても、$T$統計量を使ってモデル自身を検証できるのかを調べる。次の統計モデル$M_E(\lambda)$を構築する。
-\begin{enumerate}
-    \item $X_1,X_2,\cdots,X_n $はi.i.d
-    \item 指数分布
-    \item $\lambda$
-\end{enumerate}
-母数$\lambda=1$とした統計モデルを$M_E(1)$とする。
-$M(1)$からランダムサンプリングした確率変数$x_1,x_2,\cdots,x_n$から次の統計量を計算する。
-\begin{equation*}
-    T = \frac{\bar{X}-1}{\sqrt{\frac{\sigma^2}{n}}}
-\end{equation*}
-ここで、$T \sim t(n-1)$とする。
-$T$値が$t(n-1)$の棄却域に入っている頻度を数値計算により計算する。
-具体的に、平均$1$の指数分布または、平均$1$、標準偏差$1$の正規分布からサンプルを得て標本を$10^5$回取得する。
-このとき、$T$値を計算し、$T$値より偏った値が得られる確率$p$を計算する。その$p$がそうていしている有意水準$\alpha=0.05$となる割合を計算する。以上をサンプルサイズ$n$を変化させてシミュレーションを行なった。
-平均$1$、標準偏差$1$の正規分布の場合、$T$値は$t(n)$分布に従ので、$p<0.05$となる頻度も、$5\%$程度になることが期待される。
-一方で、平均$1$の指数分布の場合、$T$は$t(n-1)$分布に従うとはいえないことが予想される。%そこで、数値計算によって、$p<0.05$となる頻度を推定する。
-
-
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/04_/t_test_expon_norm.pdf}
-        \caption{正規分布または指数ぶんぷから得た標本の$T$値から計算した$p$値で、$p<0.05$以下になる割合}
-    \end{center}
-\end{figure}
-
-シミュレーションの結果、正規分布から標本を得た場合、$p<0.05$になる割合は、サンプルサイズに依存せず、$5\%$程度であり、期待通りである。
-一方で、指数分布から標本を得た場合、$p<0.05$になる割合はサンプルサイズに応じて変化しており、また、どのサンプルサイズでも$p<0.05$となる割合は$5\%$より多い。
-
-このことから、指数モデルの$\alpha_1$は、$\alpha_1>0.05$であることがわかり、統計量を正しく選ばなかったことで、自己否定の過誤が設定した有意水準$0.05$よりも大きくなっていることがわかる。
-
-\if 0 
-これはいらない
-\begin{SMbox}{サンプルサイズがxx以上あるから$t$検定}
-        サンプルサイズがある値以上あるので、中心極限定理により、$t$検定が利用できるというものもある\footnote{http://id.ndl.go.jp/bib/024660739}。このロジックが読み込めなかったので、その謎を明らかにすべく我々はアマゾンの奥地へ向かった。
-
-        %サンプルサイズが1以上であれば、$t$検定を行うことは原理的には可能である。
-        データが指数分布的であるときに、$t$検定を使うときに生じる問題は上でみた通りであり、$p<0.05$となる標本の割合が多くなっているので、間違った推測をする可能性が高くなる。
-        他の分布関数でもおそらく同じような現象が現れる。
-        このことから、我々は「$t$検定が利用可能である」は正確ではなく、「$t$検定を使うことができるが、間違った推測である確率が高くなる」ということだと推察した。
-
-        %サンプルサイズが大きくなれば、$\alpha_1$は小さくなる。
-        業界によっては、サンプルサイズが$xx$以上であれば、過誤を無視して良いというふうに言われることもある。実際には、設計したモデルと
-\end{SMbox}
-\fi
-
+　
 \subsection{検定を繰り返し使おう($\alpha_2$)}
 %ここまでは、一つの標本に対して、統計モデル$M(\mu)$により推測できるかを考えていた。
 %ここでは、$\sigma^2=10^2$とした正規モデル$M(\mu)$によって複数の標本について推測できるかを仮説検定を指標にし考える。
@@ -522,18 +476,8 @@ sample = norm(mu,sigma).rvs(size=(sampleN,N,repeats))
 normal_sample = np.sqrt(N)*(np.average(sample,axis=1).T-mu)/sigma
 p_values = norm.cdf(normal_sample)
 
-plt.figure(figsize=(12,8))
-sorted_data,x,predict_cdf =  cummlative_norm(np.min(p_values,axis=1))
-plt.plot(sorted_data,x,label="minimum p sample",lw=2,color = lc[0],linestyle = ls[0])
-
-
-sorted_data,x,predict_cdf =  cummlative_norm(p_values[:,0])
-plt.plot(sorted_data,x,label="1-sample p",lw=2,color = lc[1],linestyle = ls[1])
-
-
-plt.ylabel("Cummlative Frequency")
-plt.xlabel("$p$-value")
-plt.legend()  
+min_p_values = np.min(p_values,axis=1)
+first_p_values = p_values[:,0]
 \end{lstlisting}
 
 図\ref{fig:minimum_p_value_choice}には、数値計算の結果を示した。
@@ -551,8 +495,8 @@ plt.legend()
     \end{center}
 \end{figure}
 
-\subsubsection{おなじ処理}
-この処理は一つ前の節で説明した事と一致する。
+\subsubsection{多重検定との関係}
+この処理は一つ前の節で説明した多重検定と一致する。
 具体的には、すくなくとも一つの標本において$p<\alpha$となるは、最小の$p$値を採用すると同じである。
 このことを数値計算により確かめておく。
 \begin{lstlisting}
@@ -570,9 +514,156 @@ np.sum(np.min(p_values,axis=1)<alpha)/repeats
 \end{lstlisting}
 結果は、$0.184$であり、解析解\footnote{解析解という用語は正しいのか不明}と一致する。
 
+
+
+\subsection{サンプル追加による$p$値の変化}
+標本にサンプルを追加しながら検定をおこなうと、期待している結果が得られるだろうか(元ネタ\cite{simmons2016false})。
+
+ある標本において、サンプルを追加する毎に検定を実行する。
+この試行を複数回繰り返し、一度でも有意水準を下回った標本の個数を数える。
+ただし、$p<\alpha$になるまで繰り返すと必ず有意となるので、最終的なサンプルのサイズはあらかじめ決定しておく。
+
+数値実験を行う。
+初期サンプルサイズを$N=10$または$N=20$、最終サンプルサイズ$N_{max}=50$、標本数$10^6$個とする。サンプル$\Delta s$個追加し、検定を実行する。
+$\Delta s$は、1,5,10または20とする。それぞれの$\Delta s$に応じた検定回数は$41,9,5,3$回である\footnote{多重検定とは条件が異なるので、$\Delta s=41$だとしても、$p<\alpha$となる頻度が$1-(1-\alpha)^{41}$とならない。}。
+
+
+図\ref{fig:multiple_test_additional_sample}が数値実験の結果である。
+サンプルサイズを追加する毎に検定をすると、$p<\alpha$となる頻度が$\alpha$以上になる。
+どの場合においても$p<\alpha$となるのは$\alpha$程度であってほしいが、これは数値実験の結果と一致しない。
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=15cm]{./image/04_/multiple_test_additional_sample.pdf}
+    \caption{サンプルの追加個数と検定を実行。サンプルの追加個数を$\Delta s$としその違いによる$p<0.05$となる頻度。初期サンプルサイズが$10$(黒色)と$20$(灰色)。}
+        \label{fig:multiple_test_additional_sample}
+    \end{center}
+\end{figure}
+
+以下に数値実験用のコードを残しておく\footnote{わかりにくいコードになってしまった。後で書き換えたい。}。
+\begin{lstlisting}
+sampleN = 10**6
+N = 10
+maxN = 50
+mu = 170
+sigma = 5.8
+
+delta = 1
+
+def nan_index(N,maxN,delta):
+    index = np.array([~(np.arange(maxN)>=i) for i in np.arange(N,maxN+delta,delta)] )
+    nan_index = np.ones(index.shape)*index
+    binary_index = index.astype(np.float64)
+    binary_index[~index] = np.nan
+    return binary_index
+
+def stopping_reule(delta):
+    nan_array = nan_index(N,maxN,delta)
+    sample_num = np.count_nonzero(~np.isnan(nan_array),axis=1)
+
+
+    # sample
+    norm_ = norm(mu,sigma)
+    sample = norm_.rvs(size=(sampleN,maxN))
+
+    rep_sample = np.tile( sample.reshape((-1,1,maxN)), reps= (len(nan_array),1))
+    restrict_sample = rep_sample*nan_array
+    sample_mean = np.nanmean(restrict_sample,axis=-1)
+
+    Z = np.sqrt(sample_num)*(sample_mean-mu)/sigma
+    p = norm.cdf(Z)
+    p_ = ((p < 0.025) | (p>0.975))
+    true_once = (np.cumsum(p_,axis=1)>=1)
+    return np.sum(true_once[:,-1])/sampleN
+N = 10
+result_10 = [stopping_reule(delta) for delta in [1,5,10,20]]
+\end{lstlisting}
+
+
+\subsubsection{いつかは有意になる}
+サンプルを一つづつ追加し、追加毎に$p$値を計算する。
+結果を図\ref{fig:time_series_p_value}に示してある。
+この図の通り、サンプルサイズを追加すると、一時的には$p$値があるしきい値(図の点線$\alpha=\frac{0.05}{2}$または$1-\frac{0.05}{2}$)を下回ることがあるが、その後サンプルを加えても、有意水準よりも大きな値となることがある。
+よく言われる「検定はサンプルサイズを大きくするといつかは有意水準を下回る」に反する\footnote{こう言われているのは、理論と実験の話を混ぜているためである。正確には、モデルと実験を比較するさいに、実験でサンプルサイズを逐次追加すると、モデルと実際の乖離があきらかになりやすいため、有意になりがちである}。
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=15cm]{./image/04_/recurssive_test.pdf}
+    \caption{サンプルの追加に応じた$p$値の変化}
+        \label{fig:time_series_p_value}
+    \end{center}
+\end{figure}
+
+
+
+\subsection{どんな統計モデルでも$T$統計量で調べよう($\alpha_1$)}
+統計モデルの分布の仮定が正規分布以外の場合においても、$T$統計量を使ってモデル自身を検証できるのかを調べる。次の統計モデル$M_E(\lambda)$を構築する。
+\begin{enumerate}
+    \item $X_1,X_2,\cdots,X_n $はi.i.d
+    \item 指数分布
+    \item $\lambda$
+\end{enumerate}
+母数$\lambda=1$とした統計モデルを$M_E(1)$とする。
+$M(1)$からランダムサンプリングした確率変数$x_1,x_2,\cdots,x_n$から次の統計量を計算する。
+\begin{equation*}
+    T = \frac{\bar{X}-1}{\sqrt{\frac{\sigma^2}{n}}}
+\end{equation*}
+ここで、$T \sim t(n-1)$とする。
+$T$値が$t(n-1)$の棄却域に入っている頻度を数値計算により計算する。
+具体的に、平均$1$の指数分布または、平均$1$、標準偏差$1$の正規分布からサンプルを得て標本を$10^5$回取得する。
+このとき、$T$値を計算し、$T$値より偏った値が得られる確率$p$を計算する。その$p$がそうていしている有意水準$\alpha=0.05$となる割合を計算する。以上をサンプルサイズ$n$を変化させてシミュレーションを行なった。
+平均$1$、標準偏差$1$の正規分布の場合、$T$値は$t(n)$分布に従ので、$p<0.05$となる頻度も、$5\%$程度になることが期待される。
+一方で、平均$1$の指数分布の場合、$T$は$t(n-1)$分布に従うとはいえないことが予想される。%そこで、数値計算によって、$p<0.05$となる頻度を推定する。
+
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=15cm]{./image/04_/N_10_Exponn_T_test.pdf}
+%    \caption{サンプルの追加に応じた$p$値の変化}
+    %\label{fig:time_series_p_value}
+    \end{center}
+\end{figure}
+
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=15cm]{./image/04_/t_test_expon_norm.pdf}
+        \caption{それぞれの分布から得た標本の$T$値から計算した$p$値で、$p<0.05$以下になる割合。黒い破線が指数分布での数値計算の結果。灰色の破線が正規分布での数値計算の結果。}
+    \end{center}
+\end{figure}
+
+シミュレーションの結果、正規分布から標本を得た場合、$p<0.05$になる割合は、サンプルサイズに依存せず、$5\%$程度であり、期待通りである。
+一方で、指数分布から標本を得た場合、$p<0.05$になる割合はサンプルサイズに応じて変化しており、また、どのサンプルサイズでも$p<0.05$となる割合は$5\%$より多い。
+
+このことから、指数モデルの$\alpha_1$は、$\alpha_1>0.05$であることがわかり、統計量を正しく選ばなかったことで、自己否定の過誤が設定した有意水準$0.05$よりも大きくなっていることがわかる。
+
+\if 0 
+これはいらない
+\begin{SMbox}{サンプルサイズがxx以上あるから$t$検定}
+        サンプルサイズがある値以上あるので、中心極限定理により、$t$検定が利用できるというものもある\footnote{http://id.ndl.go.jp/bib/024660739}。このロジックが読み込めなかったので、その謎を明らかにすべく我々はアマゾンの奥地へ向かった。
+
+        %サンプルサイズが1以上であれば、$t$検定を行うことは原理的には可能である。
+        データが指数分布的であるときに、$t$検定を使うときに生じる問題は上でみた通りであり、$p<0.05$となる標本の割合が多くなっているので、間違った推測をする可能性が高くなる。
+        他の分布関数でもおそらく同じような現象が現れる。
+        このことから、我々は「$t$検定が利用可能である」は正確ではなく、「$t$検定を使うことができるが、間違った推測である確率が高くなる」ということだと推察した。
+
+        %サンプルサイズが大きくなれば、$\alpha_1$は小さくなる。
+        業界によっては、サンプルサイズが$xx$以上であれば、過誤を無視して良いというふうに言われることもある。実際には、設計したモデルと
+\end{SMbox}
+\fi
+
+
+
 \begin{defi}
-  $p$値の分布が偏ることで、設定していた優位水準とは異る頻度で$p<\alpha$になっていることを「優位水準$\alpha$で検定ができないと言う」。
+  $p$値の分布が偏ることで、設定していた優位水準とは異る頻度で$p<\alpha$になっていることを「有意水準$\alpha$で検定ができないと言う」。
 \end{defi}
+
+\if 0
+有意水準$\alpha$で検定ができていないのは、
+\begin{itemize}
+  \item 
+\end{itemize}
+\fi
 
 \section{類似度の過誤}
 統計モデルの間の類似度を検出力といった。
@@ -709,3 +800,25 @@ $p$値をもとに判断してはいけない。
 
      %医学における研究が予測精度を高めるということを目的にして統計学を使っていないので、意見が一致しない。
 \end{SMbox}
+
+
+
+
+\subsection{有意水準$\alpha$で検定できない例}
+すでに説明したように、$p$値使った判定には様々な制限がある。
+次のような限界がある。
+
+\begin{itemize}
+  \item どんな母集団に対してでも特定の統計量を使う(母集団に関する知識の欠如)
+  \item 複数の標本に対して検定を実行する
+  \item 有意になるまでサンプルを取得する。
+  \item 複数の標本のなかで最小の$p$になった標本を採用する
+\end{itemize}
+%これら以外にも、様々な
+
+このような限界を無視した$p$値の使用をp-Hackingと言う。
+$70\%$程度の研究者たちが3番目に挙げた方法でデータを取得したことを認めている[\cite{john2012measuring}]。数値実験により確かめたとおり、有意水準$\alpha$により検定ができない。
+ここに上げられていない方法でもp-Hackingは可能であり、文献\cite{stefan2023big}にまとめられている。
+
+\subsection{$p$値を使うことが常に最適な判断材料}
+$p$値を使うことが常に最適な判断材料になることは非常に稀であり、$p$値だけで結論が下せるようなことは生物学においては稀である。
