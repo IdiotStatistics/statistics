@@ -265,11 +265,11 @@ $N$が大きくなると、解析と近似での信頼区間が一致しやす�
 %これは、中心極限定理の帰結から当然である。
 
 \begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/12_/confidence_expon_interval.pdf}
-        \label{fig:model_predict_CI_interval}
-        \caption{解析的な信頼区間と近似によって求められた信頼区間。$1/\lambda=10$とする。横軸にサンプルサイズ。縦軸に、平均値。エラーバーは信頼区間(CI)。}
-      \end{center}
+ \begin{center}
+  \includegraphics[width=15cm]{./image/12_/confidence_expon_interval.pdf}
+  \label{fig:model_predict_CI_interval}
+  \caption{解析的な信頼区間と近似によって求められた信頼区間。$1/\lambda=10$とする。横軸にサンプルサイズ。縦軸に、平均値。エラーバーは信頼区間(CI)。}
+ \end{center}
 \end{figure}
 
 \if 0
@@ -307,9 +307,9 @@ $M(\mu)$であれば、$95\%$の確率で、$\mu-\sigma z_{0.025}\sim \mu-\sigma
 
 標本全体を使えるのならば、
 \begin{enumerate}
-    \item 母数平均よりも小さいまたは大きな点が半分程度であることを予測している。
-    \item 標準偏差の内側言い換えれば、$[\mu-\sigma<x<\mu+\sigma]$の中にあるデータの数は$68\%$程度。
-    \item $[\mu-2\sigma < x < \mu+2\sigma]$の中にあるデータの数は$95.4\%$程度。
+ \item 母数平均よりも小さいまたは大きな点が半分程度であることを予測している。
+ \item 標準偏差の内側言い換えれば、$[\mu-\sigma<x<\mu+\sigma]$の中にあるデータの数は$68\%$程度。
+ \item $[\mu-2\sigma < x < \mu+2\sigma]$の中にあるデータの数は$95.4\%$程度。
 \end{enumerate}
 などがデータに当てはまるのかを調べる。
 
@@ -388,21 +388,21 @@ len(sample[np.where( (sample >a) & (sample<b) )])/N
 %データが正規分布であるという強い前提がある。
 
 \begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/12_/sample_norm_expon.pdf}
-        \label{fig:sample_norm_expon_model}
-        \caption{正規分布と指数分布それぞれからサンプルサイズ$N=100$の標本をプロットした。それぞれの右側にあるエラーバーは、正規分布モデルが予測した$68\%$予測区間。}
-      \end{center}
-    \end{figure}
+ \begin{center}
+  \includegraphics[width=15cm]{./image/12_/sample_norm_expon.pdf}
+  \label{fig:sample_norm_expon_model}
+  \caption{正規分布と指数分布それぞれからサンプルサイズ$N=100$の標本をプロットした。それぞれの右側にあるエラーバーは、正規分布モデルが予測した$68\%$予測区間。}
+ \end{center}
+\end{figure}
 
 
 \begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/12_/model_predict_SD.pdf}
-        \label{fig:model_predict_SD}
-        \caption{正規分布と指数分布それぞれからサンプルサイズ$N=100$の標本を得た。その標本から推測される$68\%$予測区間を描画した。}
-      \end{center}
-    \end{figure}
+ \begin{center}
+  \includegraphics[width=15cm]{./image/12_/model_predict_SD.pdf}
+  \label{fig:model_predict_SD}
+  \caption{正規分布と指数分布それぞれからサンプルサイズ$N=100$の標本を得た。その標本から推測される$68\%$予測区間を描画した。}
+ \end{center}
+\end{figure}
 
 
 %\subsubsection{標本全体を使う方法}
@@ -439,11 +439,11 @@ def cummlative_norm(data):
 
 
 \begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/12_/cummlative_data_example_norm.pdf}
-        \label{fig:qq_ccummlative_data_example_normummlative}
-        \caption{データの累積分布。Data 1は、正規分布$N(0,1)$、Data 2は正規分布$N(0,0.2)$からサンプリングした。サンプルサイズは$100$}
-    \end{center}
+ \begin{center}
+  \includegraphics[width=15cm]{./image/12_/cummlative_data_example_norm.pdf}
+  \label{fig:qq_ccummlative_data_example_normummlative}
+  \caption{データの累積分布。Data 1は、正規分布$N(0,1)$、Data 2は正規分布$N(0,0.2)$からサンプリングした。サンプルサイズは$100$}
+ \end{center}
 \end{figure}
 
 
@@ -487,11 +487,11 @@ qqプロットを図\ref{fig:qq_cummlative_30}図\ref{fig:qq_cummlative}左側�
 \end{figure}
 
 \begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/12_/qq_cummlative_expon_norm_gammaN_30.pdf}
-        \label{fig:qq_cummlative_30}
-        \caption{左にはqqプロット、右は累積分布と最尤モデルの累積分布。サンプルサイズは30(a)正規分布$N(170,5.8)$(b)指数分布$\lambda=5.8$(c)ガンマ分布$s=0.1$)}
-    \end{center}
+ \begin{center}
+  \includegraphics[width=15cm]{./image/12_/qq_cummlative_expon_norm_gammaN_30.pdf}
+  \label{fig:qq_cummlative_30}
+  \caption{左にはqqプロット、右は累積分布と最尤モデルの累積分布。サンプルサイズは30(a)正規分布$N(170,5.8)$(b)指数分布$\lambda=5.8$(c)ガンマ分布$s=0.1$)}
+ \end{center}
 \end{figure}
 
 \subsection{相対的なモデルのデータへの適合具合}
