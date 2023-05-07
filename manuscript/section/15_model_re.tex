@@ -3,11 +3,11 @@
 \section{指針}
 いくつか言葉を定義する。
 \begin{defi}
-    標本に対してデータを見て、適合したまたは適合するように構築したモデルを、適合モデルと言う。
-    標本を見る前に、既存の研究で構築してあったモデルを、予測モデルと言う\footnote{予測モデルと定義するのは良くないかもしれない。すでに定義された言葉であるので。}。
-    適合モデルには標本のデータや統計量を含んであり、
-    予測モデルには、これまで得られた標本の統計量などが設定してあるが、現在注目している標本のデータは含まれていない。
-    %既存の研究がないのに、予測モデルをでっち上げて、標本をよく予測したと述べるのは良くない。
+ 標本に対してデータを見て、適合したまたは適合するように構築したモデルを、適合モデルと言う。
+ 標本を見る前に、既存の研究で構築してあったモデルを、予測モデルと言う\footnote{予測モデルと定義するのは良くないかもしれない。すでに定義された言葉であるので。}。
+ 適合モデルには標本のデータや統計量を含んであり、
+ 予測モデルには、これまで得られた標本の統計量などが設定してあるが、現在注目している標本のデータは含まれていない。
+ %既存の研究がないのに、予測モデルをでっち上げて、標本をよく予測したと述べるのは良くない。
 \end{defi}
 
 %  https://tjo.hatenablog.com/entry/2013/09/10/234318
@@ -44,9 +44,9 @@ $p$値以外にも様々な指標を使って予測モデルにより予測が�
 予測できるならば、モデルの予測可能性が示される。
 予測モデルにより標本2を予測できないならば、その理由は次のものが想定できる。
 \begin{enumerate}
-    \item データが少数だったため、良い適合モデルを選べなかった（分布形の推定までできなかった等）
-    \item 同様の実験条件を整えることができなかった(影響を受ける要因があったことを発見できた)
-    \item 再現できない実験だった（実験デザインの見直し・再現できない研究の積み重ねを阻止）
+ \item データが少数だったため、良い適合モデルを選べなかった（分布形の推定までできなかった等）
+ \item 同様の実験条件を整えることができなかった(影響を受ける要因があったことを発見できた)
+ \item 再現できない実験だった（実験デザインの見直し・再現できない研究の積み重ねを阻止）
 \end{enumerate}
 
 標本2に対する適応モデルを構築する。予測モデルと適応モデル2の差異を調べる。
@@ -54,50 +54,49 @@ $p$値以外にも様々な指標を使って予測モデルにより予測が�
 %このプロセスに予測可能な領域を増やしていくことが生物を研究する上で重要な役割をになっている。(????)
 
 \begin{figure}
-    \begin{center}
-        \includegraphics[bb=0 0 1024 768,width=15cm]{./image/01_/conceptual_diagram/conceptual_diagram.006.png}
-        \caption{統計モデルを使った研究のフロー図。}
-        \label{fig:conceptual_diagram_statistics_research}
-    \end{center}
+ \begin{center}
+  \includegraphics[bb=0 0 1024 768,width=15cm]{./image/01_/conceptual_diagram/conceptual_diagram.006.png}
+  \caption{統計モデルを使った研究のフロー図。}
+  \label{fig:conceptual_diagram_statistics_research}
+ \end{center}
 \end{figure}
 
 予測モデルにより予測可能かを検証することそして、標本に対して適合したモデルを探索することこの繰り返しにより研究が進む。
 
 
 \begin{SMbox}{検定はデータを見てから・見ないで行うべき}
-    (1)データを見ないで、構築済みのモデルとの乖離を調べるという方針がある。
-    これはすでにわかっていることから、どのような現象が生じるのかをまとめ、モデルを構築する。
-    このモデル構築は、データを見る前の、実験を計画する時点で構築できる。
-    このモデルと得られたデータとの乖離を検定により調べることで、既存の知識を元にした予測モデルの予測性能を検証している。
-    予測モデルとデータの乖離が発見できたのなら、適合モデルを調べることで、新しいモデルの方が良いのかを議論できる\footnote{一般に、ここまでやらない。やった方が良い}。
-    ただし、データにどのような値が含まれているのかは一度見ることになる。
+ (1)データを見ないで、構築済みのモデルとの乖離を調べるという方針がある。
+ これはすでにわかっていることから、どのような現象が生じるのかをまとめ、モデルを構築する。
+ このモデル構築は、データを見る前の、実験を計画する時点で構築できる。
+ このモデルと得られたデータとの乖離を検定により調べることで、既存の知識を元にした予測モデルの予測性能を検証している。
+ 予測モデルとデータの乖離が発見できたのなら、適合モデルを調べることで、新しいモデルの方が良いのかを議論できる\footnote{一般に、ここまでやらない。やった方が良い}。
+ ただし、データにどのような値が含まれているのかは一度見ることになる。
 
-    (2)データを見てから、モデルを構築して検定を行うという方針。
-    こちらは、データを見ながら適合するモデルを構築する。
-    言い換えれば、適合モデルを構築するという方針である。
-    こちらの方針でも、$p<\alpha$であればよしという解析を行なっている。
-    
+ (2)データを見てから、モデルを構築して検定を行うという方針。
+ こちらは、データを見ながら適合するモデルを構築する。
+ 言い換えれば、適合モデルを構築するという方針である。
+ こちらの方針でも、$p<\alpha$であればよしという解析を行なっている。
 
-    (2)を行なったのに、(1)の手順でモデルを構築して$p<0.000$を得たという報告はしてはいけない。逆も同様にしてはいけない。嘘はつかない方が良い。
+ (2)を行なったのに、(1)の手順でモデルを構築して$p<0.000$を得たという報告はしてはいけない。逆も同様にしてはいけない。嘘はつかない方が良い。
 \end{SMbox}
 
 \begin{SMbox}{適合モデルを探しても、データとモデルの乖離($p<\alpha$)を報告するだけ}
-    $p<\alpha$を見つけるとなんだかよし！と言いたくなる。
+ $p<\alpha$を見つけるとなんだかよし！と言いたくなる。
 \end{SMbox}
 
 
 \subsection{どれが科学的成果だろうか}
 1つ目の試験での成果は次のことになる。
 \begin{enumerate}
-    \item 標本があるモデルに適合しなかった($p$値・モデルの予測とデータが一致しないことを示す証拠)
-    \item 標本に適合する適合モデル（モデルの分布形・母数）
+ \item 標本があるモデルに適合しなかった($p$値・モデルの予測とデータが一致しないことを示す証拠)
+ \item 標本に適合する適合モデル（モデルの分布形・母数）
 \end{enumerate}
 
 2つ目の試験における成果は次のことである。
 \begin{enumerate}
-    \item 標本$2$を適合モデル$1$が予測可能か。適合モデル1が予測にも使える。研究結果の予測可能性を確認。
-    \item 適合モデル$1$が標本$2$を予測できなかった理由の探索
-    \item 標本$2$の適合したモデル。適合モデル$2$と、適合モデル$1$の差異。
+ \item 標本$2$を適合モデル$1$が予測可能か。適合モデル1が予測にも使える。研究結果の予測可能性を確認。
+ \item 適合モデル$1$が標本$2$を予測できなかった理由の探索
+ \item 標本$2$の適合したモデル。適合モデル$2$と、適合モデル$1$の差異。
 \end{enumerate}
 これら以外にも、モデルから予想される生物学的な情報も科学的成果である。
 例えば、正規分布でそれぞれ予想できそうな群A,Bがあったとして、それらのモデルの平均値間の距離から何が言えるのかを考えることが求められる。
@@ -105,15 +104,15 @@ $p$値以外にも様々な指標を使って予測モデルにより予測が�
 
 
 \begin{SMbox}{生物学者は$p<\alpha$に興味がある}
-    生物学における論文の多くは適合モデルを見つけようとしたのか、予測モデルで予測ができることを評価したかったのかという違いをはっきりと明記しない。
-    一般化線形モデルを使っていれば、適合モデルを探索したかったのだろうとあたりをつけることができる。
-    2群の$t$検定を行なっているなら、これまでは正規モデルが適合モデルであり、このモデルとデータを比較したのだろう。
+ 生物学における論文の多くは適合モデルを見つけようとしたのか、予測モデルで予測ができることを評価したかったのかという違いをはっきりと明記しない。
+ 一般化線形モデルを使っていれば、適合モデルを探索したかったのだろうとあたりをつけることができる。
+ 2群の$t$検定を行なっているなら、これまでは正規モデルが適合モデルであり、このモデルとデータを比較したのだろう。
 
-    正規分布的ではないデータが得られたなら、これまでの適合モデルと異なる結果が得られたという点は報告するべきである。
-    このことを報告せずに$p$値を報告する。
-    生物学はデータの特徴に関する情報を捨てている。
-    %$p$値が得られたなら、そのことだけを報告する。
-    %生物学者が$p<\alpha$ならば違うことが見つかったと判断できると思っているからだと推察している。
+ 正規分布的ではないデータが得られたなら、これまでの適合モデルと異なる結果が得られたという点は報告するべきである。
+ このことを報告せずに$p$値を報告する。
+ 生物学はデータの特徴に関する情報を捨てている。
+ %$p$値が得られたなら、そのことだけを報告する。
+ %生物学者が$p<\alpha$ならば違うことが見つかったと判断できると思っているからだと推察している。
 \end{SMbox}
 
 
@@ -125,11 +124,11 @@ $p$値以外にも様々な指標を使って予測モデルにより予測が�
 情報を捨てることによって、各研究が独立して実行される。
 
 \begin{figure}
-    \begin{center}
-        \includegraphics[bb=0 0 1024 768,width=15cm]{./image/01_/conceptual_diagram/conceptual_diagram.007.png}
-        \caption{統計モデルを使った従来研究のフロー図。}
-        \label{fig:conceptual_diagram_statistics_research_current}
-    \end{center}
+ \begin{center}
+  \includegraphics[bb=0 0 1024 768,width=15cm]{./image/01_/conceptual_diagram/conceptual_diagram.007.png}
+  \caption{統計モデルを使った従来研究のフロー図。}
+  \label{fig:conceptual_diagram_statistics_research_current}
+ \end{center}
 \end{figure}
 
 このような研究は行わない方が良い。
@@ -196,27 +195,27 @@ iris = datasets.load_iris()
 また、$>\mu$と$\mu<$となるデータの個数の比率も$1$に近い$1.24$であった。
 これはモデルがデータに適合していることを示している。
 \begin{table}[h]
-    \caption{aa}
-    \label{table:all_spael_width_table}
-    \centering
-    \begin{tabular}{lccccccc}
-        %\toprule
-        \hline
-        {} &  $<\mu$ &  $>\mu$ &  Data Size &  $<\mu$ Rate &  $>\mu$ Rate &  $<\mu/>\mu$ & $\mu-\sigma\sim\mu+\sigma$\\
-        %\midrule
-        \hline
-        All    &    83 &    67 &        150 &       0.55 &       0.45 &       1.24 & 0.673\\
-        %\bottomrule
-        \hline
-    \end{tabular}
+ \caption{aa}
+ \label{table:all_spael_width_table}
+ \centering
+ \begin{tabular}{lccccccc}
+  %\toprule
+  \hline
+  {} &  $<\mu$ &  $>\mu$ &  Data Size &  $<\mu$ Rate &  $>\mu$ Rate &  $<\mu/>\mu$ & $\mu-\sigma\sim\mu+\sigma$\\
+  %\midrule
+  \hline
+  All    &    83 &    67 &        150 &       0.55 &       0.45 &       1.24 & 0.673\\
+  %\bottomrule
+  \hline
+ \end{tabular}
 \end{table}
 
 \begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/15_/speal_width_all.pdf}
-        \caption{データのがく弁の幅の累積度数(Data)と最尤モデルの累積度数$M_a$}
-        \label{fig:all_speal_width_fig}
-    \end{center}
+ \begin{center}
+  \includegraphics[width=15cm]{./image/15_/speal_width_all.pdf}
+  \caption{データのがく弁の幅の累積度数(Data)と最尤モデルの累積度数$M_a$}
+  \label{fig:all_speal_width_fig}
+ \end{center}
 \end{figure}
 
 図\ref{fig:all_speal_width_fig}は、データの累積度数とモデルの累積度数を示している。
@@ -238,30 +237,30 @@ virginicaとそれ以外はモデル$M_a$によって十分予測できていな
  
 
 \begin{table}[h]
-    \caption{アヤメ(virginicaとそれ以外)のがく弁の幅に関するデータの割合。モデル$M_a$の平均値を$\mu$としたとき、$\mu$より小さなデータの個数と割合($<\mu$、$<\mu$ Rate)。$\mu$より大きなデータの個数($>\mu$)と割合($>\mu$Rate)。$<\mu$と$>\mu$の割合。$\mu-\sigma\sim \mu+\sigma$の中にあるデータの個数($68\%$)と割合($68\%$Rate)。}
-    \label{table:speal_width_virig}
-    \centering
-    \begin{tabular}{lrrrrrrrr}
+ \caption{アヤメ(virginicaとそれ以外)のがく弁の幅に関するデータの割合。モデル$M_a$の平均値を$\mu$としたとき、$\mu$より小さなデータの個数と割合($<\mu$、$<\mu$ Rate)。$\mu$より大きなデータの個数($>\mu$)と割合($>\mu$Rate)。$<\mu$と$>\mu$の割合。$\mu-\sigma\sim \mu+\sigma$の中にあるデータの個数($68\%$)と割合($68\%$Rate)。}
+ \label{table:speal_width_virig}
+ \centering
+ \begin{tabular}{lrrrrrrrr}
 
-        %\toprule
-        \hline
-        {} &  $<\mu$ &  $>\mu$ &  $<\mu$ Rate &  $>\mu$ Rate &  $<\mu/>\mu$ &  $68\%$ &  $68\%$Rate &  Data Size \\
-        %\midrule
-        \hline \hline
-        virginica   &     8 &    42 &       0.16 &       0.84 &       0.19 &   27 &     0.54 &         50 \\
-        others &    75 &    25 &       0.75 &       0.25 &       3.00 &   74 &     0.74 &        100 \\
-        %All    &    83 &    67 &       0.55 &       0.45 &       1.24 &  101 &     0.67 &        150 \\
-        %\bottomrule
-        \hline
-    \end{tabular}
+  %\toprule
+  \hline
+  {} &  $<\mu$ &  $>\mu$ &  $<\mu$ Rate &  $>\mu$ Rate &  $<\mu/>\mu$ &  $68\%$ &  $68\%$Rate &  Data Size \\
+  %\midrule
+  \hline \hline
+  virginica   &     8 &    42 &       0.16 &       0.84 &       0.19 &   27 &     0.54 &         50 \\
+  others &    75 &    25 &       0.75 &       0.25 &       3.00 &   74 &     0.74 &        100 \\
+  %All    &    83 &    67 &       0.55 &       0.45 &       1.24 &  101 &     0.67 &        150 \\
+  %\bottomrule
+  \hline
+ \end{tabular}
 \end{table}
-    
+
 \begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/15_/speal_width_viri.pdf}
-        \caption{データのがく弁の幅の累積度数(Data)と最尤モデルの累積度数$M_a$}
-        \label{fig:virginica_speal_width_fig}
-    \end{center}
+ \begin{center}
+  \includegraphics[width=15cm]{./image/15_/speal_width_viri.pdf}
+  \caption{データのがく弁の幅の累積度数(Data)と最尤モデルの累積度数$M_a$}
+  \label{fig:virginica_speal_width_fig}
+ \end{center}
 \end{figure}
 
 モデル$M_a=M(\mu=3.05,\sigma^2=0.434^2)$における統計検定量も利用する。
@@ -273,18 +272,18 @@ virginicaとそれ以外はモデル$M_a$によって十分予測できていな
 $Z$の絶対値は、$2$より大きくモデルとデータが乖離していることがわかる。
 
 \begin{table}
-    \caption{統計検定量$Z$}
-    \label{table:speal_width_Z}
-    \centering
-    \begin{tabular}{lccc}
-        \hline
-        {} &   $\bar{x} $ &  $\sigma$  &     Z \\
-        \hline \hline
-        virginica &  3.43 &  0.38 & -6.03 \\
-        others    &  2.87 &  0.33 &  4.27 \\
-        $M_a$ & 3.05 & 0.434 & - \\
-        \hline
-    \end{tabular}
+ \caption{統計検定量$Z$}
+ \label{table:speal_width_Z}
+ \centering
+ \begin{tabular}{lccc}
+  \hline
+  {} &   $\bar{x} $ &  $\sigma$  &     Z \\
+  \hline \hline
+  virginica &  3.43 &  0.38 & -6.03 \\
+  others    &  2.87 &  0.33 &  4.27 \\
+  $M_a$ & 3.05 & 0.434 & - \\
+  \hline
+ \end{tabular}
 \end{table}
 
 これらのことから、モデルの改訂をした方が良いことが示唆される。
@@ -297,30 +296,30 @@ virginicaとothersに適合するモデルをそれぞれ構築する。
 累積分布はどちらも正規分布的になっている。$M_a$を構築するときと同じようにそれぞれの平均と分散を求め(表\ref{table:speal_width_Z}の通りである)、データが平均に対して対称に分布していること、$\mu-\sigma\sim\mu+\sigma$の間にあるデータが$68\%$程度であるかを確かめる。
 
 \begin{table}
-    \caption{新たなモデル$M_v,M_o$による予測とデータの適合具合}
-    \label{table:speal_width_replace_model}
-    \begin{tabular}{lrrrrrrr}
-        %\toprule
-        \hline
-        {} &  $<\mu$ &  $>\mu$ &  $<\mu$Rate &  $>\mu$Rate &  $<\mu/>\mu$  &  $68\%$Rate &  Sample Size \\
-        %\midrule
-        \hline \hline
-        0 &   28 &   22 &     0.56 &     0.44 &      1.27 &     0.72 &           50 \\
-        1 &   46 &   54 &     0.46 &     0.54 &      0.85 &     0.72 &          100 \\
-        %\bottomrule
-        \hline
-    \end{tabular}
+ \caption{新たなモデル$M_v,M_o$による予測とデータの適合具合}
+ \label{table:speal_width_replace_model}
+ \begin{tabular}{lrrrrrrr}
+  %\toprule
+  \hline
+  {} &  $<\mu$ &  $>\mu$ &  $<\mu$Rate &  $>\mu$Rate &  $<\mu/>\mu$  &  $68\%$Rate &  Sample Size \\
+  %\midrule
+  \hline \hline
+  0 &   28 &   22 &     0.56 &     0.44 &      1.27 &     0.72 &           50 \\
+  1 &   46 &   54 &     0.46 &     0.54 &      0.85 &     0.72 &          100 \\
+  %\bottomrule
+  \hline
+ \end{tabular}
 \end{table}   
 
 表\ref{table:speal_width_replace_model}には、新たなモデル$M_v$および$M_o$の予測とデータの適合具合を示している。
 どの指標もモデルの予想と一致しており、モデルがデータと適合していることを示唆している。
 
 \begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/15_/speal_width_viri_model.pdf}
-        \caption{データのがく弁の幅の累積度数(Data)と最尤モデルの累積度数$M_v,M_o$}
-        \label{fig:speal_width_viri_model}
-    \end{center}
+ \begin{center}
+  \includegraphics[width=15cm]{./image/15_/speal_width_viri_model.pdf}
+  \caption{データのがく弁の幅の累積度数(Data)と最尤モデルの累積度数$M_v,M_o$}
+  \label{fig:speal_width_viri_model}
+ \end{center}
 \end{figure}
 
 図\ref{fig:speal_width_viri_model}はモデルの累積度数とデータの適合具合を示している。
@@ -336,7 +335,7 @@ virginicaとothersに適合するモデルをそれぞれ構築する。
 同じアヤメという分類に属するのだから、がく弁の幅も同じ程度だろうと考え、$\mu$が同一のモデルを選んだ\footnote{頻度論を元にした生物学の教科書では、母数を同一にするのは、そうでないことを示すため(背理法)と説明されることがある。本書の方針とは異なる。本書では、これまで同一だと思われていたアヤメの分類が増えたので、それまではがく弁についてもある統計モデル$M$で予測されていたと言う前提があったとする。実際にデータと適合モデルが既存研究において提案されてたとする。母数が同じと考えられていたモデルで予測可能であるかを調査するために、モデルの統計量に関する予測を利用する。この論証は背理法ではない。}。また、正規分布を仮定したのも、これまでアヤメのがく弁は正規モデルで予測していたからである\footnote{と言う設定の上で推論を進めていく。実際には、既存研究でどのように扱われていたかを調べる必要がある。もしも指数分布で推測していたなら、分布形や統計検定量を変える。既存の研究成果で予測ができるのかを調べるためである。既存の予測が当たらなかったら、新たなモデルを提案する。既存のモデルが予測には適さないことや新しいモデルの提案は科学的な成果である。報告するべき事柄である。}。
 
 \begin{equation*}
-    t = \frac{\bar{x}-\bar{y}}{s\sqrt{\frac{1}{m} + \frac{1}{n} }} \sim t_{m+n-2}
+ t = \frac{\bar{x}-\bar{y}}{s\sqrt{\frac{1}{m} + \frac{1}{n} }} \sim t_{m+n-2}
 \end{equation*}
 ここで、$s^2=\frac{(m-1)s_x^2+(n-1)s_y^2}{m+n-2}$である。
 パラメータについては、表\ref{fig:seto_versi_speal_w_summary}にある通りである。
@@ -344,18 +343,18 @@ virginicaとothersに適合するモデルをそれぞれ構築する。
 このことから、モデル$M_2$では予測しにくいと考えられる。
 
 \begin{table}
-    \caption{setosa、versicolorのがく弁の幅のデータの統計量}
-    \label{fig:seto_versi_speal_w_summary}
-    \centering
-    \begin{tabular}{lrrr}
-        \hline
-        {} &  Ave. &  Sigma &   N \\
-        \hline \hline
-        setosa     &  3.43 &   0.38 &  50 \\
-        versicolor &  2.77 &   0.31 &  50 \\
-        setosa and versicolor &  3.10 &   0.48 &  100 \\
-        \hline
-    \end{tabular}
+ \caption{setosa、versicolorのがく弁の幅のデータの統計量}
+ \label{fig:seto_versi_speal_w_summary}
+ \centering
+ \begin{tabular}{lrrr}
+  \hline
+  {} &  Ave. &  Sigma &   N \\
+  \hline \hline
+  setosa     &  3.43 &   0.38 &  50 \\
+  versicolor &  2.77 &   0.31 &  50 \\
+  setosa and versicolor &  3.10 &   0.48 &  100 \\
+  \hline
+ \end{tabular}
 \end{table}
 
 最尤モデル$M=M(3.10,0.48^2)$のデータへの適合具合を見る。累積度数はモデルと離れていることがわかる(図\ref{fig:speal_width_setosa_versi_model})。
@@ -363,11 +362,11 @@ virginicaとothersに適合するモデルをそれぞれ構築する。
 
 
 \begin{figure}
-    \begin{center}
-        \includegraphics[width=15cm]{./image/15_/speal_width_seto_versi_model.pdf}
-        \caption{データのがく弁の幅の累積度数(Data)と最尤モデルの累積度数$M$}
-        \label{fig:speal_width_setosa_versi_model}
-    \end{center}
+ \begin{center}
+  \includegraphics[width=15cm]{./image/15_/speal_width_seto_versi_model.pdf}
+  \caption{データのがく弁の幅の累積度数(Data)と最尤モデルの累積度数$M$}
+  \label{fig:speal_width_setosa_versi_model}
+ \end{center}
 \end{figure}
 
 
@@ -391,29 +390,29 @@ grouseticksはライチョウのひなの頭についているダニの個体数
 Pythonでも呼び出すことができる。
 
 \begin{lstlisting}
-    import statsmodels.api as sm
-    data = sm.datasets.get_rdataset("grouseticks", "lme4").data
-    ticks = data['TICKS'].values
+ import statsmodels.api as sm
+ data = sm.datasets.get_rdataset("grouseticks", "lme4").data
+ ticks = data['TICKS'].values
 \end{lstlisting}
 
 \begin{SMbox}{カウントデータだからポアソン分布}
-    \begin{quote}
-        カウントデータならポアソン回帰で!\footnote{P.19 \url{https://kuboweb.github.io/-kubo/stat/2011/y/skubostat2011y.pdf}}\\
-        • もしこの観測データ (縦軸) がカウントデータだったら?\\
-        まずい点: 等分散ではないに直線回帰?\\
-        まずい点: モデルによる予測は「負の個体密度」?\\
-    \end{quote}
-    カウントデータだからポアソン分布を仮定しよう。その理由は、正規分布などであれば、負の個体数が出てくるので、現象をよく予測できていないと言うことが挙げられている。ここでいうカウントデータはある一定時間に起きた事象の回数のことではなく、種子の個数のことである。
+ \begin{quote}
+  カウントデータならポアソン回帰で!\footnote{P.19 \url{https://kuboweb.github.io/-kubo/stat/2011/y/skubostat2011y.pdf}}\\
+  • もしこの観測データ (縦軸) がカウントデータだったら?\\
+  まずい点: 等分散ではないに直線回帰?\\
+  まずい点: モデルによる予測は「負の個体密度」?\\
+ \end{quote}
+ カウントデータだからポアソン分布を仮定しよう。その理由は、正規分布などであれば、負の個体数が出てくるので、現象をよく予測できていないと言うことが挙げられている。ここでいうカウントデータはある一定時間に起きた事象の回数のことではなく、種子の個数のことである。
+ 
+ このことは本書では推奨しない。
+ 予測が現象を反映していないことは、大きな問題ではない。例えば、身長の分布の推定に正規分布を使った。正規分布の推定では負の身長は、非常に低い確率で出現する。これは物理的にあり得ない。では、この仮定がダメなのかと言えばそんなことはない。あり得ない部分は無視して、予測したいことが予測できれば問題にならない。
 
-    このことは本書では推奨しない。
-    予測が現象を反映していないことは、大きな問題ではない。例えば、身長の分布の推定に正規分布を使った。正規分布の推定では負の身長は、非常に低い確率で出現する。これは物理的にあり得ない。では、この仮定がダメなのかと言えばそんなことはない。あり得ない部分は無視して、予測したいことが予測できれば問題にならない。
+ また、大学入試の共通テストの得点分布はおよそ正規分布で推測可能な形になっている。このことからテストの得点は正規分布すると考えないほうがよい。
+ 何も考えずにテストを作って、ある集団に解かせてみると、その分布は正規分布とは程遠い。授業の得点を予測するのに正規分布は仮定しないほうがいいことがわかる。状況に応じて予測できそうなモデルを構築する必要があることを示唆している。
 
-    また、大学入試の共通テストの得点分布はおよそ正規分布で推測可能な形になっている。このことからテストの得点は正規分布すると考えてはいけない。
-    何も考えずにテストを作って、ある集団に解かせてみると、その分布は正規分布とは程遠い。授業の得点を予測するのに正規分布は仮定しないほうがいいことがわかる。状況に応じて予測できそうなモデルを構築する必要があることを示唆している。
+ カウントデータなのだからポアソン分布を仮定することは本書では勧めない。データに適合しないならば、より多くの適合しそうなモデルを探索してみることを勧める\footnote{分散も平均も変化するデータなので、正規分布を仮定したモデルだと計算が破綻するのかもしれない。このことを私は調べてない。}。
 
-    カウントデータなのだからポアソン分布を仮定することは本書では勧めない。データに適合しないならば、より多くの適合しそうなモデルを探索してみることを勧める\footnote{分散も平均も変化するデータなので、正規分布を仮定したモデルだと計算が破綻するのかもしれない。このことを私は調べてない。}。
-    
-    %また、適合する分布が見つからないこともある。
+ %また、適合する分布が見つからないこともある。
 \end{SMbox}
 
 
