@@ -55,11 +55,11 @@
 \subsection{ASAの$p$値に関する解釈}
 $p$値に関する解釈は、アメリカ統計協会(ASA)が2016年に発表した声明に従う\cite{doi:10.1080/00031305.2016.1154108}。以下に引用しておく。
 \begin{quote}
-    P-values can indicate how incompatible the data are with a specified statistical model.
+ P-values can indicate how incompatible the data are with a specified statistical model.
 \end{quote}
 日本計量生物学会が公開した翻訳では、
 \begin{quote}
-    $P$値はデータと特定の統計モデルが矛盾する程度をしめす指標のひとつである。
+ $P$値はデータと特定の統計モデルが矛盾する程度をしめす指標のひとつである。
 \end{quote}
 この翻訳された文章ではincompitableを矛盾としている。本書では適合と翻訳する。
 日本語の翻訳を書き換えると、$p$値は、データと特定のモデルの適合を示す指標の一つである。
@@ -75,9 +75,9 @@ ASAが$p$値をどのように使ってほしいと考えているかについ�
 その予測とは以下のようになる。
 %初等的な生物統計学の書籍に提示されているのは、
 \begin{enumerate}
-    \item OO条件とXX条件では~という特性に$\cdots$という差がある
-    \item A群とB群の特徴量の平均値が異なる
-    %\item A群とB群について平均値に差があるか
+ \item OO条件とXX条件では~という特性に$\cdots$という差がある
+ \item A群とB群の特徴量の平均値が異なる
+ %\item A群とB群について平均値に差があるか
 \end{enumerate}
 現在の生物統計学においては、これらの問いを有意差検定を用いて解決を試みている\footnote{失敗している}。
 具体的には、母数が同一のモデルを仮定し、そのモデルにデータが適合するかを検証する。
@@ -103,9 +103,8 @@ $p$値を使ったモデル選択は、仮説検定と数学的に同じであ�
 最後にあげた特色、頻度論統計学が扱う対象は、繰り返し試行を行った結果得られる統計的性質を対象にしている。生物学のデータがこの対象に当てはまっていないにもかかわらず、生物学の多くの書籍では頻度論統計学を採用している。本書では、頻度論統計学の知見を元に、頻度論が対象にしていない範囲で推論を行う方法を説明する。言い換えれば、正規分布で予測できることがわからない対象に対してモデルを構築する考え方と推定方法について考察を行う。
 
 \begin{SMbox}{生物統計学では言えないことも言える}
-    統計学では言えないことを生物統計学では主張していることが多々ある。この理由を探してはいけない。やってるからやっているだけである。
-
-    %ただし、生物統計が扱うのは頻度論では扱えない範囲なので、統計学では言えないことでもある程度認めなければいけない事項がある。
+ 統計学では言えないことを生物統計学では主張していることが多々ある。この理由を探してはいけない。やってるからやっているだけである。
+ %ただし、生物統計が扱うのは頻度論では扱えない範囲なので、統計学では言えないことでもある程度認めなければいけない事項がある。
 \end{SMbox}
 
 \chapter{モデル}
@@ -114,11 +113,11 @@ $p$値を使ったモデル選択は、仮説検定と数学的に同じであ�
 \section{モデル}
 モデル(模型)は次の特徴を備えている。
 \begin{enumerate}
-    \item モデルは本物の特徴の一部を推測可能。本物との乖離の程度も推測できる
-    \item 複数の仮定により構築される。また、それらの仮定は、現状の知識では明らかではないまたは、現実的には成立していないことがある。
-    %推測可能なことを増やすために仮定を増やすことがある。
-    % \item モデルは本物の要素・特徴の全体を推測することはできない。
-    \item モデルは間違った推測をする。
+ \item モデルは本物の特徴の一部を推測可能。本物との乖離の程度も推測できる
+ \item 複数の仮定により構築される。また、それらの仮定は、現状の知識では明らかではないまたは、現実的には成立していないことがある。
+       %推測可能なことを増やすために仮定を増やすことがある。
+ % \item モデルは本物の要素・特徴の全体を推測することはできない。
+ \item モデルは間違った推測をする。
 \end{enumerate}
   
 例えば、車のプラモデルはモデルである。本物の特徴の一つである大きさを推測可能にするため、スケール（例えば、1/24など）を決めて作られている。車体の幅などを計測し、スケール倍すれば、実物の大きさを推測できる。
@@ -141,9 +140,9 @@ $p$値を使ったモデル選択は、仮説検定と数学的に同じであ�
 まず、統計モデルは数理統計の知識を用いて構築され、現実を推測するために使用される。例えば、以下のような仮説から構築される簡単な統計モデルがあります。
 
 \begin{enumerate}
-    \item (仮定1)確率変数が同一の分布から独立に得られる(i.i.d)
-    \item (仮定2)その分布関数は、$f(x)$で表される
-    \item (仮定3)分布関数の母数に関する仮説\footnote{なお、中には三番目の仮説のみを統計モデルと主張する学派もある\cite{塩見_正衛2021}}
+ \item (仮定1)確率変数が同一の分布から独立に得られる(i.i.d)
+ \item (仮定2)その分布関数は、$f(x)$で表される
+ \item (仮定3)分布関数の母数に関する仮説\footnote{なお、中には三番目の仮説のみを統計モデルと主張する学派もある\cite{塩見_正衛2021}}
 \end{enumerate}
 
 \subsection{統計モデルとデータ}
@@ -183,11 +182,11 @@ $p$値を使ったモデル選択は、仮説検定と数学的に同じであ�
 
 
 \begin{SMbox}{有用な近似が得られるからモデルを使う}
-    Boxらは、統計学において正規分布や一次関数で推論することを次のように捉えている\cite{box1976science}。
-\begin{quote}
-    Equally, the statistician knows, for example, that in nature there never was a normal distribution, there never was a straight line, yet with normal and linear assumptions, known to be false, he can often derive results which match, to a useful approximation, those found in the real world. 
-\end{quote}
-    %データが正規分布的に分布しているということは、ある中心に対して対照的にデータが生じていることを示す。このとき、正規分布でデータを予測するのが良いのではないかと考える。
+ Boxらは、統計学において正規分布や一次関数で推論することを次のように捉えている\cite{box1976science}。
+ \begin{quote}
+  Equally, the statistician knows, for example, that in nature there never was a normal distribution, there never was a straight line, yet with normal and linear assumptions, known to be false, he can often derive results which match, to a useful approximation, those found in the real world. 
+ \end{quote}
+ %データが正規分布的に分布しているということは、ある中心に対して対照的にデータが生じていることを示す。このとき、正規分布でデータを予測するのが良いのではないかと考える。
 \end{SMbox}
 %以下では、統計モデルを$M(\bm{a})$とし、ここで$\bm{a}$は、仮定3の統計モデルの母数であり、母数が複数あることも考慮し、ベクトルで表記しておく。
 
@@ -313,11 +312,11 @@ $p$値を使ったモデル選択は、仮説検定と数学的に同じであ�
 d
 
 \begin{figure}
-    \begin{center}
-        \includegraphics[bb=0 0 1024 768,width=15cm]{./image/01_/conceptual_diagram/conceptual_diagram.002.png}
-        \caption{統計モデルによる現象の推測に関する概念図}
-        \label{fig:conceptual_diagram_statistics}
-    \end{center}
+ \begin{center}
+  \includegraphics[bb=0 0 1024 768,width=15cm]{./image/01_/conceptual_diagram/conceptual_diagram.002.png}
+  \caption{統計モデルによる現象の推測に関する概念図}
+  \label{fig:conceptual_diagram_statistics}
+ \end{center}
 \end{figure}
 
 
@@ -326,10 +325,10 @@ d
 \subsection{適合しすぎな適合モデルは良いモデル？}%表現力・過学習・汎化性能}
 
 \begin{enumerate}
-    \item 汎化性能 あるデータに対して適合させたモデルを元に、それ以外のデータに対する予測性能。
-    \item 過学習したモデル　モデルがデータに対して当てはまりが良すぎることで、汎化性能が著しく低下した状態のモデル。過度に適合したモデルは未知のデータに対する予測性能が落ちることが予想される。
-    \item モデルの表現力 モデルがデータに適合できる度合い。パラメータや母数の個数のことを指していることが多い。表現力が高いほど学習用に与えたデータそのものを予測しやすくなる。
-          %表現力が高いほど過学習しやすいモデルになる。
+ \item 汎化性能 あるデータに対して適合させたモデルを元に、それ以外のデータに対する予測性能。
+ \item 過学習したモデル　モデルがデータに対して当てはまりが良すぎることで、汎化性能が著しく低下した状態のモデル。過度に適合したモデルは未知のデータに対する予測性能が落ちることが予想される。
+ \item モデルの表現力 モデルがデータに適合できる度合い。パラメータや母数の個数のことを指していることが多い。表現力が高いほど学習用に与えたデータそのものを予測しやすくなる。
+       %表現力が高いほど過学習しやすいモデルになる。
 \end{enumerate}
 
 \subsection{モデルの種類}
