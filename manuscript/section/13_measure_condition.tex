@@ -328,12 +328,27 @@ HARkingが起こる過程を説明する。
 
 
 \subsection{外れ値}
-外れ値とは、手順通りに行ったサンプルにおいて、想定していた計測値から著しく離れた値をとったサンプルのこととする。
+外れ値とは、実験手順通りに処理を行い得られたデータではあるが、事前の想定を外れた値のことである。次のデータを外れ値とすることがある
+研究者が想定していた計測値から著しく離れた値をとったサンプル、既存研究で想定したモデルではめったに出現することがないと考えられるデータ。
 想定がなければサンプル内において注目する集団を恣意的に決定し、それ以外を外れ値として処理することになる。
+どのような基準を用いてサンプルを外したのかや実験手順を元に行われた全サンプルの数も、報告の対象になる。外した理由や存在を報告しないならば、データの隠蔽行為である。
 
+\begin{SMbox}{欠損値を平均値で埋める}
+ \begin{rightbubbles}{bubblegreen}{@M123Takahashi}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+  予測モデルの精度を上げるためであっても，欠測値を平均値で代入処理することは一切お勧めしません．添付の図のとおり，予測値yhat2は実測値y1に対して一列になってしまうので，MCARであっても，平均値代入法で予測モデルの精度は下がります．
+  \begin{flushright}
+   \small	\url{https://twitter.com/M123Takahashi/status/1658036202325573633}
+  \end{flushright}
+ \end{rightbubbles}
 
-どのような基準を用いてサンプルを外したのかや実験手順を元に行われた全サンプルの数も、報告の対象になる。外した理由や存在を報告しないならば、不正行為になる。
-
+\begin{rightbubbles}{bubblegreen}{@M123Takahashi}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+  予測精度を上げるときの欠測値処理をするときは，平均値の代入は常に悪いので，このツイートの内容も残念ながら的外れです．決して精度の上がらない方法を用いることは，倫理的に正当化される場面はないと思います．(2/2)
+  \begin{flushright}
+   \small	\url{https://twitter.com/M123Takahashi/status/1658036205194461186}
+  \end{flushright}
+ \end{rightbubbles}
+ 本書が扱っている範囲では、代表値でデータを埋めないほうがよい。
+\end{SMbox}
 
 
 \begin{comment}
