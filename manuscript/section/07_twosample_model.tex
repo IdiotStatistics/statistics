@@ -83,35 +83,36 @@ rejectRange(X,Y,5.7)
 
 %\subsection{信頼区間}
 %平均母数$\mu_1,\mu_2(\mu_1\neq \mu_2)$のときに、
-
+\begin{comment}
 $Z$の不等式を変形していくと、次がわかる
 \begin{equation*}
     (\bar{X}-\bar{Y})-z_{0.025}\sigma\sqrt{\frac{1}{n_1}+\frac{1}{n_2}} \leq \mu_1-\mu_2 \leq (\bar{X}-\bar{Y})+z_{0.025}\sigma\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}.
 \end{equation*}
 この式の意味は、何だっけ？？？TODO
 %これは、$\bar{X},\bar{Y}$を得たときに、%$\mu_1-\mu_2$がこの範囲にあれば、$\mu_1=\mu_2$という統計モデルは棄却できない。
-
+\end{comment}
 
 
 \subsection{検出力}
 %二つの統計モデル$M(\mu,\mu),M(\mu_1,\mu_2)$において、を元に、検出力を計算する。
-$M(\mu,\mu;\sigma^2,\sigma^2)$における統計量$Z$が、もう一つの統計モデル$M(\mu_1,\mu_2)$においての出現頻度を計算する。これは1標本のモデルと同様に検出力という。
+$M(\mu_1,\mu_2)$における統計量$Z$が、もう一つの統計モデル$M(\mu,\mu;\sigma^2,\sigma^2)$においての出現頻度を計算する。これは1標本のモデルと同様に検出力という。
 
-$M(\mu,\mu)$において、
+$M(\mu,\mu)$において、次が成り立つ。
 \begin{equation*}
     \frac{\bar{x}-\bar{y}}{U} \sim N(0,1)
 \end{equation*}
-である。ここで、$U=\sigma\frac{\sqrt{m+n}}{\sqrt{mn}}$である。
+ここで、$U=\sigma\frac{\sqrt{m+n}}{\sqrt{mn}}$である。
 また、$M(\mu_1,\mu_2)$において、
 \begin{equation*}
     \frac{\bar{x}-\bar{y}}{U}\sim N(\frac{\mu_1-\mu_2}{U},1)
 \end{equation*}
-である。上式の信頼区間$-z_{\alpha/2}\sim z_{\alpha/2}$が下式において出現するのは、確率分布が平行移動しているので、その区間を$[A,B]$とすると、ぞれぞれ
+である。$N(\frac{\mu_1-\mu_2}{U},1)$の$95\%$予測区間の端をそれぞれ$A,B$とする。$A,B$は次の式で求められる。
+%上式の信頼区間$-z_{\alpha/2}\sim z_{\alpha/2}$が下式において出現するのは、確率分布が平行移動しているので、その区間を$[A,B]$とすると、ぞれぞれ
 \begin{eqnarray*}
     A = -z_{\alpha/2}+\frac{\mu_1-\mu_2}{U}\\
     B = z_{\alpha/2}+\frac{\mu_1-\mu_2}{U}
 \end{eqnarray*}
-である。この区間に統計量が出現する頻度は、
+この区間に統計量が出現する頻度は、
 \begin{equation*}
     \beta = \varPhi(B)-\varPhi(A)
 \end{equation*}
