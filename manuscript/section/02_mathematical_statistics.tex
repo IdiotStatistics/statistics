@@ -4,6 +4,58 @@
 最後に、モデルの確率変数への当てはまりの良さの相対的な指標である尤度を導入し、尤度を最大にする母数を推定する方法を説明する。
 さらに、モデルのパラメータの数に対するペナルティを導入した指標のAICを導入する。
 
+
+\section{確率変数}
+\subsection{確率変数がある分布関数に従う}
+確率変数は、変数だけでなくその出現頻度をあらわす変数のことである。
+
+
+
+確率変数$x$が、ある分布関数に従うとは、
+\begin{defi}
+ $X$を連続型の確率変数とする。このとき、$R$上に定義された次の関数$f_X(x)$を$X$の確率密度関数または単に確率密度という。
+ \begin{enumerate}
+  \item $f_X(x) \leq 0 $, $\int_{-\infty}^{\infty} f_X(x)dx=1$.
+  \item $a<X\leq b$となる事象の確率$P(a<X\leq b)$は、
+        \begin{equation}
+         P(a<X\leq b) = \int_b^a f_X(x)dx.
+        \end{equation}
+ \end{enumerate}
+ $f_X(x)$を単に$f(x)$ともかく。
+
+$X$の分布関数を、
+\begin{equation*}
+ F_X(x)=P(X\leq x) = \int_{-\infty}^x f_X(t)dt
+\end{equation*}
+と表す。
+\end{defi}
+
+
+\begin{defi}
+ $X_1,X_2,X_3,\cdots,X_n$を確率変数とする。$R$の任意のボレル集合に対して、
+ \begin{equation*}
+  P(X_1 \in A_1, X_2 \in A_2,\cdots, X_n \in A_n) = P(X_1 \in A_1)P(X_2\in A_2)\cdots P(X_n \in A_n)\\
+ \end{equation*}
+が成り立つならば、$X_1,X_2,\cdots,X_n$は独立であるという。
+\end{defi}
+
+\begin{theo}
+ $X_1,X_2,\cdots,X_n$が連続型確率変数のとき、結合密度$f(x_1,x_2,\cdots,x_n)$を持つとして、それぞれの周辺密度を$f_{X_i}(x_i),i=1,2,\cdots n$とする。このとき、$X_1,X_2,\cdots,X_n$が独立であることは次が成り立つことと同値である。すべての$x_1,x_2,\cdots, x_n \in R$にたいして
+ \begin{equation*}
+  f(x_1,x_2,\cdots,x_n) = f_{X_1}(x_1)f_{X_2}(x_2)\cdots f_{X_n}(x_n).
+ \end{equation*}
+\end{theo}
+
+
+\begin{defi}
+ $X_1,X_2,\cdots$が独立同分布(i.i.d)な確率変数であるとは、次の性質を満たすときをいう。
+ \begin{itemize}
+  \item 任意の整数$n>0$に対して、$X_1,X_2,\cdots,X_n$は独立な確率変数である。
+  \item 任意の整数$i,j>0$に対して、$X_i$と$X_j$は同じ分布をもつ。
+ \end{itemize}
+\end{defi}
+
+\begin{comment}
 \subsection{累積分布関数}
 aaa
 
@@ -12,6 +64,8 @@ aaa
 
 
 \subsection{相補累積分布関数}
+ 
+\end{comment}
 $1$から累積度数を引いたものは、相補累積分布関数と呼ばれ、ある値よりも大きな値をえる確率示し、数式では、
 \begin{eqnarray}
     1-F(x) &=& f(X>x) \\
@@ -19,14 +73,28 @@ $1$から累積度数を引いたものは、相補累積分布関数と呼ば�
 \end{eqnarray}
 図\ref{fig:standard_normal_distribution}(c)に図示した。累積分布関数と相補累積分布関数のどちらかを表示するかは、分野によって異なる\footnote{生物学の分野などでは、より大きな値を得る確率を重視することがあるので、累積分布関数よりも、相補累積分布関数が好まれることがあるように私は感じている。}。
 
-\section{確率変数}
-\subsection{確率変数がある分布関数に従う}
-確率変数$x$が、ある分布関数に従うとは、
-
 %$x$をたくさん集めて、$x_1,x_2,\cdots,x_n$という標本を得たときに、その出現頻度がその分布関数に精度よく近似できる。
 
 \subsection{平均・分散}
-なんらかの分布に従う確率変数$x_1,x_2,\cdots,x_n$について、平均と分散は、
+%なんらかの分布に従う確率変数$x_1,x_2,\cdots,x_n$について、
+\begin{defi}
+ 連続型確率変数$X$の平均値を、次で定義する。
+ \begin{equation*}
+  E[X] = \int_{-\infty}^{\infty} xf_X(x)dx
+ \end{equation*}
+ E[X]の値を$\mu_X$などと表す。
+\end{defi}
+
+\begin{defi}
+ 連続型確率変数$X$の分散$V[X]$を、次で定義する。
+ \begin{equation*}
+  V[X] = E[(X-\mu)^2] = \int_{-\infty}^{\infty} (x-\mu)f_X(x)dx
+ \end{equation*}
+ここで、$X$の平均値を$\mu$とする。$V[X]$の値を$\sigma_X^2$などと表す。
+\end{defi}
+
+\subsection{その他}
+平均と分散の推定値は、
 \begin{eqnarray*}
     \bar{x}_n &=& \frac{1}{n}\sum_{i=1}^n x_i \\
     \sigma_x^2 &=& \frac{1}{n} \sum_{i=1}^n (x_i-\bar{x})^2
@@ -69,7 +137,7 @@ $1$から累積度数を引いたものは、相補累積分布関数と呼ば�
     & &\qquad\quad  m\sigma^2_y+m\bar{y}^2-2m\bar{y}\bar{z}+m\bar{z}^2 ) \\
     &=& \frac{1}{n+m} (n\sigma^2_x+n(\bar{x}-\bar{z})^2 +m\sigma^2_y +m(\bar{y}-\bar{z})^2)
 \end{eqnarray*}
-この式は、$x_1,x_2,\cdots,x_n$や$y_1,y2,\cdots,y_m$を知らなくても、それぞれの平均と分散とサンプルサイズから、これらサンプル全体の平均、分散が計算できることを示している。
+この式は、$x_1,x_2,\cdots,x_n$や$y_1,y_2,\cdots,y_m$を知らなくても、それぞれの平均と分散とサンプルサイズから、これらサンプル全体の平均、分散が計算できることを示している。
 
 \section{正規分布}
 正規分布の確率密度関数は、
@@ -197,7 +265,7 @@ $P(|x|>z)$はより極端な値を取る確率などと言う方もされます�
 
 \subsection{$N(0,1)$での珍しい値は、$N(0,2)$では珍しくない？}
 以上の議論により、$N(0,1)$において、$z=1.64$以上の値が出る確率はおよそ$5\%$である。
-では、$N(0,2)$において$z=1.64$が出る確率はいくつだろうか。
+では、$N(0,2)$において$z=1.64$以上の値が出る確率はいくつだろうか。
 $N(0,2)$において、$z=1.64\times2$以上に大きな値が出る確率は、およそ$5\%$である。
 このことから、$N(0,2)$において$z=1.64$以上の値が出る確率は、$5\%$より大きいことがわかる。
 具体的に、計算をしてみると、その確率は$0.206$程度であることがわかる。
