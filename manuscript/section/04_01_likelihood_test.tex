@@ -1,4 +1,4 @@
-\chapter{モデルとデータの尤度比による比較}
+\chapter{モデルにおける尤度比の性質}
 モデル$M$において得られるデータ元に、母数を最尤推定する。新たに作られた最尤モデル上での尤度と元のモデル$M$での尤度の比がある分布に従うことがわかっている。
 このことを利用して、もともモデル$M$でデータを予測してもいいのかを考察する。
 
@@ -9,12 +9,11 @@
 \section{概要}
 
 \begin{defi}
-    母数の数が異なる統計モデル間の尤度の比を次のように定義する。
-    \begin{equation*}
-        Dev(D,M_1,M_2) = -2\log\frac{M_1におけるDの尤度}{M_2におけるDの尤度}
-    \end{equation*}
-    ここで、$M_1$は、$M(\theta_1,\theta_2)$,$M_2$は$M((\theta_{1'},\theta_2))$であり、$\theta_1$と$\theta_2$のベクトルの要素数の和は、$\theta_{1'},\theta_2$のベクトルの要素数の和に等しい。$D$は標本とする。
-
+ 母数の数が異なる統計モデル間の尤度の比を次のように定義する。
+ \begin{equation*}
+  Dev(D,M_1,M_2) = -2\log\frac{M_1におけるDの尤度}{M_2におけるDの尤度}
+ \end{equation*}
+ ここで、$M_1$は、$M(\theta_1,\theta_2)$,$M_2$は$M((\theta_{1'},\theta_2))$であり、$\theta_1$と$\theta_2$のベクトルの要素数の和は、$\theta_{1'},\theta_2$のベクトルの要素数の和に等しい。$D$は標本とする。
 \end{defi}
 
 $M_1$における標本$D$から、最尤モデル$M_1(\hat{\theta_1})$を構築したとき、$Dev(D,M_1,M_1(\hat{\theta_1}))$は、
@@ -148,8 +147,8 @@ $\sigma^2_0$を設定した正規モデル$M(\mu_0;\sigma^2_0)$について考�
 それぞれのモデル内での標本$X$の尤度を$L(\mu_0,X),L(\bar{x},X)$とする。
 具体的な数式は、
 \begin{align}
-    L(\mu_0,X)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp(-\frac{\sum(x_i-\mu_0)}{2\sigma^2})\\
-    L(\bar{X},X)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp(-\frac{\sum(x_i-\bar{X})}{2\sigma^2})\\
+    L(\mu_0,X)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp(-\frac{\sum(x_i-\mu_0)^2}{2\sigma^2})\\
+    L(\bar{X},X)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp(-\frac{\sum(x_i-\bar{X})^2}{2\sigma^2})\\
 \end{align}
 これらから$\lambda(X)$を計算すると、
 \begin{align}
@@ -215,7 +214,7 @@ $N(170,5.8^2)$と$N(175,5.8^2)$と言う2種類の密度関数からサンプリ
 \end{enumerate}
 実際に、正規モデルにおいてこの手順をなぞってみる。
 $M(\mu;\sigma^2)$における最尤モデルは、$M(\bar{x};\sigma^2)$である。
-それぞれのモデルにおける尤度を計算し、$-2\log\lambda{x}$を計算すればよい。
+それぞれのモデルにおける尤度を計算し、$-2\log\lambda(x)$を計算すればよい。
 
 \section{複雑なモデルでの尤度比検定}
 次のモデル$M(\beta_1,\beta_2)$を考える。
@@ -344,13 +343,13 @@ $M_2$の$\hat\hat\beta_2$のパラメータがどうなっているかなども�
 \section{One-way ANOVA}
 次の仮定をもとに統計モデル$M_A=M(\mu_1,\mu_2,\cdots,\mu_n)$を構築する。
 \begin{enumerate}
-    \item $\mu_i (i=0,1,2,\cdots,n)$
+    \item $\mu_i (i=1,2,\cdots,n)$
     \item $x_{ik} \sim N(\mu_i,\sigma^2)$
 \end{enumerate}
 この統計モデルの$\mu_1=\mu_2=\cdots=\mu_n$としたときの最尤推定量を計算する。
 サンプリングされた標本$x = x_{ik} (k=0,\cdots,n_i)$とすると、このモデルの尤度は次のようになる。
 \begin{equation*}
-    L(\mu;x) = \prod_{i=0,1,2,\cdots,n,k=0,2,\cdots,m_i}\frac{1}{\sqrt{2\pi\sigma^2}}\exp(-\frac{(x_{ik}-\mu_i)}{2\sigma^2})
+    L(\mu;x) = \prod_{i=1,2,\cdots,n,k=0,2,\cdots,m_i}\frac{1}{\sqrt{2\pi\sigma^2}}\exp(-\frac{(x_{ik}-\mu_i)^2}{2\sigma^2})
 \end{equation*}
 最尤推定量は次のようになる。
 \begin{equation*}
@@ -371,7 +370,7 @@ $M_s$から得られたサンプル$x$についてその最尤推定量は次の
     -2\log \lambda(x) = \frac{L(\mu;\bar{\sigma}^2)}{L(\mu_1,\mu_2,\cdots,\mu_n,\bar{\sigma}^2_{ML})}
 \end{equation*}
 
-$M_N$において、このモデルの上位の$M(\mu_1,mu_2,\cdots,\mu_n)$の最尤推定モデルと、$M_N$の尤度比がカイ二乗分布に従う。
+$M_N$において、このモデルの上位の$M(\mu_1,\mu_2,\cdots,\mu_n)$の最尤推定モデルと、$M_N$の尤度比がカイ二乗分布に従う。
 検定統計量は以下の通り。
 \begin{equation*}
     F = \frac{\sum_i^k \frac{n_i (\bar{x}_i-\bar{x})^2}{k-1}}{ \sum_{i=0}^k\sum_{j=0}^{n_i}\frac{ (x_{ij}-\bar{x}_i)^2 }{n-k}}
