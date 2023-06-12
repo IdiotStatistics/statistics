@@ -93,22 +93,6 @@ $P(|Z|>x)=0.046$はキリが悪いので代わりに、$P(|Z|>x)=0.05$を設定�
 
 %本書では、上記の歴史的な事情にしたがって、$\alpha=0.05$を利用して、理論計算を行う。
 
-
-\begin{SMbox}{有意水準は$0.05$でよし}
-    よくある受け答えを引用しておく\cite{greenland2016statistical}。
-    \begin{quote}
-        Q: Why do so many colleges and grad schools teach p = 0.05?
-
-        A: Because that's still what the scientific community and journal editors use.
-
-        Q: Why do so many people still use p = 0.05?
-
-        A: Because that's what they were taught in college or grad school.
-    \end{quote}
- ここでの$p=0.05$は、$\alpha=0.05$のことで、有意水準を$0.05$で教える理由について聞いている。
-
-本書では、モデルにおける計算を具体的に行うために$\alpha=0.05$を利用し、データとモデルを比較するさいにはこの基準を使わない。
-\end{SMbox}
 %これは、モデル$M$の標本であるはずなのに、外れた値であれば、そのモデル$M$
 %モデルが生成したはずの標本であるが、閾値を決めてモデルから生成されたものではないとするのである。
 %モデルが自身から得られた標本を批判するのであるから、自己の標本を批判するのである。
@@ -125,9 +109,9 @@ $P(|Z|>x)=0.046$はキリが悪いので代わりに、$P(|Z|>x)=0.05$を設定�
 %統計モデルの分布関数が変化すれば、その統計モデルにおける信頼区間・棄却域の値も変わる\footnote{中心極限定理を利用し、統計量の出現範囲を近似することが多い。}。
 %実際のデータが$\alpha\%$の割合で棄却されるということではない。モデルから生成された標本であるのに、この統計モデルから生成されていないと疑いをかける。
 
-\subsection{$\mu$の変化に応じた信頼区間}
+\subsection{母数平均の変化に応じた信頼区間}
 %$95\%$信頼区間と$p$値の関係}
-正規モデル$M$においてその統計検定量$Z$について、式変形を行なう。
+正規モデル$M$においてその統計検定量$Z$について、式変形を行う。
 \begin{eqnarray}
     & &|Z| < z_{0.025}( = 1.96 ) \notag \\
     &\rightarrow& \frac{\sqrt{n}|\bar{x}-\mu|}{\sigma} < z_{0.025} \notag\\
@@ -657,7 +641,7 @@ N = 10
 result_10 = [stopping_rule(delta) for delta in [1,5,10,20]]
 \end{lstlisting}
 
-\subsection{いつかは有意になる}
+\subsection{いつかは有意になる}\label{large_sample_size_significant}
 非常にわずかなモデルのちがいでも検定を使うと、モデルの標本ではないと言えてしまうことを確認する。
 まず、二つの正規モデルを構築する$M_a=M(170,5.8^2),M_b=M(171;5.8^2)$とする。
 母数平均が殆ど一致していることを、母数平均の規格化量$D$を計算することで確認しておく。
@@ -704,7 +688,7 @@ Z = calc_p()
 \end{lstlisting}
 
 図\ref{fig:time_series_p_value_depends_sample_size}にはサンプルサイズに応じた$p$値を表示した。
-サンプルサイズを増やしていくことで、$p$値が徐々に小くなることがわかる。
+サンプルを増やしていくことで、$p$値が徐々に小くなることがわかる。
 殆ど同じようなモデルであってもサンプルサイズを増やしていけば、あるモデルのサンプルではないと主張できる。
 このことは、データをモデルを比較するさいに非常に重要な事項である。
 \begin{figure}
@@ -718,9 +702,9 @@ Z = calc_p()
 
 
 \subsection{いつかは有意にならない}
-サンプルを一つづつ追加し、追加毎に$p$値を計算する。
+ある正規モデル$M_a$において、サンプルを生成し、一つづつサンプルを追加し、追加毎に$p$値を計算する。
 結果を図\ref{fig:time_series_p_value}に示してある。
-この図の通り、サンプルサイズを追加すると、一時的には$p$値があるしきい値(図の点線$\alpha=\frac{0.05}{2}$または$1-\frac{0.05}{2}$)を下回ることがあるが、その後サンプルを加えても、有意水準よりも大きな値となることがある。
+この図の通り、サンプルサイズを追加すると、一時的には$p$値があるしきい値(図の点線$\alpha=\frac{0.05}{2}$または$1-\frac{0.05}{2}$)を下回ることがあるが、その後サンプルを加えると、有意水準よりも大きな値となることがある。
 よく言われる「検定はサンプルサイズを大きくするといつかは有意水準を下回る」に反する\footnote{こう言われているのは、理論と実験の話を混ぜているためである。正確には、モデルと実験を比較するさいに、実験でサンプルサイズを逐次追加すると、モデルと実際の乖離があきらかになりやすいため、有意になりがちである。既に前の小節で確認した。}。
 
 \begin{figure}
@@ -925,3 +909,24 @@ $p$値を使うことが常に最適な判断材料になることは非常に�
 このモデルとデータとの対比を全く行わずに検定は運用されている。
 $p$値を使った、データとモデルの比較方法はすでに様々な論文において批判されている\cite{points_of_significance}。
 
+
+\subsection{いつかは有意になる}
+すでに小節\ref{large_sample_size_significant}おいて説明したように、非常に僅かな違いでも、$p<\alpha$となりやすいことを示しておく。TODO
+
+
+
+\begin{SMbox}{有意水準は$0.05$でよし}
+    よくある受け答えを引用しておく\cite{greenland2016statistical}。
+    \begin{quote}
+        Q: Why do so many colleges and grad schools teach p = 0.05?
+
+        A: Because that's still what the scientific community and journal editors use.
+
+        Q: Why do so many people still use p = 0.05?
+
+        A: Because that's what they were taught in college or grad school.
+    \end{quote}
+ ここでの$p=0.05$は、$\alpha=0.05$のことで、有意水準を$0.05$で教える理由について聞いている。
+
+本書では、モデルにおける計算を具体的に行うために$\alpha=0.05$を利用し、データとモデルを比較するさいにはこの基準を使わない。
+\end{SMbox}
