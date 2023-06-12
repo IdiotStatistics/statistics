@@ -18,18 +18,17 @@
   \item $f_X(x) \leq 0 $, $\int_{-\infty}^{\infty} f_X(x)dx=1$.
   \item $a<X\leq b$となる事象の確率$P(a<X\leq b)$は、
         \begin{equation}
-         P(a<X\leq b) = \int_b^a f_X(x)dx.
+         P(a<X\leq b) = \int_a^b f_X(x)dx.
         \end{equation}
  \end{enumerate}
  $f_X(x)$を単に$f(x)$ともかく。
 
-$X$の分布関数を、
+$X$の累積分布関数(または分布関数)を、
 \begin{equation*}
  F_X(x)=P(X\leq x) = \int_{-\infty}^x f_X(t)dt
 \end{equation*}
 と表す。
 \end{defi}
-
 
 \begin{defi}
  $X_1,X_2,X_3,\cdots,X_n$を確率変数とする。$R$の任意のボレル集合に対して、
@@ -55,6 +54,23 @@ $X$の分布関数を、
  \end{itemize}
 \end{defi}
 
+
+\begin{defi}
+ $1$から累積分布関数を引いたものを、相補累積分布関数といい、
+ \begin{eqnarray}
+  G(x)=1-F(x) &=& f(X>x) \\
+  &=& \int_{x}^{\infty} f(z)dz.
+ \end{eqnarray}
+ である。
+\end{defi}
+累積分布関数は、ある値よりも小さな値を得る確率を示す。
+相補累積分布関数は、ある値よりも大きな値を得る確率を示す。
+図\ref{fig:standard_normal_distribution}(c)に図示した。累積分布関数と相補累積分布関数
+のどちらかを表示するかは、分野によって異なる。
+%\footnote{生物学の分野などでは、より大きな値を得る確率を重視することがあるので、累積分布関数よりも、相補累積分布関数が好まれることがあるように私は感じている。}。
+
+
+
 \begin{comment}
 \subsection{累積分布関数}
 aaa
@@ -66,12 +82,6 @@ aaa
 \subsection{相補累積分布関数}
  
 \end{comment}
-$1$から累積度数を引いたものは、相補累積分布関数と呼ばれ、ある値よりも大きな値をえる確率示し、数式では、
-\begin{eqnarray}
-    1-F(x) &=& f(X>x) \\
-        &=& \int_{x}^{\infty} f(z)dz.
-\end{eqnarray}
-図\ref{fig:standard_normal_distribution}(c)に図示した。累積分布関数と相補累積分布関数のどちらかを表示するかは、分野によって異なる\footnote{生物学の分野などでは、より大きな値を得る確率を重視することがあるので、累積分布関数よりも、相補累積分布関数が好まれることがあるように私は感じている。}。
 
 %$x$をたくさん集めて、$x_1,x_2,\cdots,x_n$という標本を得たときに、その出現頻度がその分布関数に精度よく近似できる。
 
@@ -82,13 +92,13 @@ $1$から累積度数を引いたものは、相補累積分布関数と呼ば�
  \begin{equation*}
   E[X] = \int_{-\infty}^{\infty} xf_X(x)dx
  \end{equation*}
- E[X]の値を$\mu_X$などと表す。
+ $E[X]$の値を$\mu_X$などと表す。
 \end{defi}
 
 \begin{defi}
  連続型確率変数$X$の分散$V[X]$を、次で定義する。
  \begin{equation*}
-  V[X] = E[(X-\mu)^2] = \int_{-\infty}^{\infty} (x-\mu)f_X(x)dx
+  V[X] = E[(X-\mu)^2] = \int_{-\infty}^{\infty} (x-\mu)^2 f_X(x)dx
  \end{equation*}
 ここで、$X$の平均値を$\mu$とする。$V[X]$の値を$\sigma_X^2$などと表す。
 \end{defi}
