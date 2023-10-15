@@ -216,7 +216,7 @@ $95\%$信頼区間の式を見てわかるように、サンプルサイズ$n$�
 %\subsection{複数の確率変数から推測する}
 
 
-\section{正規モデルにおける中心間の距離(効果量)}
+\subsection{正規モデルにおける中心間の距離(効果量)}
 %ここでは、正規モデル$M_N(\mu;\sigma^2)$について考える。
 分散が等しい二つの正規モデル$M_a=M(\mu_a),M_b=M(\mu_b)$とする。
 %標準偏差を$1$にすると、それぞれのモデルは、$M_{a'}=M(\frac{\mu_a}{\sigma};1^2),M_{b'}=M(\frac{\mu_b}{\sigma};1^2)$である。
@@ -320,6 +320,43 @@ $N$が大きくなると、解析と近似での信頼区間が一致しやす�
 %事前実験やこれまでの研究結果から推測し、モデルの分布と標本分布が一致していそうなモデルを選ぶことになる。
 
 \section{モデルとデータの乖離を調べる方法}
+
+\subsection{チェビシャフの不等式}
+\begin{lemm}
+ 確率変数$x$が平均$\mu$,分散$\sigma^2$であるとき、次の不等式が成り立つ。
+ \begin{equation*}
+  P(|X-\mu| \geq k\sigma) \leq \frac{1}{k^2}
+ \end{equation*}
+ここで、$k$は任意の正の数。不等式の不等号を変えてやると、
+ \begin{equation*}
+  P(|X-\mu| \leq k\sigma) \geq 1-\frac{1}{k^2}
+ \end{equation*}
+\end{lemm}
+この不等式を使えば、標準偏差をばらつきの基本単位として、その単位の中にどれくらいデータが入るのか推定できる。例えば、$k=2$の場合を記述すると、
+ \begin{equation*}
+  P(|X-\mu| \leq 2\sigma) \geq \frac{3}{4}
+ \end{equation*}
+$\mu$から$2\sigma$の範囲の中にある確率変数は、$75\%$程度より多いことを示している。
+\begin{lstlisting}
+ x = np.arange(0,12,0.01)
+ y = np.sin(x/(2*np.pi)*20)
+ plt.plot(x,y)
+ plt.show()
+
+ np.random.shuffle(y) # やらなくてもよい
+
+ df = pd.DataFrame(y,columns=['x'])
+ sns.swarmplot(data=df, y="x");plt.show()
+
+ mu,sigma = np.mean(df['x']),np.std(df['x'])
+ x = df['x']
+ print(mu,sigma)
+ print(np.sum( np.abs(x-mu)<=2*sigma )/len(x), np.sum( np.abs(x-mu)>=2*sigma )/len(x))
+\end{lstlisting}
+最後行の出力は、$3/4$以上、$1/4$以下であり、計算してみると、期待通り$1,0$が出力されている。
+
+
+
 
 %\section{モデルでデータを推測可能}
 \subsection{正規モデルの場合}
@@ -428,18 +465,18 @@ len(sample[np.where( (sample >a) & (sample<b) )])/N
  \end{center}
 \end{figure}
 
-\subsubsection{標準偏差まわりにデータがある割合}
-チェビシャフにより、変異がどのような物であっても、平均-2$\rm{SD}\sim$平均+2$\rm{SD}$の間に$3/4$程度のデータがある。
+
+
+
 
 
 %\subsubsection{標本全体を使う方法}
 
 
-
-
-
-
 \subsection{正規モデル以外でも使える方法}
+
+
+
 \subsubsection{累積分布によるデータとモデルの比較}
 
 標本の累積分布のプロット方法について説明する。
