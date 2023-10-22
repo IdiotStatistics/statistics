@@ -365,20 +365,47 @@ $a$について、とくと、
 \end{eqnarray*}
 $b$については、同様に、
 \begin{equation*}
-    b = \frac{1}{\lambda}\log\frac{\alpha}{2}
+    b = -\frac{1}{\lambda}\log\frac{\alpha}{2}
 \end{equation*}
-以上より、この積分の条件で、$100(1-\alpha)\%$の確率で値を得る範囲は、$[\frac{1}{\lambda} \log\frac{1}{1-\alpha/2} ,\frac{1}{\lambda}\log\frac{\alpha}{2}]$である。
-図\ref{fig:expon_simulation_sample}は、指数分布により、サンプルサイズ$1000$の標本を$100$回作って、各標本においてデータが区間$[\frac{1}{\lambda} \log\frac{1}{1-\alpha/2} ,\frac{1}{\lambda}\log\frac{\alpha}{2}]$に入った割合をシミュレーションし、そのヒストグラムを表示している。確かに、$95\%$くらいの割合でその区間にデータが入っている。
-
+以上より、この積分の条件で、$100(1-\alpha)\%$の確率で値を得る範囲は、
+\begin{equation}\label{expon_fail_prediction_interval}
+ [\frac{1}{\lambda} \log\frac{1}{1-\alpha/2},
+-\frac{1}{\lambda}\log\frac{\alpha}{2}]
+\end{equation}
+である。
+指数分布により、サンプルサイズ$1000$の標本を$100$回作って、各標本においてデータがこの区間に入った割合をシミュレーションし、そのヒストグラムを図\ref{fig:expon_simulation_sample}に示した。確かに、$95\%$くらいの割合でその区間にデータが入っている。
 
 \begin{figure}
     \begin{center}
         \includegraphics[width=15cm]{./image/02_/expon_simulation_sample.pdf}
-        \caption{指数分布$\lambda=1/10$からサンプルサイズ1000の標本を100回シミュレーションし、各標本においてデータが区間$[\frac{1}{\lambda} \log\frac{1}{1-\alpha/2} ,\frac{1}{\lambda}\log\frac{\alpha}{2}]$に入った割合を計算した。そのヒストグラム。}
+        \caption{指数分布$\lambda=1/10$からサンプルサイズ1000の標本を100回シミュレーションし、各標本においてデータが区間$[\frac{1}{\lambda} \log\frac{1}{1-\alpha/2} ,-\frac{1}{\lambda}\log\frac{\alpha}{2}]$に入った割合を計算した。そのヒストグラム。}
         \label{fig:expon_simulation_sample}
 
     \end{center}
 \end{figure}
+
+
+\subsection{指数分布に従う確率変数の予測区間}
+確率変数の出現しやすい区間は、一般には予測区間として定義される。
+そして、予測区間は、ある割合$1-\alpha$で確率変数が出現する最小の区間であるとする。
+ここでは、\ref{expon_fail_prediction_interval}が最小ではないことを示す。
+具体的には、$1-\alpha$の割合で確率変数が出現する区間を導出し、この区間が式\ref{expon_fail_prediction_interval}より小さいことを示す。
+$[0,a]$をその区間とし、
+\begin{equation*}
+ 1-\exp(-\lambda a) = 1-\alpha
+\end{equation*}
+を解く。するとこの区間は、
+\begin{equation*}\label{expon_min_prediction_interval}
+[0,\frac{1}{\lambda}\log\frac{1}{\alpha}]
+ \end{equation*}
+である。
+区間\ref{expon_fail_prediction_interval}と、区間\ref{expon_min_prediction_interval}の大小関係を比較する。区間の大きさの差を計算する\footnote{対数の計算$\log A+\log B=\log AB,\log \frac{A}{B}= \log A-\log B$,$\log \frac{1}{A}=-\log A$}。
+\begin{eqnarray*}
+ & &\lambda \left( (\frac{1}{\lambda}\log\frac{2}{\lambda}-\frac{1}{\lambda}\log\frac{1}{1-\frac{\alpha}{2}})-\frac{1}{\lambda}\log\frac{1}{\alpha} \right)\\
+&=& -\log\frac{\alpha}{2}+\log(1-\frac{\alpha}{2})+\log\alpha \\
+&=& \log2(1-\frac{\alpha}{2}) = \log(2-\alpha)
+\end{eqnarray*}
+また、最後の式は、常に正なので、区間\ref{expon_fail_prediction_interval}の方が大きいことがわかる。よって、区間\ref{expon_min_prediction_interval}のほうが区間\ref{expon_fail_prediction_interval}より小さい区間である\footnote{問題:最小の区間であろうか？}\footnote{どっちをつかってもそんなに差がでないので、どっちでを使ってもいい。おおまかに入っていることを確認するためだけにつかう。数学的なことにはこれ以上考えない。}。
 
 
 \section{カイ二乗分布}
