@@ -670,7 +670,7 @@ $\frac{\partial l(\mu,\sigma^2)}{\partial \mu} = 0$とおいて、$\mu$につい
 \end{equation*}
 ここで、$k$はデータによって決まったパラメータの個数である。
 
-\subsection{マトリョウシカになったモデル}
+\section{マトリョウシカになったモデル}
 複数のパラメータにより決定されるモデル$M(\alpha,\beta,\gamma,\omega)$がある。
 このパラメータの中からモデルに影響を与えないように値を個体したモデル$M(\alpha,\beta,\gamma)$や$M(\alpha,\beta,\omega)$や$M(\alpha)$などが構成できることがある。
 このようにパラメータの個数が少なくなったモデルを元のモデルからネストされたモデルや入れ子になったモデルと呼ぶことがある。
@@ -678,3 +678,53 @@ $\frac{\partial l(\mu,\sigma^2)}{\partial \mu} = 0$とおいて、$\mu$につい
 
 モデル$M(\alpha,\beta,\gamma)$をフルモデルとしたとき、$M(
 \alpha,\beta)$はネストされたモデルでるが、$M(\alpha,\omega)$はネストされたモデルではない。
+
+\subsection{尤度比}
+フルモデルモデル$M_2$に対しその子モデルを$M_1$とする。$M_2$の母数を$(\theta_1,\theta_2)$ただし、$\theta_1\in R^n,\theta_2\in R^k$とし、$M_1$の母数を$\theta_1$とする。また、$D$を$M_1$のサンプルサイズ$d$の標本とする。
+
+\begin{defi}
+ 母数の個数が異なる統計モデル間の最尤推定する前の尤度比を次のように定義する\footnote{厳密な尤度比の定義は数理統計学の教科書を参照せよ。}。
+ \begin{equation*}
+  Dev(D,M_1,M_2) = -2\log\frac{M_1におけるDの尤度}{M_2におけるDの尤度}
+ \end{equation*}
+式変形を行えば\footnote{$\log\frac{a}{b} =\log a -\log b$}、
+ \begin{equation*}
+ Dev(D,M_1,M_2) = 2\left( \log ( M_2におけるDの尤度 )-\log ( M_1におけるDの尤度 ) \right)
+ \end{equation*}
+となる。自由度の高いモデル$M_2$とそれよりも自由度の低いモデル$M_1$の対数尤度の差の$2$倍である。
+
+ また、$M_2$における母数$\theta_2$を最尤推定したときのモデルを$M^{ML}_2(D)$とする。このとき、次を尤度比と呼ぶ。
+ \begin{equation*}
+  Dev(D,M_1,M_2^{ML}(D))
+ \end{equation*}
+%$$Dev(D,M_1,M_2^{ML}(D))$は、標本$D$が変化すれば、この値も変化する。
+\end{defi}
+
+このとき、次のことが解っている\footnote{ただしいくらかの条件がある。詳しくは数理統計学のテキストを参照するべき}。
+\begin{theo}    \label{likelihood_test_basic}
+\begin{equation*}
+ Dev(D,M_1,M_2^{ML}(D)) \sim \chi^2_{n}
+\end{equation*}
+%ここで、$k$は、最尤推定した母数の個数。
+分母のモデルにおけるデータ由来の母数の個数から$(n+k)$、分子のモデルにおけるデータ由来の母数の個数$(k)$を引いたものが自由度$(n)$。
+式が複雑であるが、$4$つのステップで説明できる。
+\begin{enumerate}
+ \item 子モデル$M_1$の標本を生成。
+ \item それ以上に高い自由度を持つ対するフルモデル$M_2$で、標本を予測しようと最尤$M_2$モデルを構築する。
+ \item $M_1$における最尤モデルも構築する
+ \item 最尤モデルにおける対数尤度の差が、$\chi^2_{n}$に従う(なんどもこの操作をすると)。
+\end{enumerate}
+\end{theo}
+
+
+\subsection{データから推定したモデルの尤度比}
+
+あるデータ$D'$に対して、なんらかの推定方法で母数を推定したモデル$\hat{M_1}$について、次のことがわかる。
+\begin{lemm} \label{likelihood_test_estimated_model}
+ \begin{equation*}
+  Dev(D,\hat{M_1},\hat{\hat{M_2}}) = -2\log\frac{\hat{M_1}におけるDの尤度}{\hat{\hat{M_2}}におけるDの尤度} \sim \chi^2_{k}
+ \end{equation*}
+ ここで$D$は、$\hat{M_1}$の標本であり、$\hat{\hat{M_2}}$は、標本$D$を使って最尤推定を行なったモデル、$k$は$\hat{\hat{M_2}}$において最尤推定を行なった母数の個数。
+\end{lemm}
+
+
