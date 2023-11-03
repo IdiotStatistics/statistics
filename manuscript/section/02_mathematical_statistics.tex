@@ -661,6 +661,21 @@ $\frac{\partial l(\mu,\sigma^2)}{\partial \mu} = 0$とおいて、$\mu$につい
 
 最尤推定量は、分布関数によって異なるので、計算してみるとよい。
 
+\subsubsection{最尤推定したモデルだけど、予測には使えないモデル}\label{likelihood_model_unpredictable}
+最尤推定した母数を使った最尤モデルだけど、予測には使えないモデルを紹介する。
+データがあるその平均値の周りに非対称に分布している場合を考える。
+このデータに対して、正規モデルを採用し、その母数を最尤推定したモデルを構築する。
+このモデルは、明らかに予測に利用しにくい。
+
+最尤モデルとして、その母数などが論文に記述されていたとする。
+この場合、著者らがデータの性質がモデルにより説明できることを示したと思わせられる。
+実際のところ検証したのかは、読者にはわからないことがある。
+単に最尤モデルが記述されていたとしても、そのモデルが良かったとは考えないほうが良さそうである。
+
+例えば、平均と分散などの統計的な要約量がかかれていて、その後、正規モデルを利用してその性質を調べているということがある。
+実際のデータを調べると、正規モデルの特徴をデータがもっていないこともありえる。
+
+
 \subsection{AIC(an information criterion)}
 確率分布から対数尤度を求め、対数尤度の低い確率分布は、その中で相対的にデータに対して当てはまりの良い確率分布であると考えることができる。
 最尤推定量を使った確率分布関数は、データを使って分布関数を決定しているので、データを使わずに求めた分布よりも、データに対して良い分布関数になりがちである。
@@ -684,11 +699,11 @@ $\frac{\partial l(\mu,\sigma^2)}{\partial \mu} = 0$とおいて、$\mu$につい
 
 \begin{defi}
  母数の個数が異なる統計モデル間の最尤推定する前の尤度比を次のように定義する\footnote{厳密な尤度比の定義は数理統計学の教科書を参照せよ。}。
- \begin{equation*}
+ \begin{equation*}\label{likelihood_equation}
   Dev(D,M_1,M_2) = -2\log\frac{M_1におけるDの尤度}{M_2におけるDの尤度}
  \end{equation*}
 式変形を行えば\footnote{$\log\frac{a}{b} =\log a -\log b$}、
- \begin{equation*}
+ \begin{equation*}\label{loglikelihood_equation_log_minus_log}
  Dev(D,M_1,M_2) = 2\left( \log ( M_2におけるDの尤度 )-\log ( M_1におけるDの尤度 ) \right)
  \end{equation*}
 となる。自由度の高いモデル$M_2$とそれよりも自由度の低いモデル$M_1$の対数尤度の差の$2$倍である。
@@ -707,6 +722,8 @@ $\frac{\partial l(\mu,\sigma^2)}{\partial \mu} = 0$とおいて、$\mu$につい
 \end{equation*}
 %ここで、$k$は、最尤推定した母数の個数。
 分母のモデルにおけるデータ由来の母数の個数から$(n+k)$、分子のモデルにおけるデータ由来の母数の個数$(k)$を引いたものが自由度$(n)$。
+\end{theo}
+
 式が複雑であるが、$4$つのステップで説明できる。
 \begin{enumerate}
  \item 子モデル$M_1$の標本を生成。
@@ -714,17 +731,36 @@ $\frac{\partial l(\mu,\sigma^2)}{\partial \mu} = 0$とおいて、$\mu$につい
  \item $M_1$における最尤モデルも構築する
  \item 最尤モデルにおける対数尤度の差が、$\chi^2_{n}$に従う(なんどもこの操作をすると)。
 \end{enumerate}
-\end{theo}
 
 
 \subsection{データから推定したモデルの尤度比}
-
-あるデータ$D'$に対して、なんらかの推定方法で母数を推定したモデル$\hat{M_1}$について、次のことがわかる。
+定理\ref{likelihood_test_basic}より直ちに次がわかる。
+あるデータ$D'$に対して、なんらかの推定方法で母数を推定したモデル$\hat{M_1}$について、
 \begin{lemm} \label{likelihood_test_estimated_model}
  \begin{equation*}
   Dev(D,\hat{M_1},\hat{\hat{M_2}}) = -2\log\frac{\hat{M_1}におけるDの尤度}{\hat{\hat{M_2}}におけるDの尤度} \sim \chi^2_{k}
  \end{equation*}
- ここで$D$は、$\hat{M_1}$の標本であり、$\hat{\hat{M_2}}$は、標本$D$を使って最尤推定を行なったモデル、$k$は$\hat{\hat{M_2}}$において最尤推定を行なった母数の個数。
+が成り立つ。
+
+ここで$D$は、$\hat{M_1}$の標本であり、$\hat{\hat{M_2}}$は、標本$D$を使って最尤推定を行なったモデル、$k$は$\hat{\hat{M_2}}$において最尤推定を行なった母数の個数。
 \end{lemm}
 
+\subsection{尤度比検定}
+母数の個数が$k$個のモデル$M(\theta)$とする($\theta$は$k$次元ベクトル)。
+モデル$M(\theta)$からサンプリングしたサンプルサイズ$n$の標本$x=(x_1,x_2,\cdots,x_n)$を得たとする。
+この標本$X$から$\theta$のうち$r$個の母数に関する最尤推定量を$\bar{\theta}$得たとする。
+$\bar{\theta}$のうち$k-r$個はモデル由来の母数であり、$r$個は標本から推定した母数である。
+このことから、$\bar{\theta}$は自由度$r$の母数のベクトルと言う。
 
+もとのモデル$M(\theta)$における標本$X$に対する尤度は、$L(\theta,x)$とする。
+また、最尤モデル$M(\bar{\theta})$での尤度は、$L(\bar{\theta},x)$とする。
+このとき、これら尤度の比がカイ二乗分布分布に従うことがわかっている。
+つまり、
+\begin{equation*}
+    -2\log\lambda(X)\sim \chi^2_{k-r}
+\end{equation*}
+ただし、
+\begin{equation*}
+    \lambda(X) = \frac{L(\theta,x)}{L(\bar{\theta},x)} 
+\end{equation*}
+である。
