@@ -137,8 +137,8 @@ $\hat{M}$から考えられる尤度比の変動の中では、比較的大き�
 いくつか注意するべきことがある。
 \begin{enumerate}
  \item $\hat{M}$が$D'$を予測しているかはこれだけでは不明(小節\ref{likelihood_model_unpredictable})。
- \item $\hat{\hat{M}}$の方が良いとは言えてない。$\hat{M}$に対する絶対評価\footnote{当てはまりの良さは、尤度の大小関係を見れば良い}。
- \item 「尤度の大小関係が有意であることを確かめるのが尤度比検定である。」などといわれることもあるが、本書とはことなる方針の統計利用である。本書では、$p$が十分小ければ、$\hat{M}$による予測はやめておいたほうがよいという証拠の１つとする。
+ \item $\hat{\hat{M}}$の方が良いとは言えてない。$\hat{M}$に対する絶対評価\footnote{当てはまりの良さは、尤度の大小関係を見れば良い。フルモデルの方が大概の場合当てはまりが良くなる。}。
+ \item 「尤度の大小関係が有意であることを確かめるのが尤度比検定である。」などといわれることもあるが、本書とは異る方針の統計利用である。本書では、$p$が十分小ければ、$\hat{M}$による予測はやめておいたほうがよいという証拠の１つとする。
 \end{enumerate}
 
 %有意かどうかとはどういう意味かがわからない。$\hat{M}$の尤度比の変動では予測できないという意味であれば理解できる。さまざまな前提で検定が使われているので、解釈が一致しない。}。
@@ -182,20 +182,22 @@ $D$の最尤モデルを$M_{1''}$、$M_{2''}$とする。
 
 \subsection{まぜると危険}
 尤度比検定を行えば、フルモデル\footnote{尤度比の分母にくるモデル}が採用できるという説明がされることがある。
-これは特定モデルに対する標本の乖離具合いと、モデル間のデータへの当てはまり具合に関する指標これら$2$つを、研究者が混合した主張である。
+これは以下の二つを混合している。
+\begin{enumerate}
+ \item 特定モデルに対する標本の乖離具合い
+ \item モデル間のデータへの当てはまり具合に関する指標
+\end{enumerate}
 
 まず、統計的仮説検定では、特定モデルの標本の統計要約量以上の値がそのモデルで出現する確率が計算できる。
 この道具を本書では、特定モデルとデータの乖離具合の指標の１つとして導入した。
-このことからも、尤度比検定についても、特定モデルに関するデータの乖離具合の指標である。
+尤度比検定についても、特定モデルに関するデータの乖離具合の指標である。
 故に本書では、尤度比検定については、他のモデルの良さについては計れていないという立場をとる。
 
 次に、モデル間のデータへの当てはまり具合について、式\ref{loglikelihood_equation_log_minus_log}$(Dev)$を観察する。
-この式は、フルモデルの尤度と子モデルの差分を示している。$Dev$が$0$よりも小ければ、フルモデルの方が当てはまりが良く、$0$より大きければ、子モデルの方が当てはまりがよいことを示す。基本的には、母数の個数が多いフルモデルの方が当てはまりが良いので、対数尤度が大きくなる。
-このことから、$Dev >0$になる。
-$Dev$を計算すれば、フルモデルのほうが当てはまりといしてはよいモデルが明かになっている。
+この式は、フルモデルの尤度と子モデルの差分を示している。$Dev$が$0$よりも小ければ、フルモデルの方が当てはまりが良く、$0$より大きければ、子モデルの方が当てはまりがよいことを示す。基本的には、母数の個数が多いフルモデルの方が当てはまりが良いので、対数尤度が大きくなる。このことから、$Dev$を計算するまでもなく、フルモデルの方があてはまりとしては良い。
 
-これら二つのことをまぜて結論として、フルモデルが良いという主張をしてしまう。
-これら二つの観点は別々に主張するべきことである\footnote{フルモデルの方がいいことは別るが、フルモデルが実際に使えるかという意味では検証されていないことは常に注意が必要。}。
+これら二つのことをまぜあわせ、結論として、フルモデルが良いという主張がなされていることがある。
+これら二つの評価とそして、得られた結果は別々に主張するべきことである\footnote{フルモデルの方がいいことはわかるが、フルモデルが実際に使えるかという意味では検証されていないことは常に注意。}\footnote{生物統計学では、混ぜて議論を行っている。いまさら混ぜるなとしてもあまり意味がないだろう。}。
 
 
 \begin{SMbox}{滅多に観察されない逸脱度}
@@ -352,51 +354,98 @@ $M_2$の$\hat\hat\beta_2$のパラメータがどうなっているかなども�
 
 
 \section{One-way ANOVA}
-次の仮定をもとに統計モデル$M_A=M(\mu_1,\mu_2,\cdots,\mu_n)$を構築する。
+統計モデル$M_N= M (\mu,\sigma^2)$に対し、これを拡張したモデルを考える。
+そのモデルは次の仮定をもつ。
 \begin{enumerate}
     \item $\mu_i (i=1,2,\cdots,n)$
     \item $x_{ik} \sim N(\mu_i,\sigma^2)$
 \end{enumerate}
-この統計モデルの$\mu_1=\mu_2=\cdots=\mu_n$としたときの最尤推定量を計算する。
-サンプリングされた標本$x = x_{ik} (k=0,\cdots,n_i)$とすると、このモデルの尤度は次のようになる。
+ここで、$m=\sum_{i=1}^n n_i$と定義する。
+これを統計モデル$M_A=M(\mu_1,\mu_2,\cdots,\mu_n)$とする。
+フルモデルと子モデルそれぞれについて、最尤モデルを検討する。
+
+\subsection{子モデルの最尤推定}
+%$M_A$の子モデルを$M_N=M(\mu;\sigma^2)$とする。
+%平均母数の個数を１つに絞ったモデルである。
+%明らかに$M_N$は$M_A$のネストされたモデルである。
+$M_N$から得られたサンプル$x$についてその最尤推定量は次のようになる。
+%これは、正規モデルの最尤推定量なので
 \begin{equation*}
-    L(\mu;x) = \prod_{i=1,2,\cdots,n,k=0,2,\cdots,m_i}\frac{1}{\sqrt{2\pi\sigma^2}}\exp(-\frac{(x_{ik}-\mu_i)^2}{2\sigma^2})
+    \bar{\mu}_{\rm{ML}} = \frac{1}{\sum_{i=1}^n n_i} \sum_{i=1}^n\sum_{k=0}^{n_i} x_{ik}, \\
+    \bar{\sigma}_{\rm{ML}}^2 =  \frac{1}{\sum_{i=1}^n n_i} \sum_{i=1}^n \sum_{k=1}^{n_i}(x_{ik} -\bar{\mu}_{ML})^2
+\end{equation*}
+こモデルの尤度は、式\ref{anova_model_likelihood}を参考に考えると次のようになる。
+\begin{eqnarray*}
+ L_N&=& \prod_{i=1}^n \prod_{j=1}^{n_i}\frac{1}{\sqrt{2\pi \bar{\sigma}^2_{\rm{ML}}}}\exp\left(  -\frac{(x_{ij}-\bar{\mu}_{\rm{ML}}^2)}{2 \bar{\sigma}^2_{\rm{ML}}}\right) \\
+&=&  (2\pi \bar{\sigma}^2_{\rm{ML}})^{-\frac{m}{2} }\exp\left(  -m/2\right) 
+\end{eqnarray*}
+
+\subsection{フルモデル}
+%この統計モデルの$\mu_1=\mu_2=\cdots=\mu_n$としたときの最尤推定量を計算する。
+$M_A$からサンプリングされた標本$x = (x_{ik}) (k=1,\cdots,n_i)$とすると、このモデルの尤度は次のようになる。
+\begin{equation*}
+    L(\mu;x) = \prod_{\substack{i=1,2,\cdots,n \\ k=1,\cdots,n_i}}\frac{1}{\sqrt{2\pi\sigma^2}}\exp(-\frac{(x_{ik}-\mu_i)^2}{2\sigma^2})
 \end{equation*}
 最尤推定量は次のようになる。
 \begin{equation*}
-    \bar{\mu_i} = \frac{1}{n_i}\sum_{j=0}^{n_i} x_i = \bar{x_i},\\
-    \bar{\sigma}^2 = \frac{1}{\sum_{i}^k n_i} \sum_{i=0}^n \sum_{j=0}^{n_i} (x_{ij}-\bar{x_i})^2
+ \bar{\mu_i} = \frac{1}{n_i}\sum_{j=1}^{n_i} x_{ij} = \bar{x_i},\\
+ \bar{\sigma}^2 = \frac{1}{m} \sum_{i=1}^n \sum_{j=1}^{n_i} (x_{ij}-\bar{x_i})^2
 \end{equation*}
-である。
+尤度についても計算しておく。
+\begin{eqnarray*}\label{anova_model_likelihood}
+ L_A &=& \prod_{i=1}^n \prod_{j=1}^{n_i}\frac{1}{\sqrt{2\pi \bar{\sigma}^2}}\exp\left(  -\frac{(x_{ij}-\bar{\mu_i})^2}{2 \bar{\sigma}^2}\right) \\
+ &=&  (2\pi \bar{\sigma}^2)^{-\frac{m}{2}}\exp\left(  -\frac{\sum_{i=1}^n \sum_{j=1}^{n_i} (x_{ij}-\bar{\mu_i})^2}{2 \bar{\sigma}^2}\right) \\
+ &=&  (2\pi \bar{\sigma}^2)^{-\frac{m}{2}}\exp\left(  -\frac{ m \bar{\sigma}^2}{ 2\bar{\sigma}^2}\right) \\
+ &=&  (2\pi \bar{\sigma}^2)^{-\frac{m}{2} }\exp\left(  -m/2\right) 
+\end{eqnarray*}
 
-このモデルについて母数制限を制限したモデルを$M_N=M(\mu;\sigma^2)$がある。
-$M_N$は明らかに$M_A$のネストされたモデルである。
-$M_s$から得られたサンプル$x$についてその最尤推定量は次のようになる。
-\begin{equation*}
-    \bar{\mu}_{\rm{ML}} = \frac{1}{\sum_{i=0}^n m_i} \sum_{i=0}^n\sum_{k=0}^{m_i} x_{ik}, \\
-    \bar{\sigma^2}_{\rm{ML}} =  \frac{1}{\sum_{i=0}^n m_i} \sum_{i=0}^n \sum_{k=0}^{m_i}(x_{ik} -\mu)^2
-\end{equation*}
+\subsection{尤度比}
 以上をもとに尤度比を計算する。
+\begin{eqnarray*}
+ \lambda =\frac{L_N}{L_A} &=& \frac{(2\pi \bar{\sigma}^2)^{-\frac{m}{2} }\exp\left(  -m/2\right) }{  (2\pi \bar{\sigma}^2_{\rm{ML}})^{-\frac{m}{2} }\exp\left(  -m/2\right)  }\\
+ &=& \left( \frac{ \bar{\sigma}^2}{ \bar{\sigma}^2_{\rm{ML}} }\right)^{-\frac{m}{2}}\\
+ &=& \left( \frac{ \bar{\sigma}^2}{ \bar{\sigma}^2_{\rm{ML}} }\right)^{-\frac{m}{2}} \\
+&=& \left( \frac{ \sum_{i=1}^n \sum_{j=1}^{n_i} (x_{ij}-\bar{x_i})^2 }{ \sum_{i=1}^n \sum_{k=1}^{n_i}(x_{ik} -\bar{\mu}_{ML})^2 } \right)^{-\frac{m}{2}}
+\end{eqnarray*}
+
+
+%\right)^{\frac{-m}{2}}
+
+\begin{comment}
 \begin{equation*}
     -2\log \lambda(x) = \frac{L(\mu;\bar{\sigma}^2)}{L(\mu_1,\mu_2,\cdots,\mu_n,\bar{\sigma}^2_{ML})}
 \end{equation*}
 
-$M_N$において、このモデルの上位の$M(\mu_1,\mu_2,\cdots,\mu_n)$の最尤推定モデルと、$M_N$の尤度比がカイ二乗分布に従う。
-検定統計量は以下の通り。
+\end{comment}
+
+%$M_N$において、このモデルの上位の$M(\mu_1,\mu_2,\cdots,\mu_n)$の最尤推定モデルと、$M_N$の尤度比がカイ二乗分布に従う。
+$M_N$の標本$x$について、$-2\log \lambda(x)$が$\chi^2$分布に従う。
+自由度は、$M_N$が$2$であり、$M_A$が、$n+1$なので、$\chi^2$の自由度は$n+1-2=n-1$である。
+
+以上のことから、1つの平均値を設定したモデルとデータが乖離していることを調べることがで
+きる。
+モデル$M_N$における統計的性質であることに注意。
+
+
+\begin{comment}
+ 
+$-2\log\lambda$を計算すると、
 \begin{equation*}
     F = \frac{\sum_i^k \frac{n_i (\bar{x}_i-\bar{x})^2}{k-1}}{ \sum_{i=0}^k\sum_{j=0}^{n_i}\frac{ (x_{ij}-\bar{x}_i)^2 }{n-k}}
 \end{equation*}
-データ由来の母数の個数から1を引いた数が自由度になる。
+である。
+%$データ由来の母数の個数から1を引いた数が自由度になる。
 つまり、
-$-2\log\lambda(x)\sim \chi^2_{k-1}$である。
+\begin{equation*}
+ -2\log\lambda(x) = F\sim \chi^2_{n-1}
+\end{equation*}
+である。
 
-モデル$M_N$における統計的性質であることに注意。
-以上のことから、1つの平均値を設定したモデルとデータが乖離していることを調べることができる。
-
+\end{comment}
 
 \begin{SMbox}{少なくとも一つは母数が違う}
     1-way ANOVAを使い、$p<\alpha$を得たならば、少なくとも一つは母数が違う郡が入っている。言い換えれば、帰無仮説が棄却され、対立仮説を採択している。    
-    有意差検定では、対立仮説を採択することはないと説明している教科書でも、ANOVAでは対立仮説を採択していることがある\footnote{Neyman-PearsonとFisherの混合検定が使われているので、その方針を採用しているだけである。}。
+    有意差検定では、対立仮説を採択することはないと説明している教科書でも、ANOVAでは対立仮説を採択していることがある\footnote{ハイブリッド検定が使われているので、その方針を採用しているだけである。}。
     
     本書では、$M_N$モデルとデータが乖離しているかもしれない程度しかわからないということにする。
     異なる母数で推測した方が良いという結論を得るには、検定以外の方法で、データを解析することが必要である。
