@@ -103,14 +103,15 @@ aaa
 ここで、$X$の平均値を$\mu$とする。$V[X]$の値を$\sigma_X^2$などと表す。
 \end{defi}
 
-\subsection{その他}
+
+\subsection{平均分散の逐次更新}
 平均と分散の推定値は、
 \begin{eqnarray*}
     \bar{x}_n &=& \frac{1}{n}\sum_{i=1}^n x_i \\
     \sigma_x^2 &=& \frac{1}{n} \sum_{i=1}^n (x_i-\bar{x})^2
 \end{eqnarray*}
 である。
-\subsubsection{逐次更新}
+
 新たな確率変数$x_{n+1}$を得たとき、元の確率変数$x_1,x_2,\cdots,x_n$に関する平均と$\bar{x},\sigma_x^2$により、計算してやると、
 \begin{equation*}
     \bar{x}_{n+1} = \frac{1}{n+1}(n\bar{x}+x_{n+1})
@@ -132,7 +133,7 @@ aaa
     &=& \frac{1}{n+1}(n(\sigma_n^2+\bar{x}_n^2)+x_{n+1}^2)-x_{n+1}^2
 \end{eqnarray*}
 
-\subsubsection{標本の追加}
+\subsection{標本の追加による平均値分散の更新}
 新たな標本$y_1,y_2,\cdots,y_m$を得たとする。このとき、二つの標本の平均$\bar{z}$と分散$\sigma_z^2$を計算する。
 平均は、次の通り。
 \begin{equation*}
@@ -510,13 +511,13 @@ $X \sim N(\mu_1,\sigma^2_1),Y\sim(\mu_2,\sigma^2_1)$とするとき、$aX+bY \si
 \end{equation*}
 である。式を変形すると、
 \begin{equation*}
-    \mu-z_{0.025}\frac{\sigma^2}{n}<\bar{x}<\mu+z_{0.025}\frac{\sigma^2}{n}
+    \mu-z_{0.025}\frac{\sigma}{\sqrt{n}}<\bar{x}<\mu+z_{0.025}\frac{\sigma}{\sqrt{n}}
 \end{equation*}
 がわかる。
 以上をまとめておく。
 
 \begin{theo}
-    $X_1,X_2,\cdots,X_n \sim N(\mu,\sigma^2)$とすると、$\frac{\bar{X}-\mu}{\sqrt{\frac{\sigma^2}{n}}}\sim N(0,1)$ ただし、$\bar{X}=\frac{X_1+X_2+\cdots+X_n}{n}$。また、$\bar{X}$の出現しやすい区間は、$\mu-z_{0.025}\frac{\sigma^2}{n}<\bar{x}<\mu+z_{0.025}\frac{\sigma^2}{n}$である。
+    $X_1,X_2,\cdots,X_n \sim N(\mu,\sigma^2)$とすると、$\frac{\bar{X}-\mu}{\sqrt{\frac{\sigma^2}{n}}}\sim N(0,1)$ ただし、$\bar{X}=\frac{X_1+X_2+\cdots+X_n}{n}$。また、$\bar{X}$の出現しやすい区間は、$\mu-z_{0.025}\sqrt{\frac{\sigma^2}{n}}<\bar{x}<\mu+z_{0.025}\sqrt{\frac{\sigma^2}{n}}$である。
 \end{theo}
 
 
@@ -741,8 +742,9 @@ $\frac{\partial l(\mu,\sigma^2)}{\partial \mu} = 0$とおいて、$\mu$につい
   Dev(D,\hat{M_1},\hat{\hat{M_2}}) = -2\log\frac{\hat{M_1}におけるDの尤度}{\hat{\hat{M_2}}におけるDの尤度} \sim \chi^2_{k}
  \end{equation*}
 が成り立つ。
-
-ここで$D$は、$\hat{M_1}$の標本であり、$\hat{\hat{M_2}}$は、標本$D$を使って最尤推定を行なったモデル、$k$は$\hat{\hat{M_2}}$において最尤推定を行なった母数の個数。
+ここで$D$は、$\hat{M_1}$の標本であり、$\hat{\hat{M_2}}$は、標本$D$を使って最尤推定を行なったモデル、
+$\hat{M_1}$における最尤推定した母数の個数を$n(=0)$とすると、$\hat{\hat{M_2}}$における最尤推定した母数の個数を$n+k(=k)$とする。
+%$k$は$\hat{\hat{M_2}}$において最尤推定を行なった母数の個数。
 \end{lemm}
 
 \subsection{尤度比検定}
