@@ -387,6 +387,10 @@ print(N)
 \section{自己否定の誤推定}
 統計モデルからサンプリングされた標本を、統計量により元のモデルからサンプリングされたかどうかを判断するとき、そのモデルからサンプリングされた標本ではないと想定以上に判断してしまうことがある。言い替えると、複数の標本のうち$\alpha$をモデルの標本ではないと判断したいにもかかわらず、適切な処理や計算を行わないことで、$\alpha$以上におおくの標本にこのモデルの標本ではないと判断をくだすことになる。
 そのような処理や計算方法について説明をおこなう。
+\begin{defi}
+  $p$値の分布が偏ることで、$p<\alpha$となる確率が$\alpha$ではないことを「有意水準$\alpha$で検定ができないと言う」。
+\end{defi}
+
 
 %このような過度な推定は、二つの要素に分解できる。
 %不適切な統計量を使用することで、棄却域と統計量の違いにより生じる$\alpha_1$、そして、様々な種類の途中処理を噛ませて計算した結果生じる$\alpha_2$である($0<\alpha_2 \leq 1$)。
@@ -397,6 +401,26 @@ print(N)
 %$\alpha_2=\alpha$となっていれば、有意水準$\alpha$の検定ができる。
 
 %統計モデルに対して不適切な統計量を使ってモデルの検証を試みると、第一の過誤が変化することがわかっている。
+\subsection{有意水準$\alpha$で検定が行えている}
+$x\sim N(\mu,\sigma)$について、これを、累積分布関数により、$x$以下の数値が出現する確率に変換する。$F$を確率密度関数とすると、$F(X<x)$を計算する。
+これは、$0\sim 1$の間で一様に分布する。このことを確かめる。
+
+正規分布から$10^5$回サンプリングを行い、その累積分布関数により、サンプリングした数値より小さな値が出現する確率を計算した。
+結果は、\ref{fig:test_cummlative_distribution}の通り$F(X<x)$が、傾き$1$の直線上に乗る\footnote{一様分布している}。
+
+この性質を使うことで、有意水準$\alpha$で検定が行えていることを数値計算により確かめることができる。
+具体的には、統計検定量を計算し、これが従う分布形の累積分布関数により統計量より小さな値が出現する確率を計算する。これを複数の標本について行うと、計算された値が一様分布する。このことは、経験累積分布が傾き$1$の直線に乗ることを検証すればよい。
+一方で、有意水準$\alpha$で検定が行えないならば、経験累積分布が傾き$1$の直線から離れているはずである。
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=15cm]{./image/04_/test_cummlative_distribution.pdf}
+    \caption{累積分布}
+   \label{fig:test_cummlative_distribution}
+    \end{center}
+\end{figure}
+%正規モデル$M_N(170,5.8^2)$
+
 
 
 \subsection{どんな統計モデルでも$T$統計量で調べよう}
@@ -432,13 +456,13 @@ $M_E(1)$または、正規モデル$M(\mu=0,\sigma^2=1)$からある一定のサ
 \end{itemize}
 %以上を数値計算を行なった。
 
-正規モデル$M(0,1)$の場合、$T$値は$t(n)$分布に従ので、$p<0.05$となる頻度も、$5\%$程度になることが期待される。
+正規モデル$M(0,1)$の場合、$T$値は$t(n-1)$分布に従ので、$p<0.05$となる頻度も、$5\%$程度になることが期待される。
 一方で、指数モデル$M_E(1)$の場合、$T$は$t(n-1)$分布に従わない。このことから、実験$1$では、$p$値の分布が偏り、一様分布からずれるそして、実験$2$では、$p<\alpha$となる標本が、$0.05$とは異ることが予想できる。
 
 \begin{figure}
  \begin{center}
   \includegraphics[width=15cm]{./image/04_/N_10_Exponn_T_test.pdf}
-  \caption{サンプルサイズ$10$での$p$値の累積分布。実践は、正規モデル。破線は、指数モデル。}
+ \caption{サンプルサイズ$10$での$p$値の累積分布。実践は、正規モデル。破線は、指数モデル。}
   \label{fig:model_dependent_T_test}
  \end{center}
 \end{figure}
@@ -446,7 +470,8 @@ $M_E(1)$または、正規モデル$M(\mu=0,\sigma^2=1)$からある一定のサ
 
 \begin{figure}
  \begin{center}
-  \includegraphics[width=15cm]{./image/04_/t_test_expon_norm.pdf}
+  \includegraphics[width=15cm]{./image/04_/expon_T_test_expon_norm.pdf}
+%t_test_expon_norm.pdf}
   \caption{それぞれの分布から得た標本の$T$値から計算した$p$値で、$p<0.05$以下になる割合。黒い破線が指数分布での数値計算の結果。灰色の破線が正規分布での数値計算の結果。}
   \label{fig:t_test_expon_norm}
  \end{center}
@@ -727,9 +752,6 @@ Z = calc_p()
 
 
 
-\begin{defi}
-  $p$値の分布が偏ることで、設定していた優位水準とは異る頻度で$p<\alpha$になっていることを「有意水準$\alpha$で検定ができないと言う」。
-\end{defi}
 
 \if 0
 有意水準$\alpha$で検定ができていないのは、
@@ -867,7 +889,7 @@ $p$値をもとに判断してはいけない。
     %ただ、モデルとデータの比較を行なった後、データが目的にあっているのかを調べなければならない。
     %モデルの仮定をデータが満たしていることを$P$値では測れない。モデルの仮定をデータが満たすことはほとんどない。
 
- また、$p$が十分小さいとしても、そのモデルは予測には十分使えるということもありえる。
+% また、$p$が十分小さいとしても、そのモデルは予測には十分使えるということもありえる。
 \end{SMbox}
 
 
@@ -998,3 +1020,146 @@ $p$値を使った、データとモデルの比較方法はすでに様々な�
  すでに説明したとおり、$p<0.05$だとしても、それはなんらかに差があるということではないということもある。 ある特定の統計モデルにおいて、統計検定量が出現しにくいことから、そのモデルでは標本を予測するのは難しいのではないかと考える根拠の一つにすぎない。 生物統計学の教科書にでてくる「検定を使えば差があるかないかがわかる」という記述は、生物研究において$p$値の取り扱いとしてこのコンセンサスがあるということを示しているだけである。(生物学上のコンセンサスとして)差があるということにはできるが、それがなんらか意味があるのかについてはなんら調べがついていない。また、統計学的有意ということもあるが、前提が整っていない統計的仮説検定において統計的に有意と宣言するのはおかしなことである。
  統計量として$p$値のみが記述されているようなら、その論文に対し批判的に読むべきだろう。
 \end{SMbox}
+
+\begin{SMbox}{p値の解釈}
+$p$値は分野によって多様な解釈がなされることがある\cite{published_papers/18436201,2020医療統計解析使いこなし実践ガイド}。
+\if 0
+例えば、ASAの声明[\cite{ASA_JA}]を引用しているにもかかわらず、
+$p$値は、証明したい仮説が真である場合、研究で行った前提条件が担保されている場合、研究で得られた結果が実際に得られる確率を示している\cite{2020医療統計解析使いこなし実践ガイド}。
+
+などと書かれる場合がある。
+ここで、「実際に得られる確率」が何を指しているのかが不明確であるが、「統計モデル上で実験で得られた統計量が得られる確率」を意図すると読み替えることはできるのだろうか。
+\fi
+
+よい解釈として以下の6つの原則が示されている\cite{published_papers/18436201}
+\begin{enumerate}
+    \item $p$値はデータと特定のモデルが矛盾する程度を示す指標の一つである。
+    \item $p$値は調べている仮説が正しい確率や、データが偶然飲みで得られた確率を図るものではない。
+    \item 科学的な結論や、ビジネス、政策における決定は$p$値がある値を越えたかどうかのみに基づくべきではない。
+    \item 適正な推測のためには、全てを報告する透明性が必要である
+    \item $p$値や統計的優位性は、効果の大きさや結果の重要性を意味しない。
+    \item $p$値は、それだけでは統計モデルや仮説に関するエビデンスの、よい指標とはならない。
+\end{enumerate}
+
+\if 0
+    $p$値や信頼区間を報告することがASAの声明では求められている。私は、それら以外の情報として、ランダムサンプリングされているということ・再現可能性・正規分布を含んだ統計モデルなどを研究者がどの程度信じているのかということも報告するべきだと考えている。統計モデルの仮定が現象から著しく外れているのならば、統計モデルを使った推論は無意味である。
+    また、研究者の統計学への心情がわかれば、報告に価値があることを理解しやすくなる。
+\fi 
+\end{SMbox}
+
+\begin{SMbox}{p値への誤解}
+    誤解とされる解釈はも引用しておく\cite{idiot_statistics2014}\footnote{原典は\cite{GOODMAN2008135}である。孫引き引用である}。
+    以下の解釈は、統計ユーザーの流派によらず間違いであるとされることが多い\footnote{これらの誤解を採用している科学者もいないとは言えない。教科書でも誤解を広めていることがある}。
+    \begin{enumerate}
+        \item $p=0.05$ならば、帰無仮説が真である確率は$5\%$しかない。
+        \item $p\geq 0.05$のような有意でない結果は、グループ間に差がないことを意味する
+        \item 統計的に有意な発見は客観的に重要である
+        \item $p$値が$0.05$より大きい研究と小さい研究は矛盾する
+        \item $p$値が同じ研究は帰無仮説に対して同等の証拠を提供する。
+        \item $p=0.05$は、帰無仮説のもとで$5\%$しか起こり得ないデータを観察したことを意味する
+        \item $p=0.05$と$p\leq 0.05$は同じことである。
+        \item $p$値は不等式の形で書かれるものである(例えば、$p=0.015$のときは$p\leq 0.02$とする)。
+        \item $p=0.05$は、帰無仮説を棄却したとしたら、第一種の誤りの確率が$5\%$しかないことを示す。
+        \item 有意水準$p=0.05$のもとで、第一種の誤りの確率は$5\%$になる。
+        \item ある方向を向いた結果やその方向の結果があり得ない差異を気に留めないのであれば、片側の$p$値を用いるべきである。
+        \item 科学に関する結果や処方の方針は$p$値が有意であるかどうかに基づくべきである。
+    \end{enumerate}
+\end{SMbox}
+
+
+
+
+\if 0
+p値が小さいとき、統計モデルの少なくとも一つの仮定と実際のデータとが合わないことが考えられます。そこでまず、統計モデルの仮定を満たしているのかを確認します。統計モデルの仮定(1)を確認します。身長データを無作為抽出して計測したため、身長データはそれぞれ独立であると考えられます。次に統計モデルの仮定(2)です。これは、Q-Qプロットを使います。もし、データが正規分布ではなさそうであれば、この統計モデルは使えません。
+以上のことが確かめられたら統計モデルの仮定(3)が実際のデータと異なると結論付けます。少なくとも、ある母数では実際のデータと乖離していると主張するわけです。
+\fi
+
+\section{何度も検定しよう}
+
+
+\begin{SMbox}{なんども実験を繰り返す}
+\begin{rightbubbles}{bubblegreen}{Takami Sato}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+    無知を晒すけど「p値下げるために後からサンプルサイズ増やすな」って正直わかってない。後から論文を見て増やしたかどうか何てわからんし、そのデータに対するp値としては計算上正しい訳だし。「小さい差に対しても有意になるから、p値だけでなく値の差もしっかり議論しよう。」ならわかるんだが。
+    \begin{flushright} 
+        \small	\url{https://twitter.com/tkm2261/status/1640467558813028352}
+        \end{flushright}  
+\end{rightbubbles}
+
+\begin{rightbubbles}{bubblegreen}{Takami Sato}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+    元からあるデータに足さずに改めて取り直したデータだけで計算すればなんも問題ないし積極的にやっていい
+    そも、個人的には$5\%$のラインに意味はないんだから、後からサンプルサイズ足すくらいなら正直なp値（$6\%$でも$7\%$でも）で議論したらいいと思う
+    \begin{flushright} 
+        \small	\url{https://twitter.com/Daphnia_t_ponyo/status/1640843352227848193}
+        \end{flushright}  
+\end{rightbubbles}
+
+\begin{rightbubbles}{bubblegreen}{Ken McAlinn}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+    これは多重検定だからだめだよ😉
+\begin{flushright} 
+\small	\url{https://twitter.com/kenmcalinn/status/1640845051788967937}
+\end{flushright}    
+\end{rightbubbles}
+
+
+\begin{rightbubbles}{bubblegreen}{Ken McAlinn}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+  p値の分布は一様だから$5\%$棄却水準は(01上の)0.05の位置にあるんだけど、一回観測しちゃうと「そのまま」か「データを増やす」か条件がつくからどんどん分布が0のほうに歪んでく(有意じゃないとそのままを選ばないから)。そうすると0.05の位置までの確率が5$\%$以上に増えるから過誤の確率が合わない。
+\begin{flushright} 
+\small	\url{https://twitter.com/kenmcalinn/status/1640486745505427465}
+\end{flushright}    
+\end{rightbubbles}
+
+
+\begin{rightbubbles}{bubblegreen}{Ken McAlinn}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+  だから計算的には追加でも最初から全部でもp値は同じになるんだけど、追加の場合は有意水準を変えるか選択停止を考慮したp値を計算しないと過誤の確率が合わない。p値は$5\%$なのに過誤の確率が$80\%$になったりする。
+\begin{flushright} 
+\small	\url{https://twitter.com/kenmcalinn/status/1640488036164161540}
+\end{flushright}    
+\end{rightbubbles}
+
+\begin{rightbubbles}{bubblegreen}{Ken McAlinn}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+  根本的に言えば、尤度原理を満たさないp値には問題があるから尤度原理を満たすベイズファクターとかを使いましょうっていうのはtmさんの言う通り。
+\begin{flushright} 
+\small	\url{https://twitter.com/kenmcalinn/status/1640491660919422976}
+\end{flushright}    
+\end{rightbubbles}
+
+\begin{rightbubbles}{bubblegreen}{tm}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+  データが最初から全部あるときのp値と途中で増やしたときのp値は定義に戻ると別の値になります。なので単純に「途中で追加したのにも関わらず最初から全部あったかのように計算するのは間違い」です。後から増やしてもわからないのは別の問題（隠蔽）で、これを気にするならp値は原理的にダメです。
+\begin{flushright} 
+\small	\url{https://twitter.com/tmaehara/status/1640474043038986240}
+\end{flushright}    
+\end{rightbubbles}
+
+
+\begin{rightbubbles}{bubblegreen}{tm(@tmaehara)}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+  （どうデータをとったかによらず）どういうデータが得られたかだけで決まる手法は「尤度原理を満たす」といいます。尤度原理は成り立ってほしい性質ですが、帰無仮説検定はこれを満たしません。これは$p$値に対する代表的な批判ポイントです。
+\begin{flushright} 
+\small	\url{https://twitter.com/tmaehara/status/1640480964882182145}
+\end{flushright}    
+\end{rightbubbles}
+
+
+\end{SMbox}
+\if 0
+\begin{SMbox}{新たなデータを取ってみよう}
+  \begin{quote}    HARKingにならないように、データ探索からわかった興味深い事実をまとめるにはどうすれば良いのでしょうか？業務でも「明確な仮説からのスタートではないが、ドメイン知識から『何となくこれを組み合わせたら何か見えないか』」で役立つことが見つかる場合がありまして\footnote{\url{https://querie.me/answer/SqEe8Qb3Xfo8PBmyQ3RN?timestamp=1679325100}}。
+  \end{quote}
+  もしも、検定によって検討を行おうとするのならば、繰返し実験を行って検定を行い、$p<\alpha$となったとしても、これに喜んではいけない。
+\end{SMbox}
+
+\fi
+% 塩野義製薬の薬
+% https://mainichi.jp/articles/20220818/k00/00m/040/138000c
+%https://www.mhlw.go.jp/stf/newpage_26901.html
+%https://www.jstage.jst.go.jp/article/jjb/36/Special_Issue_2/36_S123/_pdf/-char/ja
+% https://bio.nikkeibp.co.jp/atcl/news/p1/22/07/20/09735/
+% https://twitter.com/penguin_pharm/status/1549746189561606144
+% https://www.sankei.com/article/20220902-Y2DSR2RUWVM63G5QE6LS22VHEI/
+% https://www.buzzfeed.com/jp/naokoiwanaga/s-217622?utm_source=dynamic&utm_campaign=bfsharetwitter
+% https://www.kansensho.or.jp/uploads/files/guidelines/teigen_220902.pdf
+% https://www3.nhk.or.jp/news/html/20220902/k10013800921000.html
+% https://www3.nhk.or.jp/news/html/20220902/k10013800921000.html
+% https://www3.nhk.or.jp/news/html/20220907/k10013806901000.html
+% https://www.m3.com/news/open/iryoishin/1062171
+% https://www.mixonline.jp/tabid55.html?artid=73353
+
