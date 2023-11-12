@@ -1,31 +1,19 @@
 
 \chapter{数理統計の補足}
 
-\section{正規分布の検定1}
-
-また、母数分散$\sigma$について次が成り立つ。
-\begin{theo}\label{normal_sigma_chi2}
-    $X_1,X_2,\cdots,X_n \sim N(\mu,\sigma^2)$について、次が成り立つ。
-    \begin{equation*}
-        Y = (n-1)(\frac{S_x}{\sigma})^2 \sim \chi^2_{n-1}
-    \end{equation*}
-    ここで、$S^2_x=\frac{1}{n-1}\sum_{i=1}^n(x_i-\bar{x})^2,\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i$である。
-\end{theo}
-
-
 %https://ds.machijun.net/clear-exercise-of-statistics/%E7%AC%AC7%E7%AB%A0-%E6%8C%87%E6%95%B0%E6%AF%8D%E9%9B%86%E5%9B%A3ex%CE%BC%EF%BC%89%E3%81%AE%E6%AF%8D%E5%B9%B3%E5%9D%87%E3%81%AE%E4%BF%A1%E9%A0%BC%E5%8C%BA%E9%96%93%E3%81%A8%E6%A4%9C%E5%AE%9Ap128/
 
 \section{指数分布を含むモデル}
 
 \begin{theo}
-    $x_1,x_2,\cdots,x_n \sim Ex(\lambda)$とする。
-    $x_1+x_2+\cdots+x_n \sim \gamma(n,\lambda)$である
+    $x_1,x_2,\cdots,x_n,i.i.d. \sim \rm{Exp}(\lambda)$とする。
+    このとき$x_1+x_2+\cdots+x_n \sim Ga(n,\lambda)$である。
 \end{theo}
 
-$n$を自然数とし、ガンマ分布$Ga(\frac{n}{2},2)$を特に、カイ２乗分布といい、$\chi ^2_n$で表す。
+$n$を自然数とし、ガンマ分布$Ga(\frac{n}{2},2)$をカイ２乗分布といい、$\chi ^2_n$で表す。
 
 \begin{theo}
-$n$を自然数とする。$G\sim\Gamma(\frac{n}{2},\beta),Y_n\sim \chi^2_n$とすると、$P(G\leq w) = P(Y_n \leq 2\beta w)$
+$n$を自然数とする。$G\sim Ga(\frac{n}{2},\beta),Y_n\sim \chi^2_n$とすると、$P(G\leq w) = P(Y_n \leq 2\beta w)$
 \end{theo}
 \begin{proof}
 $w >0$に対して、
@@ -68,14 +56,16 @@ P(G\leq n\bar{x}) = 1-\frac{\alpha}{2}
 \end{equation}
 
 
-
+\begin{comment}
+ 
 \subsection{２標本・指数分布}
-$X_1,X_2,\cdots,X_n \sim i.i.d Exp(\theta_1),Y1,Y_2,\cdots,Y_n \sim i.i.d Exp(\theta_2)$とする。帰無仮説$H_0$を、$H_0:\theta_1=\theta_2$とし、対立仮説$H_1$を、$H_1 : \theta_1 \neq \theta_2$とする。帰無仮説のもとで、尤度関数$L_{H_0}$は、
+$x_1,x_2,\cdots,x_n,i.i.d. \sim \rm{Exp}(\theta_1),y_1,y_2,\cdots,y_n,i.i.d. \sim \rm{Exp}(\theta_2)$とする。
+帰無仮説$H_0$を、$H_0:\theta_1=\theta_2$とし、対立仮説$H_1$を、$H_1 : \theta_1 \neq \theta_2$とする。帰無仮説のもとで、尤度関数$L_{H_0}$は、
 
 \begin{equation}
-    L_{H_0} = \theta^{-n_1-n_2}\exp\{-\theta^{-1}T\}
+ L_{H_0} = \theta^{-n_1-n_2}\exp\{-\theta^{-1}T\}
 \end{equation}
-ただし、$T=\sum_{i=0}^n X_i+\sum_{i=0}^n Y_i$である。$\frac{\partial H_0}{\partial\theta}=0$となる$\theta$は、
+ただし、$T=\sum_{i=0}^n x_i+\sum_{i=0}^n y_i$である。$\frac{\partial H_0}{\partial\theta}=0$となる$\theta$は、
 
 \begin{equation}
     \frac{\partial H_0}{\partial\theta} = \{ -(n_1+n_2)+\theta^{-1}T \}\theta^{-n_1-n_2-1}\exp(-\theta^{-1}T).
@@ -88,11 +78,11 @@ $\theta_0$を$L_{H_0}$に代入すると、
 
 同様に、対立仮説のもとで、尤度関数$L_{H_1}$は、
 \begin{equation}
-    L_{H_1} = \theta_1^{-n_1}\exp(-\frac{n_1}{\theta_1}\bar{x})\theta_2^{-n_2}\exp(-\frac{n_2}{\theta_2}\bar{y})
+    L_{H_1} = \theta_1^{-n_1}\exp\left(-\frac{n_1}{\theta_1}\bar{x}\right)\theta_2^{-n_2}\exp\left(-\frac{n_2}{\theta_2}\bar{y}\right)
 \end{equation}
 $\frac{\partial H_1}{\partial\theta}=0$となる$\theta_1$を計算する。
 \begin{equation}
-    \frac{\partial H_1}{\partial\theta_1}=\{ -n_1\theta_1^{-n_1-1} \exp(-\frac{n_1}{\theta_1}\bar{x})+n_1\bar{x}\theta_1^{-n_1-2}\exp(-\frac{n_1}{\theta_1}\bar{x})\}\theta_2^{-n_2}\exp(-\frac{n_2}{\theta_2}\bar{y}).
+    \frac{\partial H_1}{\partial\theta_1}=\left( -n_1\theta_1^{-n_1-1} \exp\left(-\frac{n_1}{\theta_1}\bar{x}\right)+n_1\bar{x}\theta_1^{-n_1-2}\exp\left(-\frac{n_1}{\theta_1}\bar{x}\right)\right)\theta_2^{-n_2}\exp\left(-\frac{n_2}{\theta_2}\bar{y}\right).
 \end{equation}
 $ \frac{\partial H_1}{\partial\theta_1}=0$より、$(-n_1+n_1\bar{x}\theta_1^{-1})\theta_1^{-n_1-1}=0$より、$\hat{\theta}_1=\bar{x}$である。同様に、$\hat{\theta}_2=\bar{y}$。
 以上によって、$L_{H_1}$は、
@@ -108,28 +98,30 @@ $ \frac{\partial H_1}{\partial\theta_1}=0$より、$(-n_1+n_1\bar{x}\theta_1^{-1
 \end{eqnarray}
 尤度比検定より、$-2\log \varLambda \sim\chi^2_1$である。
 
-$Ga(\alpha,\beta)$について、以下が成り立つ
+
+\end{comment}
+
+
+\subsection{ガンマ分布の性質}
+$x\sim Ga(\alpha,\beta)$について、以下が成り立つ
 \begin{eqnarray}
-    k X &\sim& Ga(\alpha,\beta/k) \\
-    \frac{1}{k} X &\sim& Ga(\alpha,k\beta)\\
+    k x &\sim& Ga(\alpha,\beta/k) \\
+    \frac{1}{k} x &\sim& Ga(\alpha,k\beta)\\
     \chi^2_{2n}&=&Ga(n,2) 
 \end{eqnarray}
 以上を使うと、
 \begin{eqnarray*}
-    n\bar{X} &\sim& Ga(n,\frac{1}{\lambda}) \\
-    \frac{n}{2}\bar{X} &\sim&(\frac{n}{2},\frac{1}{\lambda}) \\
-    \frac{n}{2\lambda}\bar{X} &\sim& Ga(\frac{n}{2},2)=\chi^2_{n}
+    n\bar{X} &\sim& Ga\left(n,\frac{1}{\lambda}\right) \\
+    \frac{n}{2}\bar{X} &\sim& Ga\left(n,\frac{2}{\lambda}\right) \\
+    \frac{n}{2\lambda}\bar{X} &\sim& Ga\left(n,2 \right)=\chi^2_{n}
 \end{eqnarray*}
 また、ガンマ分布とベータ分布の関係より、$X_1 \sim Ga(\alpha_1,\beta),X_2\sim Ga(\alpha_2,\beta)$ならば、$\frac{X_1}{X_1+X_2}\sim Beta(\alpha_1,\alpha_2)$である。以上より、
 $Z=\frac{n\bar{X}}{n\bar{X}+m\bar{Y}}\sim Beta(n,m)$である。このことから、棄却域($z_1 \leq Z \leq z_2$)を求めることができる。具体的には、
-\begin{equation}
-    \int_0^{z_1}\frac{1}{B{n,m}}z^{n-1}(1-z)^{m-1}dz = \alpha/2,      \int_{z_2}^{\infty}\frac{1}{B{n,m}}z^{n-1}(1-z)^{m-1}dz = \alpha/2.
-\end{equation}
+\begin{eqnarray}
+    \int_0^{z_1}\frac{1}{B(n,m)}z^{n-1}(1-z)^{m-1}dz &=& \alpha/2 \\
+    \int_{z_2}^{\infty}\frac{1}{B(n,m)}z^{n-1}(1-z)^{m-1}dz &=& \alpha/2.
+\end{eqnarray}
 この解$z_1,z_2$を計算すれば良い。
-
-
-
-
 
 
 %https://stats.stackexchange.com/questions/81151/likelihood-ratio-for-two-sample-exponential-distribution
@@ -144,7 +136,8 @@ $Z=\frac{n\bar{X}}{n\bar{X}+m\bar{Y}}\sim Beta(n,m)$である。このことか�
     $S_n$は、期待値$0$、分散$1$の正規分布に分布収束する。
 \end{theo}
 
-
+\begin{comment}
+ 
 \begin{SMbox}
 中心極限定理は、間違った捉え方をされていることが多い。
 
@@ -167,9 +160,9 @@ $Z=\frac{n\bar{X}}{n\bar{X}+m\bar{Y}}\sim Beta(n,m)$である。このことか�
 \end{hypoth}
 反例がすぐに出てくるので、このような仮説は一般には成り立たない。例えば、データがコーシー分布から生成されている場合、成り立たない。
  
+
+
 \end{comment}
-
-
 
 
 
