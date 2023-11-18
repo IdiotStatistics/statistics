@@ -230,6 +230,16 @@ TODO:意味不明\\
 
 \section{正規モデル}
 正規モデル$M_N(\mu,\sigma^2)$について、次が成り立つ。
+\paragraph{母分散$\sigma$が不明な場合}
+$X_1,X_2,\cdots,X_n \sim N(\mu,\sigma^2)$とする。統計量$T$を、
+\begin{equation*}
+    T = \frac{\bar{X}-\mu}{\sqrt{\frac{S^2}{n}}}.
+\end{equation*}
+ここで、$\bar{X}=\frac{X_1+X_2+\cdots+X_n}{n}$、$S^2=\frac{1}{n-1}\sum_{i=1}^{n}(X_i-\bar{X})^2$である。
+この統計量$T$は、$t(n-1)$分布に従うことが知られている。
+%統計量$T$の中に母数$\sigma$が入っていないので、$\sigma$がわからないときでも、$T$を計算すれば、それが$t(n-1)$に従うことがわかる。
+
+
 \paragraph{母平均$\mu$が既知の場合}
 \begin{theo}\label{normal_sigma_chi2}
     $x_1,x_2,\cdots,x_n,i.i.d. \sim N(\mu,\sigma^2)$について、次が成り立つ。
@@ -408,7 +418,7 @@ $p$値が小ければ$M_B$で推測することは止めておいたほうがよ
 \end{enumerate}
 以上の仮定は確率変数はそれぞれ独立した２項分布に従うことを意味する。
 
-このモデルにおいて、次の統計検定量$Q(X)$に関する性質を得る。
+このモデルにおいて、次の検定統計量$Q(X)$に関する性質を得る。
 
 \begin{equation*}
  Q(X) = \sum^k \sum^c \frac{ X_{i,j} - \frac{p_i q_j}{n}}{\frac{p_i q_j}{n} }
@@ -443,7 +453,7 @@ $p$値が小ければ$M_B$で推測することは止めておいたほうがよ
  \item $X_{i,j} \sim B(n,p_i q_j) (i=1,2,j=1,2)$
  \item 母数$p_i,q_j$は不明
 \end{enumerate}
-このデータとの乖離を統計検定量$Q$を計算することで確かめてみる。
+このデータとの乖離を検定統計量$Q$を計算することで確かめてみる。
 \begin{eqnarray*}
  Q &=& \frac{(45-60*20/100)^2}{60*20/100} +\frac{(15-60*35/100)^2}{60*35/100} + \\
 &&\frac{(20-40*65/100)^2}{40*65/100} + 
@@ -460,14 +470,13 @@ $p$値が小ければ$M_B$で推測することは止めておいたほうがよ
 \end{comment}
 
 \section{指数モデル}
-\subsection{モデル}
 指数分布を含んだモデルを構築する。
 \begin{enumerate}
  \item $x_1,x_2,\cdots,x_n,i.i.d. \sim \rm{Exp}(\theta_1)$
  \item $y_1,y_2,\cdots,y_n,i.i.d. \sim \rm{Exp}(\theta_2)$
 \end{enumerate}
 これを、$M_E(\theta_1,\theta_2)$とする。$\theta_1=\theta_2$のモデルを$M_N(\theta)$とする。
-\subsubsection{$M_N(\theta)$における尤度関数}
+\subsection{$M_N(\theta)$における尤度関数}
 $M_N(\theta)$において、この尤度関数を計算する。
 \begin{equation*}
  L_{0} = \theta^{-n_1-n_2}\exp\{-\theta^{-1}T\}
@@ -483,7 +492,7 @@ $\theta_0$を$L_{0}$に代入すると、
 \end{equation}
 である。
 
-\subsubsection{$M_N(\theta_1,\theta_2)$における尤度関数}
+\subsection{$M_N(\theta_1,\theta_2)$における尤度関数}
 同様に、対立仮説のもとで、尤度関数$L_{1}$は、
 \begin{equation}
     L_{1} = \theta_1^{-n_1}\exp\left(-\frac{n_1}{\theta_1}\bar{x}\right)\theta_2^{-n_2}\exp\left(-\frac{n_2}{\theta_2}\bar{y}\right)
@@ -499,7 +508,7 @@ $ \frac{\partial L_1}{\partial\theta_1}=0$より、$(-n_1+n_1\bar{x}\theta_1^{-1
 \end{equation}
 である。
 
-\subsubsection{尤度比}
+\subsection{尤度比}
 \begin{eqnarray}
     \varLambda = \frac{L_{0}}{L_{1}} &=& \frac{ \theta_0^{-n_1-n_2}\exp(-n_2-n_2) }{ (\hat{\theta}_1)^{-n_1}(\hat{\theta}_2)^{-n_2} \exp(-n_1-n_2)}\\
     &=& \left(\frac{\hat{\theta_0}}{\theta_0}\right)^{n_1} \left(\frac{\hat{\theta_1}}{\theta_0} \right)^{n_2}
