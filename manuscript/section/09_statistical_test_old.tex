@@ -260,61 +260,22 @@ $X_1,X_2,\cdots,X_n \sim N(\mu,\sigma^2)$とする。統計量$T$を、
     ここで、$S^2_x=\frac{1}{n-1}\sum_{i=1}^n(x_i-\bar{x})^2,\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i$である。
 \end{theo}
 
-
-%https://ds.machijun.net/clear-exercise-of-statistics/%E7%AC%AC7%E7%AB%A0-%E6%8C%87%E6%95%B0%E6%AF%8D%E9%9B%86%E5%9B%A3ex%CE%BC%EF%BC%89%E3%81%AE%E6%AF%8D%E5%B9%B3%E5%9D%87%E3%81%AE%E4%BF%A1%E9%A0%BC%E5%8C%BA%E9%96%93%E3%81%A8%E6%A4%9C%E5%AE%9Ap128/
-\section{指数分布を含むモデル}
-
-\begin{theo}
-    $x_1,x_2,\cdots,x_n,i.i.d. \sim \rm{Exp}(\lambda)$とする。
-    このとき$x_1+x_2+\cdots+x_n \sim Ga(n,\lambda)$である。
-\end{theo}
-
-$n$を自然数とし、ガンマ分布$Ga(\frac{n}{2},2)$をカイ２乗分布といい、$\chi ^2_n$で表す。
-
-\begin{theo}
-$n$を自然数とする。$G\sim Ga(\frac{n}{2},\beta),Y_n\sim \chi^2_n$とすると、$P(G\leq w) = P(Y_n \leq 2\beta w)$
-\end{theo}
-\begin{proof}
-$w >0$に対して、
+\section{正規2モデル}
+\paragraph{検定統計量$T$について}
+2つの正規分布$X_1,X_2,\cdots,X_{n_1} \sim N(\mu_1,\sigma_1^2), Y_1,Y_2,\cdots,Y_{n_2}\sim N(\mu_2,\sigma_1^2)$とする。このとき、
+\begin{equation*}
+    T = \frac{(\bar{X}-\bar{Y})-(\mu_1-\mu_2)}{\sqrt{\frac{U^2}{n_1}+\frac{U^2}{n_2}}}
+\end{equation*}
+は、$n_1+n_2-2$の$t$分布に従う。ここで、$U$は、
+\begin{equation*}
+    U^2 = \frac{(n-1)U_1^2+(n_2-1)U_2^2}{n_1-1+n_2-1}
+\end{equation*}
+であり、$U_1,U_2$は、不偏分散
 \begin{eqnarray*}
-    P(G \leq w) &=& \int_0^w \frac{\beta^\frac{n}{2}}{\Gamma(n/2)}x^{n/2-1}\exp{(-\beta x)}dx \\
-    &=&\int_0^{2\beta w} \frac{\beta^{\frac{n}{2}}}{\Gamma(n/2)}\left( \frac{t}{2\beta} \right)^{n/2-1}\exp{(-\beta t/2\beta)}\frac{dt}{2\beta} (x=t/(2\beta)) \\
-    &=& \int_0^{2\beta w} \frac{1}{2^{n/2}\Gamma(n/2)}t^{n/2-1}\exp{(-t/2)}dt\\
-    &=&P(Y_n \leq 2\beta w)
+    U_1^2 = \frac{1}{n_1-1}\sum_{i=1}^{n_1}(X_i-\bar{X})\\
+    U_2^2 = \frac{1}{n_2-1}\sum_{i=1}^{n_2}(Y_i-\bar{Y})\\
 \end{eqnarray*}
-\end{proof}
-
-以上より$n\bar{x}\sim \Gamma(n,\lambda)$である。
-このとき、$\lambda$の信頼区間を求める。$\lambda$の下限は、
-\begin{equation}
-    P(G\leq n\bar{x}) = \frac{\alpha}{2}
-\end{equation}
-を満たし、$\lambda$の上限は、
-\begin{equation}
-P(G\leq n\bar{x}) = 1-\frac{\alpha}{2}
-\end{equation}
-を満たす。
-下限の式を変形していく。
-\begin{eqnarray*}
-    \alpha/2 &=& P(G\leq n\bar{x})  \\
-    &=& P(Y_{2n}\leq 2n \lambda_l \bar{x})\\
-    &\rightarrow& 2n\lambda \bar{x} = \chi^2_{2n}(1-\alpha/2)\\
-    &\rightarrow& \lambda = \frac{\chi^2_{2n}(1-\alpha/2)}{2n\bar{x}}
-\end{eqnarray*}
-上限についても同様に、
-\begin{eqnarray*}
-    1-\frac{\alpha}{2} &= & P(G\leq n\bar{x}) \\
-    &=& P(Y_{2n}\leq 2n\lambda \bar{x})  \\
-    &\rightarrow& 2n\lambda \bar{x} = \chi^2_{2n}(\alpha/2)\\
-    &\rightarrow&  \lambda = \frac{\chi^2_{2n}(\alpha/2)}{2n\bar{x}}
-\end{eqnarray*}
-以上によって、$\frac{1}{\lambda}$の信頼区間は、
-\begin{equation}
-    \label{exp_model_confidence_interval}
-    \frac{2n\bar{x}}{\chi^2_{2n}(\alpha/2)} \leq \bar{x} \leq \frac{2n\bar{x}}{\chi^2_{2n}(1-\alpha/2)}
-\end{equation}
-
-
+である。
 
 
 \section{独立性の検定}
@@ -468,6 +429,64 @@ $p$値が小ければ$M_B$で推測することは止めておいたほうがよ
  = (45-60*65/100)^2/(60*65/100)+(15-60*35/100)^2/(60*35/100)+(20-40*65/100)^2/(40*65/100) + (20-40*35/100)^2/(40*35/100)
  = 6.5934
 \end{comment}
+
+
+
+%https://ds.machijun.net/clear-exercise-of-statistics/%E7%AC%AC7%E7%AB%A0-%E6%8C%87%E6%95%B0%E6%AF%8D%E9%9B%86%E5%9B%A3ex%CE%BC%EF%BC%89%E3%81%AE%E6%AF%8D%E5%B9%B3%E5%9D%87%E3%81%AE%E4%BF%A1%E9%A0%BC%E5%8C%BA%E9%96%93%E3%81%A8%E6%A4%9C%E5%AE%9Ap128/
+\section{指数分布を含むモデル}
+
+\begin{theo}
+    $x_1,x_2,\cdots,x_n,i.i.d. \sim \rm{Exp}(\lambda)$とする。
+    このとき$x_1+x_2+\cdots+x_n \sim Ga(n,\lambda)$である。
+\end{theo}
+
+$n$を自然数とし、ガンマ分布$Ga(\frac{n}{2},2)$をカイ２乗分布といい、$\chi ^2_n$で表す。
+
+\begin{theo}
+$n$を自然数とする。$G\sim Ga(\frac{n}{2},\beta),Y_n\sim \chi^2_n$とすると、$P(G\leq w) = P(Y_n \leq 2\beta w)$
+\end{theo}
+\begin{proof}
+$w >0$に対して、
+\begin{eqnarray*}
+    P(G \leq w) &=& \int_0^w \frac{\beta^\frac{n}{2}}{\Gamma(n/2)}x^{n/2-1}\exp{(-\beta x)}dx \\
+    &=&\int_0^{2\beta w} \frac{\beta^{\frac{n}{2}}}{\Gamma(n/2)}\left( \frac{t}{2\beta} \right)^{n/2-1}\exp{(-\beta t/2\beta)}\frac{dt}{2\beta} (x=t/(2\beta)) \\
+    &=& \int_0^{2\beta w} \frac{1}{2^{n/2}\Gamma(n/2)}t^{n/2-1}\exp{(-t/2)}dt\\
+    &=&P(Y_n \leq 2\beta w)
+\end{eqnarray*}
+\end{proof}
+
+以上より$n\bar{x}\sim \Gamma(n,\lambda)$である。
+このとき、$\lambda$の信頼区間を求める。$\lambda$の下限は、
+\begin{equation}
+    P(G\leq n\bar{x}) = \frac{\alpha}{2}
+\end{equation}
+を満たし、$\lambda$の上限は、
+\begin{equation}
+P(G\leq n\bar{x}) = 1-\frac{\alpha}{2}
+\end{equation}
+を満たす。
+下限の式を変形していく。
+\begin{eqnarray*}
+    \alpha/2 &=& P(G\leq n\bar{x})  \\
+    &=& P(Y_{2n}\leq 2n \lambda_l \bar{x})\\
+    &\rightarrow& 2n\lambda \bar{x} = \chi^2_{2n}(1-\alpha/2)\\
+    &\rightarrow& \lambda = \frac{\chi^2_{2n}(1-\alpha/2)}{2n\bar{x}}
+\end{eqnarray*}
+上限についても同様に、
+\begin{eqnarray*}
+    1-\frac{\alpha}{2} &= & P(G\leq n\bar{x}) \\
+    &=& P(Y_{2n}\leq 2n\lambda \bar{x})  \\
+    &\rightarrow& 2n\lambda \bar{x} = \chi^2_{2n}(\alpha/2)\\
+    &\rightarrow&  \lambda = \frac{\chi^2_{2n}(\alpha/2)}{2n\bar{x}}
+\end{eqnarray*}
+以上によって、$\frac{1}{\lambda}$の信頼区間は、
+\begin{equation}
+    \label{exp_model_confidence_interval}
+    \frac{2n\bar{x}}{\chi^2_{2n}(\alpha/2)} \leq \bar{x} \leq \frac{2n\bar{x}}{\chi^2_{2n}(1-\alpha/2)}
+\end{equation}
+
+
+
 
 \section{指数モデル}
 指数分布を含んだモデルを構築する。
