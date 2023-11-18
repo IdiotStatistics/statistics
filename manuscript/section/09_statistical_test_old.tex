@@ -251,6 +251,62 @@ TODO:意味不明\\
 \end{theo}
 
 
+%https://ds.machijun.net/clear-exercise-of-statistics/%E7%AC%AC7%E7%AB%A0-%E6%8C%87%E6%95%B0%E6%AF%8D%E9%9B%86%E5%9B%A3ex%CE%BC%EF%BC%89%E3%81%AE%E6%AF%8D%E5%B9%B3%E5%9D%87%E3%81%AE%E4%BF%A1%E9%A0%BC%E5%8C%BA%E9%96%93%E3%81%A8%E6%A4%9C%E5%AE%9Ap128/
+\section{指数分布を含むモデル}
+
+\begin{theo}
+    $x_1,x_2,\cdots,x_n,i.i.d. \sim \rm{Exp}(\lambda)$とする。
+    このとき$x_1+x_2+\cdots+x_n \sim Ga(n,\lambda)$である。
+\end{theo}
+
+$n$を自然数とし、ガンマ分布$Ga(\frac{n}{2},2)$をカイ２乗分布といい、$\chi ^2_n$で表す。
+
+\begin{theo}
+$n$を自然数とする。$G\sim Ga(\frac{n}{2},\beta),Y_n\sim \chi^2_n$とすると、$P(G\leq w) = P(Y_n \leq 2\beta w)$
+\end{theo}
+\begin{proof}
+$w >0$に対して、
+\begin{eqnarray*}
+    P(G \leq w) &=& \int_0^w \frac{\beta^\frac{n}{2}}{\Gamma(n/2)}x^{n/2-1}\exp{(-\beta x)}dx \\
+    &=&\int_0^{2\beta w} \frac{\beta^{\frac{n}{2}}}{\Gamma(n/2)}\left( \frac{t}{2\beta} \right)^{n/2-1}\exp{(-\beta t/2\beta)}\frac{dt}{2\beta} (x=t/(2\beta)) \\
+    &=& \int_0^{2\beta w} \frac{1}{2^{n/2}\Gamma(n/2)}t^{n/2-1}\exp{(-t/2)}dt\\
+    &=&P(Y_n \leq 2\beta w)
+\end{eqnarray*}
+\end{proof}
+
+以上より$n\bar{x}\sim \Gamma(n,\lambda)$である。
+このとき、$\lambda$の信頼区間を求める。$\lambda$の下限は、
+\begin{equation}
+    P(G\leq n\bar{x}) = \frac{\alpha}{2}
+\end{equation}
+を満たし、$\lambda$の上限は、
+\begin{equation}
+P(G\leq n\bar{x}) = 1-\frac{\alpha}{2}
+\end{equation}
+を満たす。
+下限の式を変形していく。
+\begin{eqnarray*}
+    \alpha/2 &=& P(G\leq n\bar{x})  \\
+    &=& P(Y_{2n}\leq 2n \lambda_l \bar{x})\\
+    &\rightarrow& 2n\lambda \bar{x} = \chi^2_{2n}(1-\alpha/2)\\
+    &\rightarrow& \lambda = \frac{\chi^2_{2n}(1-\alpha/2)}{2n\bar{x}}
+\end{eqnarray*}
+上限についても同様に、
+\begin{eqnarray*}
+    1-\frac{\alpha}{2} &= & P(G\leq n\bar{x}) \\
+    &=& P(Y_{2n}\leq 2n\lambda \bar{x})  \\
+    &\rightarrow& 2n\lambda \bar{x} = \chi^2_{2n}(\alpha/2)\\
+    &\rightarrow&  \lambda = \frac{\chi^2_{2n}(\alpha/2)}{2n\bar{x}}
+\end{eqnarray*}
+以上によって、$\frac{1}{\lambda}$の信頼区間は、
+\begin{equation}
+    \label{exp_model_confidence_interval}
+    \frac{2n\bar{x}}{\chi^2_{2n}(\alpha/2)} \leq \bar{x} \leq \frac{2n\bar{x}}{\chi^2_{2n}(1-\alpha/2)}
+\end{equation}
+
+
+
+
 \section{独立性の検定}
 % \footnote{検定について次のpdfを参考にした\url{https://www.hiroshima-u.ac.jp/system/files/161890/ASstatistics_2020_2.pdf}}
 
