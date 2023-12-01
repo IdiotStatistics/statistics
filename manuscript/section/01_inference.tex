@@ -152,6 +152,16 @@ $p$値を使ったモデル選択は、仮説検定と数学的に同じであ�
 
 \end{SMbox}
 
+
+\begin{rightbubbles}{bubblegreen}{Sato Shuntaro｜佐藤俊太朗}{./image/Twitter_logo_PNG/2021_Twitter_logo_blue.png}
+研究計画書を見ていると、「統計解析は実施しない」という記載もちょくちょく見る。検定や回帰をしないから。集計（要約）も統計解析です。
+  
+\begin{flushright} 
+\small	\url{https://twitter.com/Shuntarooo3/status/1726817830690271516}
+\end{flushright}    
+\end{rightbubbles}
+
+
 \chapter{モデル}
 モデルについて説明する。
 
@@ -475,9 +485,24 @@ $R^2$が小さな値をとっているということは、回帰モデルより
 \section{疑似乱数}
 乱数（でたらめな数）とは、人間の意図が加わらず、作為的でなく、規則性がなく、再現性もない数値列のことである。決定論を元に計算が行われているコンピュータ上では理想的な乱数列数を生成することできない。そこで、乱数の代わり擬似乱数を用いて、でたらめをまねた数値を生成することができる。
 
-\subsection{逆関数法}
+\subsection{乱数生成法}
+\paragraph{逆関数法}
 逆関数法は、ある確率密度関数$f(x)$に従う疑似乱数を生成する方法の一つである。
 $f(x)$の累積分布関数を$F(x)$とする。$F(x)$は、値域を$[0,1]$にとる関数である。
 このことから、$0\sim 1$の一様乱数$u$を生成し、累積分布関数の逆函數$x=F^{-1}(u)$を計算する。
 すると、$x$は、確率密度関数$f(x)$に従う。
+
+\paragraph{Box-Muller法}
+$x_1,y_1$を区間$[0,1]$に分布する一様乱数とする。
+次の、$U,V$は$U,V,i.i.d\sim N(0,1)$である。
+\begin{eqnarray*}
+ U &=& \sqrt{-2\ln x_1}\cos(2\pi y_1) \\
+ V &=& \sqrt{-2\ln x_1}\sin(2\pi y_1)
+\end{eqnarray*}
+
+このことから、平均$\mu$分散$\sigma^2$に従う乱数を得るには、以下のように変換すればよい。
+\begin{eqnarray*}
+ U\times \sigma+\mu \\
+  V\times \sigma+\mu
+\end{eqnarray*}
 
