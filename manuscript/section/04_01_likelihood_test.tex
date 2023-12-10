@@ -364,7 +364,7 @@ $M_2$の$\hat\hat\beta_2$のパラメータがどうなっているかなども�
 これを統計モデル$M_A=M(\mu_1,\mu_2,\cdots,\mu_n)$とする。
 フルモデルと子モデルそれぞれについて、最尤モデルを検討する。
 
-\subsection{子モデルの最尤推定}
+\paragraph{子モデルの最尤推定}
 %$M_A$の子モデルを$M_N=M(\mu;\sigma^2)$とする。
 %平均母数の個数を１つに絞ったモデルである。
 %明らかに$M_N$は$M_A$のネストされたモデルである。
@@ -380,7 +380,7 @@ $M_N$から得られたサンプル$x$についてその最尤推定量は次の
 &=&  (2\pi \bar{\sigma}^2_{\rm{ML}})^{-\frac{m}{2} }\exp\left(  -m/2\right) 
 \end{eqnarray*}
 
-\subsection{フルモデル}
+\paragraph{フルモデル}
 %この統計モデルの$\mu_1=\mu_2=\cdots=\mu_n$としたときの最尤推定量を計算する。
 $M_A$からサンプリングされた標本$x = (x_{ik}) (k=1,\cdots,n_i)$とすると、このモデルの尤度は次のようになる。
 \begin{equation*}
@@ -399,7 +399,7 @@ $M_A$からサンプリングされた標本$x = (x_{ik}) (k=1,\cdots,n_i)$と�
  &=&  (2\pi \bar{\sigma}^2)^{-\frac{m}{2} }\exp\left(  -m/2\right) 
 \end{eqnarray*}
 
-\subsection{尤度比}
+\paragraph{尤度比}
 以上をもとに尤度比を計算する。
 \begin{eqnarray*}
  \lambda =\frac{L_N}{L_A} &=& \frac{(2\pi \bar{\sigma}^2)^{-\frac{m}{2} }\exp\left(  -m/2\right) }{  (2\pi \bar{\sigma}^2_{\rm{ML}})^{-\frac{m}{2} }\exp\left(  -m/2\right)  }\\
@@ -451,7 +451,7 @@ $-2\log\lambda$を計算すると、
     異なる母数で推測した方が良いという結論を得るには、検定以外の方法で、データを解析することが必要である。
 \end{SMbox}
 
-\subsection{数値計算}
+\paragraph{数値計算}
 統計的性質が現れることを数値計算により確かめてみる。
 \begin{lstlisting}
 mu = 170
