@@ -10,6 +10,9 @@
 \usepackage{amsmath, amssymb}
 \usepackage{type1cm}
 \usepackage{comment} 
+\usepackage{secdot}
+\sectiondot{subsection}
+
 \newtheorem{theo}{定理}[section]
 \newtheorem{defi}{定義}[section]
 \newtheorem{lemm}{補題}[section]
@@ -159,15 +162,50 @@ captionpos = t
 
 \begin{document}
 
-\title{空想統計教程}
-%\large{\\--- モデルによる予測 ---}}
+\title{空想統計教程
+\large{\\ --- 機械学習からはじめる科学研究のための統計学 ---}}
 \author{Idiot}
 %\date{2020/6/29}
 \maketitle
-\tableofcontents	
+
+\setcounter{tocdepth}{2}
+\tableofcontents
 %% TODO QQplot,検出力,確率密度関数,分散分析,t分布
 %%\input{section0}
 %\input{00_comment}
+
+%\input{./section/01_inference}
+%\input{./section/04_01_likelihood_test}
+%\input{./section/02_mathematical_statistics}
+%\input{./section/09_statistical_test_old}
+
+%\bibliography{ref} %hoge.bibから拡張子を外した名前
+
+%\bibliographystyle{junsrt}
+
+
+\begin{comment}
+\input{./section/01_inference}
+\input{./section/12_model}
+\input{./section/04_statistical_test}
+\input{./section/02_mathematical_statistics}
+
+
+
+\input{./section/01_inference}
+%\input{./section/13_measure_condition}
+\input{./section/12_model}
+
+
+\input{./section/16_linear_regression}
+
+\end{comment}
+
+
+%\input{./section/16_linear_regression}
+
+
+%\begin{comment}
 
 \input{./section/01_inference}
 \input{./section/13_measure_condition}
@@ -177,20 +215,33 @@ captionpos = t
 %%%\input{05_error.tex}
 \input{./section/04_01_likelihood_test}
 \input{./section/03_normal_model}
+
+
 %\input{06_exp_model}
 
 %\input{10_measure}
-\input{./section/07_twosample_model}
 \input{./section/15_model_re}
+\input{./section/16_linear_regression}
 %\input{08_non_parametric}
-%
+
+
 \appendix
 \input{./section/02_mathematical_statistics}
-\input{./section/11_mathematics}
+% \input{./section/11_mathematics} % もういらない
 %\input{./section/14_statistical_test_model} %これは消そう
+\input{./section/07_twosample_model}
+%\input{./section/17_binomial}
 \input{./section/09_statistical_test_old}
+
 
 \bibliography{ref} %hoge.bibから拡張子を外した名前
 \bibliographystyle{junsrt}
+
+
+
+
+%\end{comment}
+
+
 
 \end{document}
