@@ -177,15 +177,6 @@ TODO:意味不明\\
 
 
 
-\begin{SMbox}{過誤の概念に対する懸念}
-第一の過誤・第二の過誤に関する批判として\cite{norleans2004臨床試験のための統計的方法}がある。
-\cite{2010毒性試験に用いる統計解析法の動向}において引用されていた部分を引用しておく。
-%私も彼らの意見に同意する。
-\begin{quote}
-過誤の概念は非現実的である。根本的な問題は、我々が真実を知らないことである。現実の臨床試験では、我々は実験から学び、真実を知りたいと願うのであって、真実がすでに知られており、我々の観察を判断するのに利用できる、というようなものではない。現在利用できる情報だけに基づく決定は、それ以上の情報が利用できるときには間違っていたことがわかることもあり得る。それ以上の情報が得られないとき、決定を行なった元になる情報でその決定の評価を行うことは理論的に不可能である。一つの試験では、試験さそのものから得られる情報が、利用できる唯一の情報である。利用できる情報の調査と競合する利害の注意深いバランスを考慮した後でのみ、仮説の棄却や採択の判断が行われる。その後の試験の情報が利用できるようになるまでは、現在の判断が正しいか誤りかを判断する情報は存在しない。従って、一つの試験にとっては、過誤の考え方は全く意味を持たない。
-\end{quote}
-%何も考えず、$\alpha=0.05,\beta=0.8$としてサンプルサイズを
-\end{SMbox}
 
 
 \begin{comment}
@@ -488,14 +479,14 @@ P(G\leq n\bar{x}) = 1-\frac{\alpha}{2}
 
 
 
-\section{指数モデル}
+\section{指数2モデル}
 指数分布を含んだモデルを構築する。
 \begin{enumerate}
  \item $x_1,x_2,\cdots,x_n,i.i.d. \sim \rm{Exp}(\theta_1)$
  \item $y_1,y_2,\cdots,y_n,i.i.d. \sim \rm{Exp}(\theta_2)$
 \end{enumerate}
 これを、$M_E(\theta_1,\theta_2)$とする。$\theta_1=\theta_2$のモデルを$M_N(\theta)$とする。
-\subsection{$M_N(\theta)$における尤度関数}
+\paragraph{$M_N(\theta)$における尤度関数}
 $M_N(\theta)$において、この尤度関数を計算する。
 \begin{equation*}
  L_{0} = \theta^{-n_1-n_2}\exp\{-\theta^{-1}T\}
@@ -511,7 +502,7 @@ $\theta_0$を$L_{0}$に代入すると、
 \end{equation}
 である。
 
-\subsection{$M_N(\theta_1,\theta_2)$における尤度関数}
+\paragraph{$M_N(\theta_1,\theta_2)$における尤度関数}
 同様に、対立仮説のもとで、尤度関数$L_{1}$は、
 \begin{equation}
     L_{1} = \theta_1^{-n_1}\exp\left(-\frac{n_1}{\theta_1}\bar{x}\right)\theta_2^{-n_2}\exp\left(-\frac{n_2}{\theta_2}\bar{y}\right)
@@ -527,7 +518,7 @@ $ \frac{\partial L_1}{\partial\theta_1}=0$より、$(-n_1+n_1\bar{x}\theta_1^{-1
 \end{equation}
 である。
 
-\subsection{尤度比}
+\paragraph{尤度比}
 \begin{eqnarray}
     \varLambda = \frac{L_{0}}{L_{1}} &=& \frac{ \theta_0^{-n_1-n_2}\exp(-n_2-n_2) }{ (\hat{\theta}_1)^{-n_1}(\hat{\theta}_2)^{-n_2} \exp(-n_1-n_2)}\\
     &=& \left(\frac{\hat{\theta_0}}{\theta_0}\right)^{n_1} \left(\frac{\hat{\theta_1}}{\theta_0} \right)^{n_2}
