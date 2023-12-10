@@ -4,6 +4,59 @@
 最後に、モデルの確率変数への当てはまりの良さの相対的な指標である尤度を導入し、尤度を最大にする母数を推定する方法を説明する。
 さらに、モデルのパラメータの数に対するペナルティを導入した指標のAICを導入する。
 
+\section{基本的な統計量}
+なんらかの標本のサンプルを実数の数列とする。つまり、そのサンプルを$x_1,x_2,\cdots,x_n$とすると、それぞれの$i$について$x_i\in R$である。
+
+
+\subsection{平均分散}
+平均と分散を次の式で定義する。
+\begin{eqnarray*}
+    \bar{x}_n &=& \frac{1}{n}\sum_{i=1}^n x_i \\
+    \sigma_x^2 &=& \frac{1}{n} \sum_{i=1}^n (x_i-\bar{x})^2
+\end{eqnarray*}
+
+
+\subsection{逐次更新}
+新たなサンプル$x_{n+1}$を得たとき、元の実数列$x_1,x_2,\cdots,x_n$に関する平均と$\bar{x},\sigma_x^2$により、平均と分散を計算できる。
+平均値は、
+\begin{equation*}
+    \bar{x}_{n+1} = \frac{1}{n+1}(n\bar{x}+x_{n+1})
+\end{equation*}
+であることがわかる。
+また、分散は、$n$までの分散を、$\sigma_n^2$と書くことにすると、次のように式を変形できる。
+\begin{eqnarray*}
+    \sigma_n^2&=&\frac{1}{n}\sum_{i=1}^n(x_i-\bar{x})\\
+    &=& \frac{1}{n}(\sum_{i=1}^n x_i^2-n\bar{x}_n^2)\\
+    &\rightarrow& n\sigma^2_n+n\bar{x}_n^2 = \sum_{i=1}^n x_i^2
+\end{eqnarray*}
+これらを使い、$x_{n+1}$を得たときの$\sigma_{n+1}^2$を計算する。
+\begin{eqnarray*}
+    \sigma_{n+1}^2 &=& \frac{1}{n+1}(\sum_{i=1}^n (x_i-\bar{x}_{n+1})^2+(x_{n+1}-\bar{x}_{n+1})^2 ) \\
+    &=& \frac{1}{n+1}(\sum_{i=1}^nx_i^2-2n\bar{x}_n\bar{x}_{n+1}+n\bar{x}^2_{n+1}+\\
+    & &\qquad\quad x_{n+1}^2-2x_{n+1}\bar{x}_{n+1}+\bar{x}_{n+1}^2)\\
+    &=& \frac{1}{n+1}(x_{n+1}^2
+    +n\sigma_n^2+n\bar{x}_n^2-(n+1)x_{n+1}^2)\\
+    &=& \frac{1}{n+1}(n(\sigma_n^2+\bar{x}_n^2)+x_{n+1}^2)-x_{n+1}^2
+\end{eqnarray*}
+
+\subsection{標本の追加による平均値分散の更新}
+新たな標本$y_1,y_2,\cdots,y_m$を得たとする。このとき、二つの標本の平均$\bar{z}$と分散$\sigma_z^2$を計算する。
+平均は、次の通り。
+\begin{equation*}
+    \bar{z} = \frac{1}{n+m}(n\bar{x}+m\bar{y})
+\end{equation*}
+分散は次の通り。
+\begin{eqnarray*}
+    \sigma_z^2 &=& \frac{1}{n+m}(\sum_{i=1}^n(x_i-\bar{z})^2+\sum_{i=1}^m(y_i-\bar{z})^2) \\
+    &=& \frac{1}{n+m}(\sum_{i=1}^n x_i^2-2n\bar{x}\bar{z}+n\bar{z}^2+ \\ 
+    & &\qquad\quad \sum_{i=1}^m y_i -2m\bar{y}\bar{z}+m\bar{z}^2) \\
+    &=& \frac{1}{n+m}( n\sigma_x^2 +n\bar{x}^2 -2n\bar{x}\bar{z} + n\bar{z}^2+ \\
+    & &\qquad\quad  m\sigma^2_y+m\bar{y}^2-2m\bar{y}\bar{z}+m\bar{z}^2 ) \\
+    &=& \frac{1}{n+m} (n\sigma^2_x+n(\bar{x}-\bar{z})^2 +m\sigma^2_y +m(\bar{y}-\bar{z})^2)
+\end{eqnarray*}
+この式は、$x_1,x_2,\cdots,x_n$や$y_1,y_2,\cdots,y_m$を知らなくても、それぞれの平均と分散とサンプルサイズから、これらサンプル全体の平均、分散が計算できることを示している。
+
+
 
 \section{確率変数}
 \subsection{確率変数がある分布関数に従う}
@@ -100,55 +153,10 @@ aaa
  \begin{equation*}
   V[X] = E[(X-\mu)^2] = \int_{-\infty}^{\infty} (x-\mu)^2 f_X(x)dx
  \end{equation*}
-ここで、$X$の平均値を$\mu$とする。$V[X]$の値を$\sigma_X^2$などと表す。
+%ここで、$X$の平均値を$\mu$とする。$V[X]$の値を$\sigma_X^2$などと表す。
 \end{defi}
 
 
-\subsection{平均分散の逐次更新}
-平均と分散の推定値は、
-\begin{eqnarray*}
-    \bar{x}_n &=& \frac{1}{n}\sum_{i=1}^n x_i \\
-    \sigma_x^2 &=& \frac{1}{n} \sum_{i=1}^n (x_i-\bar{x})^2
-\end{eqnarray*}
-である。
-
-新たな確率変数$x_{n+1}$を得たとき、元の確率変数$x_1,x_2,\cdots,x_n$に関する平均と$\bar{x},\sigma_x^2$により、計算してやると、
-\begin{equation*}
-    \bar{x}_{n+1} = \frac{1}{n+1}(n\bar{x}+x_{n+1})
-\end{equation*}
-であることがわかる。
-また、分散は、$n$までの分散を、$\sigma_n^2$と書くことにすると、次のように式を変形できる。
-\begin{eqnarray*}
-    \sigma_n^2&=&\frac{1}{n}\sum_{i=1}^n(x_i-\bar{x})\\
-    &=& \frac{1}{n}(\sum_{i=1}^n x_i^2-n\bar{x}_n^2)\\
-    &\rightarrow& n\sigma^2_n+n\bar{x}_n^2 = \sum_{i=1}^n x_i^2
-\end{eqnarray*}
-これらを使い、$x_{n+1}$を得たときの$\sigma_{n+1}^2$を計算する。
-\begin{eqnarray*}
-    \sigma_{n+1}^2 &=& \frac{1}{n+1}(\sum_{i=1}^n (x_i-\bar{x}_{n+1})^2+(x_{n+1}-\bar{x}_{n+1})^2 ) \\
-    &=& \frac{1}{n+1}(\sum_{i=1}^nx_i^2-2n\bar{x}_n\bar{x}_{n+1}+n\bar{x}^2_{n+1}+\\
-    & &\qquad\quad x_{n+1}^2-2x_{n+1}\bar{x}_{n+1}+\bar{x}_{n+1}^2)\\
-    &=& \frac{1}{n+1}(x_{n+1}^2
-    +n\sigma_n^2+n\bar{x}_n^2-(n+1)x_{n+1}^2)\\
-    &=& \frac{1}{n+1}(n(\sigma_n^2+\bar{x}_n^2)+x_{n+1}^2)-x_{n+1}^2
-\end{eqnarray*}
-
-\subsection{標本の追加による平均値分散の更新}
-新たな標本$y_1,y_2,\cdots,y_m$を得たとする。このとき、二つの標本の平均$\bar{z}$と分散$\sigma_z^2$を計算する。
-平均は、次の通り。
-\begin{equation*}
-    \bar{z} = \frac{1}{n+m}(n\bar{x}+m\bar{y})
-\end{equation*}
-分散は次の通り。
-\begin{eqnarray*}
-    \sigma_z^2 &=& \frac{1}{n+m}(\sum_{i=1}^n(x_i-\bar{z})^2+\sum_{i=1}^m(y_i-\bar{z})^2) \\
-    &=& \frac{1}{n+m}(\sum_{i=1}^n x_i^2-2n\bar{x}\bar{z}+n\bar{z}^2+ \\ 
-    & &\qquad\quad \sum_{i=1}^m y_i -2m\bar{y}\bar{z}+m\bar{z}^2) \\
-    &=& \frac{1}{n+m}( n\sigma_x^2 +n\bar{x}^2 -2n\bar{x}\bar{z} + n\bar{z}^2+ \\
-    & &\qquad\quad  m\sigma^2_y+m\bar{y}^2-2m\bar{y}\bar{z}+m\bar{z}^2 ) \\
-    &=& \frac{1}{n+m} (n\sigma^2_x+n(\bar{x}-\bar{z})^2 +m\sigma^2_y +m(\bar{y}-\bar{z})^2)
-\end{eqnarray*}
-この式は、$x_1,x_2,\cdots,x_n$や$y_1,y_2,\cdots,y_m$を知らなくても、それぞれの平均と分散とサンプルサイズから、これらサンプル全体の平均、分散が計算できることを示している。
 
 \section{正規分布}
 正規分布の確率密度関数は、
@@ -171,7 +179,7 @@ p(x;\mu,\sigma)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma
 \begin{eqnarray}
 \Phi(x) &=& p(X<x; 0,1) \\
     &=& \int_{-\infty}^x \phi(z)dz \\
-    &=& \frac{1}{2}(1+\rm{erf}\frac{x-\mu}{\sqrt{2\sigma^2}})
+    &=& \frac{1}{2}\left(1+\rm{erf}\frac{x-\mu}{\sqrt{2\sigma^2}}\right)
 \end{eqnarray}
 であり、図\ref{fig:standard_normal_distribution}(b)である。
 
@@ -370,8 +378,8 @@ $b$については、同様に、
 \end{equation*}
 以上より、この積分の条件で、$100(1-\alpha)\%$の確率で値を得る範囲は、
 \begin{equation}\label{expon_fail_prediction_interval}
- [\frac{1}{\lambda} \log\frac{1}{1-\alpha/2},
--\frac{1}{\lambda}\log\frac{\alpha}{2}]
+ \left[ \frac{1}{\lambda} \log\frac{1}{1-\alpha/2},
+-\frac{1}{\lambda}\log\frac{\alpha}{2} \right]
 \end{equation}
 である。
 指数分布により、サンプルサイズ$1000$の標本を$100$回作って、各標本においてデータがこの区間に入った割合をシミュレーションし、そのヒストグラムを図\ref{fig:expon_simulation_sample}に示した。確かに、$95\%$くらいの割合でその区間にデータが入っている。
@@ -397,14 +405,14 @@ $[0,a]$をその区間とし、
 \end{equation*}
 を解く。するとこの区間は、
 \begin{equation*}\label{expon_min_prediction_interval}
-[0,\frac{1}{\lambda}\log\frac{1}{\alpha}]
+\left[0,\frac{1}{\lambda}\log\frac{1}{\alpha} \right]
  \end{equation*}
 である。
 区間\ref{expon_fail_prediction_interval}と、区間\ref{expon_min_prediction_interval}の大小関係を比較する。区間の大きさの差を計算する\footnote{対数の計算$\log A+\log B=\log AB,\log \frac{A}{B}= \log A-\log B$,$\log \frac{1}{A}=-\log A$}。
 \begin{eqnarray*}
  & &\lambda \left( (\frac{1}{\lambda}\log\frac{2}{\lambda}-\frac{1}{\lambda}\log\frac{1}{1-\frac{\alpha}{2}})-\frac{1}{\lambda}\log\frac{1}{\alpha} \right)\\
-&=& -\log\frac{\alpha}{2}+\log(1-\frac{\alpha}{2})+\log\alpha \\
-&=& \log2(1-\frac{\alpha}{2}) = \log(2-\alpha)
+&=& -\log\frac{\alpha}{2}+\log\left(1-\frac{\alpha}{2}\right)+\log\alpha \\
+&=& \log2\left(1-\frac{\alpha}{2}\right) = \log(2-\alpha)
 \end{eqnarray*}
 また、最後の式は、常に正なので、区間\ref{expon_fail_prediction_interval}の方が大きいことがわかる。よって、区間\ref{expon_min_prediction_interval}のほうが区間\ref{expon_fail_prediction_interval}より小さい区間である\footnote{問題:最小の区間であろうか？}\footnote{どっちをつかってもそんなに差がでないので、どっちでを使ってもいい。おおまかに入っていることを確認するためだけにつかう。数学的なことにはこれ以上考えない。}。
 
@@ -568,22 +576,8 @@ $\log X_1^2+\log X_2^2 \cdots \log X_n $は十分統計量$\chi^2$分布に従�
 % https://abicky.net/2014/03/03/202054/
 \fi
 
-\subsection{正規分布とt分布の関係}
 
-2つの正規分布$X_1,X_2,\cdots,X_{n_1} \sim N(\mu_1,\sigma_1^2), Y_1,Y_2,\cdots,Y_{n_2}\sim N(\mu_2,\sigma_1^2)$とする。このとき、
-\begin{equation*}
-    T = \frac{(\bar{X}-\bar{Y})-(\mu_1-\mu_2)}{\sqrt{\frac{U^2}{n_1}+\frac{U^2}{n_2}}}
-\end{equation*}
-は、$n_1+n_2-2$の$t$分布に従う。ここで、$U$は、
-\begin{equation*}
-    U^2 = \frac{(n-1)U_1^2+(n_2-1)U_2^2}{n_1-1+n_2-1}
-\end{equation*}
-であり、$U_1,U_2$は、不偏分散
-\begin{eqnarray*}
-    U_1^2 = \frac{1}{n_1-1}\sum_{i=1}^{n_1}(X_i-\bar{X})\\
-    U_2^2 = \frac{1}{n_2-1}\sum_{i=1}^{n_2}(Y_i-\bar{Y})\\
-\end{eqnarray*}
-である。
+
 
 \section{尤度・対数尤度・AIC}
 \begin{defi}
