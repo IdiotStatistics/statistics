@@ -101,7 +101,7 @@ $E[x_2|x_1]$を$x_2$の$x_1$に対する回帰という。
 このモデルの確率密度関数を確認する。
 \begin{eqnarray*}
  %\frac{1}{\sqrt{(2\pi)^2|\sum|}} \exp\left( -\frac{1}{2} {}^t\! (\bm{x-\mu})\sum\! ^{-1}(\bm{x-\mu}) \right)
- &f(x,y)=)& \frac{1}{\sqrt{(2\pi)^2|\sum|}} \exp\left( -\frac{1}{2} {}^t\!(\bm{x-\mu})\sum\! ^{-1}(\bm{x-\mu}) \right) \\
+ f(x,y)&=& \frac{1}{\sqrt{(2\pi)^2|\sum|}} \exp\left( -\frac{1}{2} {}^t\!(\bm{x-\mu})\sum\! ^{-1}(\bm{x-\mu}) \right) \\
  &= &\frac{1}{\sqrt{(2\pi)^2|\sum|}} \exp\left( -\frac{1}{2}  \left(\sigma_x^2(x-\mu_x)^2 -2\sigma_{xy}(x-\mu_x)(y-\mu_y)+\sigma_y^2(y-\mu_y)^2\right) \right)
 \end{eqnarray*}
 
@@ -187,6 +187,10 @@ $E[x_2|x_1]$を$x_2$の$x_1$に対する回帰という。
 \begin{pmatrix}
  \frac{a-c+\sqrt{(a-c)^2+4b^2}}{2b}\\
  1
+\end{pmatrix} = 
+\begin{pmatrix}
+ \frac{a-c+\sqrt{(a+c)^2-4ac+4b^2}}{2b}\\
+ 1
 \end{pmatrix}
 \end{equation*}
 同様に、$\lambda_2$についての固有ベクトルを求める。
@@ -197,6 +201,10 @@ $E[x_2|x_1]$を$x_2$の$x_1$に対する回帰という。
  \end{pmatrix} =
 \begin{pmatrix}
  \frac{ a-c-\sqrt{(a-c)^2+4b^2} }{2b}\\
+ 1
+\end{pmatrix} = 
+\begin{pmatrix}
+ \frac{ a-c-\sqrt{(a+c)^2-4ac+4b^2} }{2b}\\
  1
 \end{pmatrix}
 \end{equation*}
@@ -260,6 +268,22 @@ $E[x_2|x_1]$を$x_2$の$x_1$に対する回帰という。
  S = \frac{\pi}{\sqrt{\lambda_1\lambda_2}}
 \end{equation*}
 
+
+\paragraph{長軸を通る直線の傾き}
+固有ベクトル$\bm{X_1},\bm{X_2}$にと同じ傾きをもつ直線を求める。
+$\bm{X_1}$の$y$成分を$x$成分で割ればいいので、以下のようになる。
+\begin{eqnarray*}
+ a_1 &=& \frac{(a-c)-\sqrt{(a-c)^2+4b^2}}{2b} \\
+ a_2 &=& \frac{(c-a)+\sqrt{(a-c)^2+4b^2}}{2b}
+\end{eqnarray*}
+
+\paragraph{長軸と$x$軸のなす角度}
+$\lambda_1>\lambda_2$とすると、長軸と$x$軸とのなす角度$\theta$は次の式により求められる。
+\begin{equation*}
+ \tan \theta = a_1
+\end{equation*}
+
+
 \subsection{決定係数$R^2$と相関係数$\rho^2$の関係}
 $E[x_2|x_2]$による予測において、決定係数$R^2$と相関係数$\rho^2$の関係を調べる。
 これを用いて、残差平方和の計算をおこなう。
@@ -293,34 +317,6 @@ $E[x_2|x_2]$による予測において、決定係数$R^2$と相関係数$\rho^
 予測性能が良ければ、分子が小くなり、第二項が$0$に近くなり、決定係数は$1$に近付く。
 予測性能がわるければ、分子が大きくなり、平均よりも悪い予測をおこなうならば、決定係数は負になる。
 
-\subsection{独立な２変数モデルの回帰平均二乗誤差}
-ここで、正規モデル$M(\mu,\sigma)$を正規モデル$M'(\mu,\sigma)$により予測することを考える。
-モデル$M,M'$での確率変数をそれぞれ$x,y$とする。$x$を$y$により予測したとき、その誤差を計算する。
-\begin{equation*}
- RMSE^2 = \frac{1}{n}\sum_{i=1}^n (x_i-y_i)^2
-\end{equation*}
-
-\begin{eqnarray*}
- RMSE^2=\frac{1}{n}\sum_{i=1}^n (x_i-y_i)^2 &=& \frac{1}{n}\sum_{i=1}^n \left( (x_i-\mu)-(y_i-\mu)\right) ^2\\
- &=& \frac{1}{n}\sum_{i=1}^n (x_i-\mu)^2+\frac{1}{n}\sum_{i=1}^n(y_i-\mu)^2-\frac{2}{n}\sum_{i=1}^n(x_i-\mu)(y_i-\mu) \\
- &=& Var[x]+Var[y]-2cov[x,y] \\
- &=& 2Var[x]
-\end{eqnarray*}
- 以上より、
-\begin{equation*}
- RMSE_{random} = \sqrt{2}\sigma
-\end{equation*}
-がわかる。
-これは、確率変数を別の確率変数により予測しようとすると、二乗誤差は分散の$\sqrt{2}$倍である\footnote{平均により予測すると、二乗誤差は$\sigma$なので、この予測モデルはそれよりも悪い。}。
-
-\subsubsection{決定係数が負になる}
-以上の議論を踏まえ、決定係数が負になることをみておこう。
-\begin{eqnarray*}
- R^2 &=& 1-\frac{\sum_{i=1}^n (x_i-y_i)^2}{\sum_{i=1}^n (x_i-\bar{x})^2}\\
- &=& 1-\frac{2n\sigma}{n\sigma}\\
- &=& -1
-\end{eqnarray*}
-平均値より予測精度が悪いことを決定係数が示している。
 
 
 \subsection{相関係数が$0.8$のとき}
@@ -335,48 +331,57 @@ $E[x_2|x_2]$による予測において、決定係数$R^2$と相関係数$\rho^
  0.6\sigma = 0.428(\sqrt{2})\sigma
 \end{equation*}
 より、$0.42倍$改善されている\footnote{https://mathlog.info/articles/2936}
-ランダムモデルの$RMSE$の$58\%$割引ともいえる。
+ランダムヌルモデルの$RMSE$の$58\%$割引ともいえる。
+
+また、$R^2$が相関係数と一致することから、次が成り立つ。
+\begin{equation*}
+ \frac{線形モデルと観測値の二乗誤差}{平均と観測値の二乗誤差} = 1-0.64 = 0.36
+\end{equation*}
+このことから、
+\begin{equation*}
+ 線形モデルと観測値の二乗誤差 = 0.36平均と観測値の二乗誤差
+\end{equation*}
+平均と観測値の二乗誤差の$64\%$引きが線形モデルと観測値の二乗誤差である。
+同様に、相関係数が$0.2$だとすると、平均と観測値の二乗誤差の$4\%$引きが線形モデルと観測値の二乗誤差である。
+相関係数を予測性能を示す統計量とあわせて考えると、相関係数が$0.2$だとたったの$4\%$しか性能が改善されていないことがわかる。
+平均値による誤差の半額引きには、相関係数$0.7$程度が必要である。
+
+\begin{SMbox}{$4\%$の改善}
+ $4\%$の改善がみられたことは報告するべきことだろうか。それは、業界や対象に依存する。さまざまな、要素との対応関係を調べたが$1\%$も性能が改善されない対象であれば、$4\%$の性能改善はすごい発見であろう。また、ある要素との対応関係で$96\%$程度改善されているような対象であれば、$4\%$の改善を発見するというのは小さな発見とも思える。
+
+ ただし、あらゆる実験報告には価値がある。
+\end{SMbox}
 
 
-\section{誤差モデルI}
-ここで、誤差項が確率変数であることを仮定してモデルModel Iを構築する。
-\begin{enumerate}
- \item $x_i$は、与えられた定数
- \item $a,b$を実数の定数
- \item $u_i = y_i-a x_i -b$
- \item $u_i \sim N(0,\sigma^2)$
- %\item $E[u_i]=0$。平均は$0$。
- %\item $E[u_j u_i]=0$。無相関。
- %\item $Var[u_i]=0$。分散が均一。
-\end{enumerate}
-この仮定により構築されるモデルを$M_{I}(a,b; x)$または$M_I(a,b)$と表記する\footnote{正規性の仮定の代わりに、無相関、等しい分散、平均が$0$の仮定を与えるのが簡単な定義である。ここでは、正規性を仮定しておいた}。
-また、最尤推定量を挿入した最尤モデルを$M_I(\hat{a},\hat{b})$と表記する。
-この最尤推定量は次の通りである。
+\subsection{$4$つの直線}
+つぎの二変量モデルを考える。
+$\mu_x=67.0, \mu_y = 68.3,\sigma^2_x=16.2,\sigma^2_y=20.5,\sigma_{xy}=9.5$。
+このモデルでは、$4$つの直線を導出した。具体的には、$E[Y|X],E[Y|X]$また、楕円の長軸、楕円の短軸である。
+これら$4$個の直線を図\ref{fig:multivariate_normal_four_line}に示した。
+傾きが負の直線が楕円の短軸であり、それに直行した黒色の直線が楕円の長軸に沿った直線である。傾きが正である物のなかで最も小さい傾きをもつ直線が$E[Y|X]$であり、長軸の直線よりも傾きの大きな直線が$E[X|Y]$である。
+\begin{figure}
+ \begin{center}
+  \includegraphics[width=10cm]{./image/16_/multivariate_normal_four_line.pdf}
+  \label{fig:multivariate_normal_four_line}
+  \caption{二変量モデルにおいて導出される$4$つの直線。傾きが負の直線が短軸であり、それに直行した黒色の直線が長軸である。傾きが正である物のなかで最も小さい傾きをもつ直線が$E[Y|X]$であり、長軸の直線よりも傾きの大きな直線が$E[X|Y]$である。}
+ \end{center}
+\end{figure}
+
+
+
+まず、$Y$を直線$aX+b$により予測するさいの、予測の良さについて考える。
+ここでは、評価指標として、$RMSE$を使う。
 \begin{eqnarray*}
- \hat{a} &=& \frac{Q_{xy}}{Q_{xx}}\\
- \hat{b} &=& \bar{y}-\hat{a}\bar{x}
+ \rm{RMSE} &=& \frac{1}{n}\sum_{i=1}^n((y_i-\mu_y)-a(x_i-\mu_x))^2\\
+ &=& \frac{1}{n}\sum_{i=1}^n((y_i-\mu_y)^2+a^2(x_i-\mu_x)^2-2a(x_i-\mu_x)(y_i-\mu_y))\\
+&=& \frac{1}{n}\sum_{i=1}^n (\sigma_y^2+a^2\sigma_x^2-2a\sigma_{xy})\\
 \end{eqnarray*}
-予測値と観測値の差分を残差$e_i$、またその二乗和を残差平方和とよぶ。それぞれ、以下の通り。
-\begin{eqnarray*}
- e_i &=& y_i - (ax_i+b)\ \ (i=1,2,\cdots,n)\\
- RSS &=& \sum_{i=1}^n e_i^2 \\
-\end{eqnarray*}
-そして分散の推定値を以下のように定義する。
-\begin{eqnarray*}
- \hat{\sigma}^2 = \frac{RSS}{n-2}
-\end{eqnarray*}
-モデル$M_I(a,b)$において、次のことも解っている。
+これは、$a$に関する二次方程式なので、$\rm{RMSE}$が最小になるのは、$a$が次のときである。
 \begin{equation*}
- \frac{(\hat{a}-a)}{ \left( \frac{\hat{\sigma}^2}{Q_{xx}} \right)^\frac{1}{2}} \sim t_{n-2}
+ a = \frac{\sigma_{xy}}{\sigma_x^2}
 \end{equation*}
-また、このことから、$a$の信頼区間は、次の通り。
-\begin{equation*}
- |a| \leq \hat{a}\pm(\hat{\sigma}^2/Q_{xx})^{1/2}t_{n-2,\frac{\alpha}{2}}
-\end{equation*}
-$y$の予測区間は、以下の通りである。
-\begin{equation*}
- y_0\pm\left[\hat{\sigma}^2\left( 1+\frac{1}{n} +\frac{(x_0-\bar{x})^2}{Q_{xx}} \right)\right]^{1/2}t_{n-2,\alpha/2}
-\end{equation*}
+この結果から、$X$をもとに$Y$を予測する直線$E[Y|X]$は、その直線の中では$RMSE$が最小である。
+同様に、$Y$をもとに$X$を予測する直線$E[X|Y]$は、その直線の中では$RMSE$が最小である。
 
 
 
@@ -890,4 +895,53 @@ $E_4$ & 1.13 &  -7.18 \\
 \end{table}
 
 
+
+\chapter{回帰モデル}
+
+
+\section{誤差モデルI}
+ここで、誤差項が確率変数であることを仮定してモデルModel Iを構築する。
+\begin{enumerate}
+ \item $x_i$は、与えられた定数
+ \item $a,b$を実数の定数
+ \item $u_i = y_i-a x_i -b$
+ \item $u_i \sim N(0,\sigma^2)$
+ %\item $E[u_i]=0$。平均は$0$。
+ %\item $E[u_j u_i]=0$。無相関。
+ %\item $Var[u_i]=0$。分散が均一。
+\end{enumerate}
+この仮定により構築されるモデルを$M_{I}(a,b; x)$または$M_I(a,b)$と表記する\footnote{正規性の仮定の代わりに、無相関、等しい分散、平均が$0$の仮定を与えるのが簡単な定義である。ここでは、正規性を仮定しておいた}。
+また、最尤推定量を挿入した最尤モデルを$M_I(\hat{a},\hat{b})$と表記する。
+この最尤推定量は次の通りである。
+\begin{eqnarray*}
+ \hat{a} &=& \frac{Q_{xy}}{Q_{xx}}\\
+ \hat{b} &=& \bar{y}-\hat{a}\bar{x}
+\end{eqnarray*}
+予測値と観測値の差分を残差$e_i$、またその二乗和を残差平方和とよぶ。それぞれ、以下の通り。
+\begin{eqnarray*}
+ e_i &=& y_i - (ax_i+b)\ \ (i=1,2,\cdots,n)\\
+ RSS &=& \sum_{i=1}^n e_i^2 \\
+\end{eqnarray*}
+そして分散の推定値を以下のように定義する。
+\begin{eqnarray*}
+ \hat{\sigma}^2 = \frac{RSS}{n-2}
+\end{eqnarray*}
+モデル$M_I(a,b)$において、次のことも解っている。
+\begin{equation*}
+ \frac{(\hat{a}-a)}{ \left( \frac{\hat{\sigma}^2}{Q_{xx}} \right)^\frac{1}{2}} \sim t_{n-2}
+\end{equation*}
+また、このことから、$a$の信頼区間は、次の通り。
+\begin{equation*}
+ |a| \leq \hat{a}\pm(\hat{\sigma}^2/Q_{xx})^{1/2}t_{n-2,\frac{\alpha}{2}}
+\end{equation*}
+$y$の予測区間は、以下の通りである。
+\begin{equation*}
+ y_0\pm\left[\hat{\sigma}^2\left( 1+\frac{1}{n} +\frac{(x_0-\bar{x})^2}{Q_{xx}} \right)\right]^{1/2}t_{n-2,\alpha/2}
+\end{equation*}
+
+\subsection{解釈}
+二変量モデルでは、二つの変数に対して関係があることを前提にしたモデルであった。これを使う場合、二つの計測量がどちらもあるはばをもってゆらいでいることが多い。
+回帰モデルは、ある固定された値に対して予測される量に対して、その対応関係の差分量がある分布形に従うことを前提にモデルを構築する。
+回帰モデルを使っているが、同じに二変量モデルも使い、その最尤推定量から相関係数を計算することがある。
+本書では、これら二つのモデルをなるべく使い分ける。言い替えれば、回帰モデルを使っているのに、相関係数を使い議論することを控える。
 
