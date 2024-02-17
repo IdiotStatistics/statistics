@@ -1,4 +1,4 @@
-\chapter{親子の身長の研究}
+\chapter{2変量正規モデル}
 % https://twitter.com/ynakahashi1003/status/1610952694767968257
 
 % https://twitter.com/ynakahashi1003/status/1610951312560238594
@@ -17,110 +17,66 @@ https://www.jstage.jst.go.jp/article/jve/24/1/24_29/_pdf/-char/ja
 
 二つの要素に対する３つのモデルを取り上げる。まず、これらの性質について整理する。
 
-\section{独立ではない変数を持つモデル}
-\begin{enumerate}
- \item $x,y$を確率変数とする。
- \item 平均を$\mu_x,\mu_y$分散を$\sigma^2_x,\sigma^2_y$とする。
-\end{enumerate}
-このモデルでは、次の$X$と$Y$の共分散という量が定義できる。
-\begin{equation*}
- \sigma_{xy} = E[(x-\mu_x)(y-\mu_y)]
-\end{equation*}
-また、相関係数を次のように定義する。
-\begin{equation*}
- \rho = \frac{\sigma_{xy}}{\sigma_x\sigma_y}
-\end{equation*}
 
-$(x-\mu_x)(y-\mu_y)$という量を考えてみる。これは$(\mu_x,\mu_y)$を中心にし、
-\begin{enumerate}
- \item $(x,y)$が右上にあれば、$x-\mu_x$と$y-\mu_y$はともに正であり、その積も正
- \item $(x,y)$が左下にあれば、$x-\mu_x$と$y-\mu_y$はともに負であり、その積は正
- \item $(x,y)$が左上にあれば、$x-\mu_x$は負そして、$y-\mu_y$は正であり、その積は負
- \item $(x,y)$が右下にあれば、$x-\mu_x$は正そして、$y-\mu_y$は負であり、その積は負
-\end{enumerate}
-である。以上から、$(x-\mu_x)(y-\mu_y)$は２次元平面上でのある中心からデータのばらつき方を示す量であること、
-そして、その平均は、平均的なデータのばらつきかたを示す。言い替えれば、平均的にデータが$(\mu_x,\mu_y)$を中心に右上から左下に多く存在すれば、共分散は正の値をとることが期待される。
-共分散を$\sigma_x,\sigma_y$により規格化した量が相関係数である。
-
-相関係数は、二つの変数が確率変数であることを仮定したモデルにより定義できる量である。
-
-
-\subsection{$r^2\leq 1$の証明}
-コーシーシュワルツの不等式
-$a_1,a_2,\cdots,a_n,b_1,b2,\cdots,b_n$を実数とする。
-\begin{equation*}
- (\sum_{i=1}^n a_i b_i)^2 \leq (\sum_{i=1}^n a_i^2)(\sum_{i=1}^n b_i^2)
-\end{equation*}
-である。等号成立は、$a_i=0$または$b_i=0$または$b_1/a_1=b_2/a_2=\cdots=b_n/a_n$が成り立つときである。
-
-このことを利用する。$a_i=x_i-\bar{x},b_i=y_i-\bar{y}$とおく。
-\begin{equation*}
- \left(\sum_{i=1}^n (x_i-\bar{x})(y_i-\bar{y})\right)^2 \leq  \sum_{i=1}^n(x_i-\bar{x})^2\sum_{i=1}^n(y_i-\bar{y})^2
-\end{equation*}
-このことから、$r^2\leq 1$であり、$-1\leq r \leq 1$がわかる。
-
-
-\section{$2$変量正規分布}
 独立ではない二つの変数に対するモデルを構築する。
 \begin{enumerate}
- \item $(x_i,y_i)\sim F (i=1,2,\cdots,n)$
+ \item $(X_i,Y_i)\sim F (i=1,2,\cdots,n)$
  \item $F$は$2$変量正規分布
  \item 母数は、平均値、分散および共分散
 \end{enumerate}
-このモデルを$2$変量モデル$M_{2}(\mu,\sum)$と呼ぶ。
+このモデルを$2$変量モデル$M_{2}(\mu,\sigma^2_x,\sigma^2_y,\sigma_{xy})$または、$M_2(\vecc{\mu},\Sigma)$と呼ぶ。ここで、$\Sigma$は共分散行列であり、$(1,1)$成分が$\sigma_x^2$、行列の$(2,2)$成分が$\sigma_y^2$であり、反対角成分は、$\sigma_{xy}$とする。
+相関係数$\rho$を定義する。
+\begin{equation*}
+ \rho = \frac{\sigma_{xy}}{\sqrt{\sigma_x^2\sigma_y^2}}
+\end{equation*}
+
 このモデルの最尤推定量は次の通り。
 \begin{eqnarray*}
  \mu_{\rm{ML}} &=& \left(\frac{1}{n}\sum_{i=1}^n x_i,\frac{1}{n}\sum_{i=1}^n y_i \right) \\
- \sum_{\rm{ML}} &=& \begin{pmatrix}
-\frac{1}{n}\sum (x_i-\bar{x})^2 &  \frac{1}{n}\sum (x_i-\bar{x})(y_i-\bar{y})\\
-\frac{1}{n}\sum (x_i-\bar{x})(y_i-\bar{y}) & \frac{1}{n}\sum (y_i-\bar{y})^2 \\
-\end{pmatrix}
+ \Sigma_{\rm{ML}} &=& \begin{pmatrix}
+                       \sigma_{x,ML}^2& \sigma_{xy,ML}  \\
+                       \sigma_{xy,ML} & \sigma_{y,ML}^2 \\
+                      \end{pmatrix}\\
+                      &=&
+   \begin{pmatrix}
+    \frac{1}{n}\sum (x_i-\bar{x})^2 &  \frac{1}{n}\sum (x_i-\bar{x})(y_i-\bar{y})\\
+    \frac{1}{n}\sum (x_i-\bar{x})(y_i-\bar{y}) & \frac{1}{n}\sum (y_i-\bar{y})^2 \\
+   \end{pmatrix}
 \end{eqnarray*}
-
-$x_1$または$x_2$を固定したときに得られる、$x_2$または$x_1$の期待値と分散は次の通り。
-\begin{eqnarray*}
- E[x_2|x_1] &=& \mu_2+\frac{\sigma_{xy}}{\sigma_x^2}(x_1-\mu_1)\\
- Var[x_2|x_1]  &=& \sigma_2^2(1-\rho^2) \\
- E[x_1|x_2] &=& \mu_1+\frac{\sigma_{yx}}{\sigma_y^2}(x_2-\mu_2)\\
- Var[x_1|x_2]  &=& \sigma_1^2(1-\rho^2)
-\end{eqnarray*}
-$E[x_2|x_1]$を$x_2$の$x_1$に対する回帰という。
-この式は、平均二乗誤差を最小にするという良い性質をもっている。
+ここで、$x_i,y_i$はこのモデルの実現値。
 
 
 
-%
-2変量正規モデルににおいて相関係数をBravais-Pearson(ブラベー・ピアソン)の係数と呼ぶこともある。
-2変量正規モデルその共分散が$0$のモデルにおいて、相関係数が次の分布に従う\footnote{正規2モデル$M(\mu_x,\mu_y,\sigma_x^2,\sigma_y^2)$において$r$がある分布に従うと言ってもいいが、相関係数を計算するとき、我々の頭のなかには2変量正規モデルでみてみようという考えがあり、正規モデルは頭にないはずである。}。
-\begin{equation*}
- r \sim 
-\end{equation*}
-このことを利用して、データと2変量正規モデル間の乖離具合を調べることができる。
-これは、相関係数に対する検定と呼ばれる作業に対応する。
-\subsection{確率密度関数}
+\section{確率密度関数}
 このモデルの確率密度関数を確認する。
 \begin{eqnarray*}
  %\frac{1}{\sqrt{(2\pi)^2|\sum|}} \exp\left( -\frac{1}{2} {}^t\! (\bm{x-\mu})\sum\! ^{-1}(\bm{x-\mu}) \right)
- f(x,y)&=& \frac{1}{\sqrt{(2\pi)^2|\sum|}} \exp\left( -\frac{1}{2} {}^t\!(\bm{x-\mu})\sum\! ^{-1}(\bm{x-\mu}) \right) \\
- &= &\frac{1}{\sqrt{(2\pi)^2|\sum|}} \exp\left( -\frac{1}{2}  \left(\sigma_x^2(x-\mu_x)^2 -2\sigma_{xy}(x-\mu_x)(y-\mu_y)+\sigma_y^2(y-\mu_y)^2\right) \right)
+ f(x,y)&=& \frac{1}{\sqrt{(2\pi)^2|\Sigma|}} \exp\left( -\frac{1}{2} {}^t\!(\bm{x-\mu})\Sigma\! ^{-1}(\bm{x-\mu}) \right) \\
+ &= &\frac{1}{\sqrt{(2\pi)^2|\Sigma|}} \exp\left( -\frac{1}{2|\Sigma|}  \left(\sigma_y^2(x-\mu_x)^2 -2\sigma_{xy}(x-\mu_x)(y-\mu_y)+\sigma_x^2(y-\mu_y)^2\right) \right)
 \end{eqnarray*}
 
 
-ここで、平均$\mu=(\mu_x,\mu_y)$共分散行列$\sum$は
+ここで、平均$\vecc{\mu}=(\mu_x,\mu_y)$共分散行列$\Sigma$は
 \begin{eqnarray*}
- \sum &=& \begin{pmatrix}
+ \Sigma &=& \begin{pmatrix}
 \sigma_x^2 &  \sigma_{xy}\\
            \sigma_{xy}& \sigma_y^2 \\
 \end{pmatrix}
 \end{eqnarray*}
-また、行列式は$|\sum| = |(\sigma_x^2\sigma_y^2-\sigma_{xy}^2)|$である。
+また、行列式は$|\Sigma| = (\sigma_x^2\sigma_y^2-\sigma_{xy}^2)$である。逆行列は、以下である。
+\begin{equation*}
+ \Sigma^{-1} = \frac{1}{\sigma^2_x\sigma^2_y-\sigma^2_{xy}}\begin{pmatrix}
+                \sigma^2_y & -\sigma_{xy}\\
+                -\sigma_{xy} & \sigma^2_x
+               \end{pmatrix}
+\end{equation*}
 
 
 確率密度関数の指数関数の内側の項について考察する。また、平均は$(0,0)$の場合を考える。
 この式を一般性を失うことなく、式変形すると、
 \begin{equation*}
- {}^t\!\bm{x}A\bm{x}=
- {}^t\!\bm{x}\begin{pmatrix}
+ \tra \bm{x}A\bm{x}=
+ \tra \bm{x}\begin{pmatrix}
   a & b \\
   b & c 
  \end{pmatrix}\bm{x}= ax^2+2bxy+cy^2 = 1
@@ -136,11 +92,11 @@ $E[x_2|x_1]$を$x_2$の$x_1$に対する回帰という。
       y_1 & y_2
      \end{pmatrix}
 \end{equation*}
-このとき、$A={}^t\!PDP$である。
-固有ベクトルの一次結合により$\bm{x}$を表すと、$\bm{x}=P\bm{c}$となる。
-これを${}^t\!\bm{x}A\bm{x}$に代入すると以下が得られる。
+このとき、$A=\tra PDP$である。
+固有ベクトルの一次結合により$\vecc{x}$を表すと、$\vecc{x}=P\vecc{c}$となる。
+これを$\tra \vecc{x}A\vecc{x}$に代入すると以下が得られる。
 \begin{equation*}
- \lambda_1 c_1^2+\lambda^2 c_2^2=1
+ \lambda_1 c_1^2+\lambda_2 c_2^2=1
 \end{equation*}
 このことから、楕円の長辺と短辺は固有値であり、その方向は、固有ベクトルであることがわかる。
 
@@ -161,10 +117,10 @@ $E[x_2|x_1]$を$x_2$の$x_1$に対する回帰という。
  \lambda_1 = \frac{a+c+\sqrt{(a-c)^2+4b^2}}{2} \\
  \lambda_2 = \frac{a+c-\sqrt{(a-c)^2+4b^2}}{2}
 \end{eqnarray*}
-である。これが固有値である。
+である。これが固有値である。共分散$b=0$の場合、$\lambda_1=a,\lambda_2=c$となっており、符号の付きかたが但しいことを確かめれる。
 
 \paragraph{固有ベクトル}
-固有ベクトルは、行列$(\sum-\lambda E)$をベクトル$(x\ y)$に作用させたとき$0$になるようなベクトルのことである。
+固有ベクトルは、行列$(\Sigma-\lambda E)$をベクトル$(x\ y)$に作用させたとき$0$になるようなベクトルのことである。
 これは、
 以下を解けばよい。
 \begin{equation*}
@@ -180,7 +136,7 @@ $E[x_2|x_1]$を$x_2$の$x_1$に対する回帰という。
 \end{equation*}
 すると、
 \begin{equation*}
- \bm{X_1} = \begin{pmatrix}
+ \vecc{X_1} = \begin{pmatrix}
   x_1 \\
   y_1
  \end{pmatrix} =
@@ -195,7 +151,7 @@ $E[x_2|x_1]$を$x_2$の$x_1$に対する回帰という。
 \end{equation*}
 同様に、$\lambda_2$についての固有ベクトルを求める。
 \begin{equation*}
- \bm{X_2}=\begin{pmatrix}
+ \vecc{X_2}=\begin{pmatrix}
   x_2 \\
   y_2
  \end{pmatrix} =
@@ -219,12 +175,12 @@ $E[x_2|x_1]$を$x_2$の$x_1$に対する回帰という。
 \end{equation*}
 この行列$P$の転置行列は、$P$の逆行列と一致する。
 \begin{equation*}
- {}^t\!P = P^{-1}
+ \tra P = P^{-1}
 \end{equation*}
 
-また、$\lambda_1$と$\lambda_2$が$\sum$の固有値であるということから、次が成り立つ。
+また、$\lambda_1$と$\lambda_2$が$\Sigma$の固有値であるということから、次が成り立つ。
 \begin{equation*}
- P^{-1}\sum P = \begin{pmatrix}
+ P^{-1}\Sigma P = \begin{pmatrix}
                  \lambda_1 & 0\\
                  0 & \lambda_2
                 \end{pmatrix}(=D)
@@ -233,26 +189,26 @@ $E[x_2|x_1]$を$x_2$の$x_1$に対する回帰という。
 
 以上から、次が成り立つ。
 \begin{eqnarray*}
- {}^t\!\bm{x}\sum\bm{x} = {}^t\!\bm{x}PDP^{-1}\bm{x}
+ \tra \vecc{x}\Sigma\vecc{x} = \tra \vecc{x}PDP^{-1}\vecc{x}
 \end{eqnarray*}
 
 \paragraph{固有ベクトルの線形和による解}
 固有ベクトルの線形和は、$c_1X_1+c_2X_2$とかける。これを行列で表記する。
 \begin{equation*}
- \bm{y} = \begin{pmatrix}
+ \vecc{y} = \begin{pmatrix}
       c_1 x_1+ c_2 x_2\\
       c_1y_1+c_2y_2
      \end{pmatrix}
      = P\begin{pmatrix}
          c_1\\
          c_2
-        \end{pmatrix}=P\bm{c}
+        \end{pmatrix}=P\vecc{c}
 \end{equation*}
 このベクトル$y$を楕円の方程式の$x$に代入する。
 \begin{eqnarray*}
- {}^t\!\bm{y} \sum \bm{y} &=& {}^t\!(P\bm{c})\sum(P\bm{c}) \\
- &=& {}^t\!\bm{c}P^{-1} \sum P \bm{c} \\
- &=& {}^t\!\bm{c} D \bm{c} = \lambda_1c_1^2+\lambda_2c_2^2 = 1
+ \tra \bm{y} \Sigma \bm{y} &=& \tra(P\bm{c})\Sigma(P\bm{c}) \\
+ &=& \tra \bm{c}P^{-1} \Sigma P \bm{c} \\
+ &=& \tra\bm{c} D \bm{c} = \lambda_1c_1^2+\lambda_2c_2^2 = 1
 \end{eqnarray*}
 これを計算すると、$\lambda_1c_1^2+\lambda_2c_2^2=1$となり、これを満す$(c_1,c_2)$は円を$x$方向に$\lambda_1$倍、$y$方向に$\lambda_2$倍したものである。
 また、これを満す$(c_1,c_2)=(c_1\sqrt{\lambda_1},c_2\sqrt{\lambda})$は、円である。
@@ -270,12 +226,32 @@ $E[x_2|x_1]$を$x_2$の$x_1$に対する回帰という。
 
 
 \paragraph{長軸を通る直線の傾き}
-固有ベクトル$\bm{X_1},\bm{X_2}$にと同じ傾きをもつ直線を求める。
-$\bm{X_1}$の$y$成分を$x$成分で割ればいいので、以下のようになる。
+固有ベクトル$\vecc{X_1},\vecc{X_2}$にと同じ傾きをもつ直線を求める。
+$\vecc{X_1}$の$y$成分を$x$成分で割ればいいので、以下のようになる。
 \begin{eqnarray*}
- a_1 &=& \frac{(a-c)-\sqrt{(a-c)^2+4b^2}}{2b} \\
- a_2 &=& \frac{(c-a)+\sqrt{(a-c)^2+4b^2}}{2b}
+ a_1 &=& \frac{2b}{a-c+\sqrt{(a-c)^2+4b^2}} \\
+ a_2 &=& \frac{2b}{a-c-\sqrt{(a-c)^2+4b^2}} 
+% a_1 &=& \frac{(a-c)-\sqrt{(a-c)^2+4b^2}}{2b} \\
+% a_2 &=& \frac{(c-a)+\sqrt{(a-c)^2+4b^2}}{2b}
 \end{eqnarray*}
+
+\paragraph{$r^2\sim 1$の場合での長軸と回帰直線}
+$r^2\sim 1$の場合、次がなりたつ。
+\begin{eqnarray*}
+ && r^2 = \left(\frac{\sigma_{xy}^2}{\sigma_x^2 \sigma_y^2} \right) \sim 1\\
+ \rightarrow && \sigma_{xy}^2 \sim \sigma_x^2\sigma_y^2
+\end{eqnarray*}
+$a_1$の分母にこれを代入する。
+\begin{eqnarray*}
+ (a-c+\sqrt{(a-c)^2+4b^2}) &=& (\sigma_x^2-\sigma_y^2+\sqrt{(\sigma_x^2-\sigma_y^2)^2+4\sigma_{xy}^2})\\
+ &=& 2\sigma_x^2
+\end{eqnarray*}
+よって、$a_1$は、$\frac{\sigma_{y}}{\sigma_x}$である。相関係数の二乗が$1$に近いとき、回帰の傾きと主軸の傾きと一致する。
+%$a_2$についても同様の議論により、$a_2=\frac{\sigma_{y}}{\sigma_y}$であり、これも回帰直線の傾きと一致する。
+
+\paragraph{$\sigma_x\sim \sigma_y$である場合}
+分散が等しいとき、長軸と短軸の傾きは、$1$または$-1$に近付く。
+
 
 \paragraph{長軸と$x$軸のなす角度}
 $\lambda_1>\lambda_2$とすると、長軸と$x$軸とのなす角度$\theta$は次の式により求められる。
@@ -283,12 +259,162 @@ $\lambda_1>\lambda_2$とすると、長軸と$x$軸とのなす角度$\theta$は
  \tan \theta = a_1
 \end{equation*}
 
+\paragraph{寄与率／積率寄予率}
+次の量を固有値$\lambda_i$の寄予率$\Lambda_i$という。
+\begin{equation*}
+ \Lambda_i = \frac{\lambda_i}{\lambda_1+\lambda_2}
+\end{equation*}
+また、積率寄予率$\Lambda_i^{\rm{cum}}$を次のように定める。
+\begin{eqnarray*}
+ \Lambda_H^{\rm{cum}} = \frac{\lambda_1}{\lambda_1+\lambda_2} \\
+ \Lambda_L^{\rm{cum}} = \frac{\lambda_1+\lambda_2}{\lambda_1+\lambda_2} =1
+\end{eqnarray*}
+ここで、$\lambda_1>\lambda_2$とする。
+積率寄予率は、固有値の大きなものの順に$\lambda_i$をならびかえたとき、$i$番目までの固有値の和を全体の固有値の和で割ったものと一般に定義される。
+ここでは、$\mathbb{R}^2$で考えているため、大きな固有値の割合$\Lambda_H^{\rm{cum}}$のみに意味がある。
+$\Lambda_H^{\rm{cum}}$が$0.5$より著しく大きければ、この固有ベクトルが実現値をよく説明している。
+
+
+
+
+\section{回帰}
+$x_1$または$x_2$を固定したときに得られる、$x_2$または$x_1$の期待値と分散は次の通り。
+\begin{eqnarray*}
+ E[x_2|x_1] &=& \mu_2+\frac{\sigma_{xy}}{\sigma_x^2}(x_1-\mu_1)\\
+ &=& \mu_2+\rho\frac{\sigma_y}{\sigma_x}(x_1-\mu_1)\\
+ Var[x_2|x_1]  &=& \sigma_y^2(1-\rho^2) \\
+ E[x_1|x_2] &=& \mu_1+\frac{\sigma_{yx}}{\sigma_y^2}(x_2-\mu_2)\\
+ &=& \mu_1+\rho\frac{\sigma_{x}}{\sigma_y}(x_2-\mu_2)\\
+ Var[x_1|x_2]  &=& \sigma_x^2(1-\rho^2)
+\end{eqnarray*}
+$E[x_2|x_1]$を$x_2$の$x_1$に対する回帰という。
+この式は、直線による予測の中で、平均二乗誤差を最小にするという良い性質をもっている。
+
+\subsection{$2$つの回帰直線}
+つぎの二変量モデルを考える。
+$\mu_x=67.0, \mu_y = 68.3,\sigma^2_x=16.2,\sigma^2_y=20.5,\sigma_{xy}=9.5$。
+このモデルでは、$4$つの直線を導出した。具体的には、$E[Y|X],E[Y|X]$また、楕円の長軸、楕円の短軸である。
+これら$4$個の直線を図\ref{fig:multivariate_normal_four_line}に示した。
+傾きが負の直線が楕円の短軸であり、それに直行した黒色の直線が楕円の長軸に沿った直線である。傾きが正である物のなかで最も小さい傾きをもつ直線が$E[Y|X]$であり、長軸の直線よりも傾きの大きな直線が$E[X|Y]$である。
+\begin{figure}
+ \begin{center}
+  \includegraphics[width=10cm]{./image/16_/multivariate_normal_four_line.pdf}
+  \label{fig:multivariate_normal_four_line}
+  \caption{二変量モデルにおいて導出される$4$つの直線。傾きが負の直線が短軸であり、それに直行した黒色の直線が長軸である。傾きが正である物のなかで最も小さい傾きをもつ直線が$E[Y|X]$であり、長軸の直線よりも傾きの大きな直線が$E[X|Y]$である。}
+ \end{center}
+\end{figure}
+
+
+
+まず、$Y$を直線$aX+b$により予測するさいの、予測の良さについて考える。
+ここでは、評価指標として、$RMSE$を使う。
+\begin{eqnarray*}
+ \rm{RMSE} &=& \frac{1}{n}\sum_{i=1}^n((y_i-\mu_y)-a(x_i-\mu_x))^2\\
+ &=& \frac{1}{n}\sum_{i=1}^n((y_i-\mu_y)^2+a^2(x_i-\mu_x)^2-2a(x_i-\mu_x)(y_i-\mu_y))\\
+&=& \frac{1}{n}\sum_{i=1}^n (\sigma_y^2+a^2\sigma_x^2-2a\sigma_{xy})\\
+\end{eqnarray*}
+これは、$a$に関する二次方程式なので、$\rm{RMSE}$が最小になるのは、$a$が次のときである。
+\begin{equation*}
+ a = \frac{\sigma_{xy}}{\sigma_x^2}
+\end{equation*}
+この結果から、$X$をもとに$Y$を予測する直線$E[Y|X]$は、その直線の中では$RMSE$が最小である。
+同様に、$Y$をもとに$X$を予測する直線$E[X|Y]$は、その直線の中では$RMSE$が最小である。
+
+\subsection{ちょっと平均によせて}
+$E[x_2|x_1]$の傾きは、$\rho\frac{\sigma_x}{\sigma_y}$である。
+分散がほぼ等しい状況を考えると、平均からの差分を$\rho$倍して$\mu_2$に足しすことで、$x_2$の予測値となる。$\rho^2$が$1$よりも十分小ければ、予測値は$\mu_2$に近い値となる。言い替えると、$x_1$から$x_2$を予測するには、$x_1$を予測値とするよりも、$\mu_2$に近い値をとることで、分散が小さくなる。
+
+
+
+\section{相関係数}
+相関係数を次のように定義する。
+\begin{equation*}
+ \rho = \frac{\sigma_{xy}}{\sqrt{\sigma_x^2\sigma_y^2}}
+\end{equation*}
+2変量正規モデルににおいて相関係数をBravais-Pearson(ブラベー・ピアソン)の係数と呼ぶこともある。
+相関係数$r$の二乗は、実現値が伸びている軸(大きな固有値をもつ固有ベクトル)のまわりにバラついている程度を示す。$r^2$が$1$に近いほど、その軸の上に実現値が乗っており、$0$に近いほど、軸からのばらつき具合が大きくなる。
+また、最尤推定量から計算した最尤相関係数は次の様に定義される。
+\begin{equation*}
+ \rho_{\rm{ML}} = \frac{\sigma_{xy,\rm{ML}}}{\sqrt{\sigma_{x,\rm{ML}}^2\sigma_{y^,\rm{ML}}^2}}
+\end{equation*}
+
+
+具体的に、共分散を設定し、$\rho$に依存した実現値$(x,y)$のばらつきかたを確認する。
+図\ref{fig:Correlation_variation_depends_covariance}には、相関係数を設定したとき、モデル
+$M(\tra(20,20),\sigma_x^2=\sigma_y^2=2^2,\sigma_{xy})$からサンプリングした実現値がどのようにばらつくのかを示した。
+主軸の傾きは、$\sigma_x=\sigma_y$より$1$であり、このとき既に示した様に、主軸の傾きは相関係数$\rho$にはほとんど依存しない。
+(A)は相関係数が$0$であり、ほぼ円上（楕円上）に実現値がばらつく。
+(B)は相関係数が$0.745$であり、主軸上を中心に楕円上に実現値がばらついていることがわかる。
+(C)は相関係数がほぼ$1$であり、主軸上に実現値乗っていることがわかる。
+このことから、相関係数は、実現値が主軸上にあつまっている程度を示している。
+
+
+\begin{figure}
+ \begin{center}
+  \includegraphics[width=12cm]{./image/16_/Correlation_variation_depends_covariance.pdf}
+  \label{fig:Correlation_variation_depends_covariance}
+  \caption{実現値のばらつきかた。(a)$\rho= 0.25$(b)$\rho=0.745$(c)$\rho=0.99975$。$\sigma_x=\sigma_y$であるため主軸の傾きは$1$。}
+ \end{center}
+\end{figure}
+\begin{comment}
+ $(x-\mu_x)(y-\mu_y)$という量を考えてみる。これは$(\mu_x,\mu_y)$を中心にし、
+\begin{enumerate}
+ \item $(x,y)$が右上にあれば、$x-\mu_x$と$y-\mu_y$はともに正であり、その積も正
+ \item $(x,y)$が左下にあれば、$x-\mu_x$と$y-\mu_y$はともに負であり、その積は正
+ \item $(x,y)$が左上にあれば、$x-\mu_x$は負そして、$y-\mu_y$は正であり、その積は負
+ \item $(x,y)$が右下にあれば、$x-\mu_x$は正そして、$y-\mu_y$は負であり、その積は負
+\end{enumerate}
+である。以上から、$(x-\mu_x)(y-\mu_y)$は２次元平面上でのある中心からデータのばらつき方を示す量であること、
+そして、その平均は、平均的なデータのばらつきかたを示す。言い替えれば、平均的にデータが$(\mu_x,\mu_y)$を中心に右上から左下に多く存在すれば、共分散は正の値をとることが期待される。
+共分散を$\sigma_x,\sigma_y$により規格化した量が相関係数である。
+
+相関係数は、二つの変数が確率変数であることを仮定したモデルにより定義できる量である。
+
+\end{comment}
+
+
+\subsection{$r^2\leq 1$の証明}
+コーシーシュワルツの不等式
+$a_1,a_2,\cdots,a_n,b_1,b2,\cdots,b_n$を実数とする。
+\begin{equation*}
+ (\sum_{i=1}^n a_i b_i)^2 \leq (\sum_{i=1}^n a_i^2)(\sum_{i=1}^n b_i^2)
+\end{equation*}
+である。等号成立は、$a_i=0$または$b_i=0$または$b_1/a_1=b_2/a_2=\cdots=b_n/a_n$が成り立つときである。
+
+このことを利用する。$a_i=x_i-\bar{x},b_i=y_i-\bar{y}$とおく。
+\begin{equation*}
+ \left(\sum_{i=1}^n (x_i-\bar{x})(y_i-\bar{y})\right)^2 \leq  \sum_{i=1}^n(x_i-\bar{x})^2\sum_{i=1}^n(y_i-\bar{y})^2
+\end{equation*}
+このことから、$r^2\leq 1$であり、$-1\leq r \leq 1$がわかる。
+
+
+%
+
+
+
+\begin{SMbox}{相関係数}
+ 次のような記述を見たことがあるだろう\footnote{Google検索で「相関係数 論文　書き方」などで調べれば見付けられる。ただし、この全てが本書の方針と異るかは不明。}。
+\begin{quote}
+ 有意な相関係数が得られた($r=0.2(p<0.05,n=10)$)。
+\end{quote}
+これは、二つのモデルに関して述べられている。１つは共分散が$0$の二変量正規モデルとデータがかいりしているということである。これが$p<0.05$で表現されている。もう一つは、最尤二変量正規モデルにおいて、相関係数が$r=0.2$であったことである。
+ これらを同時に表現すると、「有意な(あるモデルでは予測できない)相関係数（最尤推定モデルから得られる要約量）が得られた」となる。
+ 
+ これら二つは別のモデルの事なので、「有意だから、相関係数に意味がある」や「有意ではないから、相関係数に意味がある」についてはどちらも言えない。
+ ただし、論文統計学では、最尤モデルの相関係数に意味があることをヌルモデルによる有意性により論じることができるということになっている。
+ これは、$p<0.05$であれば、どんなに小さな$r$でも意味があることになってしまう。
+ 後で述べるが、$r=0.1$である場合、平均値による予測により得られる誤差を$1\%$しか改善していない。
+
+ $1\%$の精度改善に意味があるのかは研究対象に依存するだろう。
+ 例えば、様々な要素を調査したとしても、平均値モデルよりも精度改善しなかったが、ある特定の量で$1\%$の精度改善がみられたならば、その発見は意味があるかもしれない。
+ %後で述べるが、$r=0.2$である場合、平均値による予測により得られる誤差を$4\%$しか改善していない。これが意味があるのかを検定で調べることは本書では推奨しない。
+\end{SMbox}
 
 \subsection{決定係数$R^2$と相関係数$\rho^2$の関係}
 $E[x_2|x_2]$による予測において、決定係数$R^2$と相関係数$\rho^2$の関係を調べる。
 これを用いて、残差平方和の計算をおこなう。
 \begin{eqnarray*}
- \sum_{i=1}^n (y_i-E[x_2|x_i])^2 &=&   \sum_{i=1}^n ((y_i-\bar{y})-\frac{\sigma_{xy}}{\sigma^2_x}(x_i-\bar{x})^2)\\
+ \sum_{i=1}^n (y_i-E[x_2|x_i])^2 &=&   \sum_{i=1}^n ((y_i-\bar{y})^2+\frac{\sigma^2_{xy}}{\sigma^4_x}(x_i-\bar{x})^2-2\frac{\sigma_{xy}}{\sigma^2_x}(x_1-\mu_1)(x_2-\mu_2))\\
  &=& n\sigma^2_y -n \frac{\sigma^2_{xy}}{\sigma_x^2} \\
  &=& n\sigma_y^2(1-\frac{\sigma^2_{xy}}{\sigma^2_x\sigma_y^2}) \\
  &=& n\sigma_y^2(1-\rho^2)
@@ -297,7 +423,7 @@ $E[x_2|x_2]$による予測において、決定係数$R^2$と相関係数$\rho^
 %ここで、回帰平均二乗誤差RMSE(regression mean square)を定義しておく。
 \begin{equation*}
  %RMSE^2 = 
- RSS = (\sigma_y\sqrt{1-\rho^2})^2
+ RSS^2 = (\sigma_y\sqrt{1-\rho^2})^2
 \end{equation*}
 このことを用いて、決定係数$R^2$について計算を行う。
 \begin{eqnarray*}
@@ -316,8 +442,6 @@ $E[x_2|x_2]$による予測において、決定係数$R^2$と相関係数$\rho^
 第二項は、分母に、平均と観測値の差の二乗、分子に予測値と観測値の差の二乗をしたものである。
 予測性能が良ければ、分子が小くなり、第二項が$0$に近くなり、決定係数は$1$に近付く。
 予測性能がわるければ、分子が大きくなり、平均よりも悪い予測をおこなうならば、決定係数は負になる。
-
-
 
 \subsection{相関係数が$0.8$のとき}
 相関係数が$0.8$のとき、$RMSE$は、$RMSE^2 = \sigma_y\sqrt{1-\rho^2}$より、
@@ -349,62 +473,175 @@ $E[x_2|x_2]$による予測において、決定係数$R^2$と相関係数$\rho^
 \begin{SMbox}{$4\%$の改善}
  $4\%$の改善がみられたことは報告するべきことだろうか。それは、業界や対象に依存する。さまざまな、要素との対応関係を調べたが$1\%$も性能が改善されない対象であれば、$4\%$の性能改善はすごい発見であろう。また、ある要素との対応関係で$96\%$程度改善されているような対象であれば、$4\%$の改善を発見するというのは小さな発見とも思える。
 
- ただし、あらゆる実験報告には価値がある。
+ %ただし、あらゆる実験報告には価値がある。
 \end{SMbox}
 
 
-\subsection{$4$つの直線}
-つぎの二変量モデルを考える。
-$\mu_x=67.0, \mu_y = 68.3,\sigma^2_x=16.2,\sigma^2_y=20.5,\sigma_{xy}=9.5$。
-このモデルでは、$4$つの直線を導出した。具体的には、$E[Y|X],E[Y|X]$また、楕円の長軸、楕円の短軸である。
-これら$4$個の直線を図\ref{fig:multivariate_normal_four_line}に示した。
-傾きが負の直線が楕円の短軸であり、それに直行した黒色の直線が楕円の長軸に沿った直線である。傾きが正である物のなかで最も小さい傾きをもつ直線が$E[Y|X]$であり、長軸の直線よりも傾きの大きな直線が$E[X|Y]$である。
+\subsection{ヌルモデルの相関係数}
+2変量正規モデルその共分散が$0$のモデルにおいて、相関係数を含む次の$T$が自由度$n-2$の$t$分布に従う\footnote{正規2モデル$M(\mu_x,\mu_y,\sigma_x^2,\sigma_y^2)$において$T$がある分布に従うと言ってもいいが、相関係数を計算するとき、我々の頭のなかには2変量正規モデルでみてみようという考えがあり、正規モデルは頭にないはずである。}\footnote{$r$が従う分布も計算できるようである。Wikipediaに記述があるが、これが正しいことを私は確かめていない。\url{https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Using_the_exact_distribution}}。
+言い替えれば、モデル$M(\mu,\sigma_x,\sigma_y,\sigma_{xy}=0)$からサンプリングした標本から、その最尤モデルを構築し、その相関係数から以下の$T$を計算する。
+この作業を繰り返すと、$t_{n-2}$に従うということがわかる。
+\begin{equation*}
+ T = r\frac{\sqrt{n-2}}{\sqrt{1-r^2}} \sim t_{n-2}
+\end{equation*}
+ここで、$n$はサンプルサイズ、$t_{n-2}$は、自由度$n-2$の$t$分布。
+このことを利用して、データと2変量正規モデル間の乖離具合を調べることができる。
+%これは、相関係数に対する検定と呼ばれる作業に対応する。
+\subsubsection{数値計算}
+二変量正規モデル$M(\vecc{\mu}=\tra (0,0),\sigma_x=2,\sigma_y=1,\sigma_{xy}=0)$とする。
+このモデルからサンプルサイズ$10^4$の標本を$10^4$個を作成し、標本の個数分、相関係数また$T$値を計算した。
+結果は図\ref{fig:Correlation_null_model}に示した。数値実験の累積分布が$t$分布の累積分布と一致した。
+
+\begin{lstlisting}
+sigma = np.array([[2**2,0],[0,1**2]])
+mu=np.array([10,20])
+sampleN = 10**4
+N= 10**4
+sample = multivariate_normal(mu,sigma).rvs(size=(sampleN,N))
+
+mu = np.mean(sample,axis=1)
+cov = np.array([np.cov((sample[idx]-mu[idx]).T) for idx in range(sampleN)])
+r = np.array([cov[idx][0,1]/np.sqrt(cov[idx][0,0]*cov[idx][1,1]) for idx in range(sampleN)])
+T = r*np.sqrt(N-2)/np.sqrt(1-r**2)
+\end{lstlisting}
+
+
 \begin{figure}
  \begin{center}
-  \includegraphics[width=10cm]{./image/16_/multivariate_normal_four_line.pdf}
-  \label{fig:multivariate_normal_four_line}
-  \caption{二変量モデルにおいて導出される$4$つの直線。傾きが負の直線が短軸であり、それに直行した黒色の直線が長軸である。傾きが正である物のなかで最も小さい傾きをもつ直線が$E[Y|X]$であり、長軸の直線よりも傾きの大きな直線が$E[X|Y]$である。}
+  \includegraphics[width=15cm]{./image/16_/Correlation_null_model.pdf}
+  \label{fig:Correlation_null_model}
+  \caption{$T$値の累積分布}
  \end{center}
 \end{figure}
 
 
 
-まず、$Y$を直線$aX+b$により予測するさいの、予測の良さについて考える。
-ここでは、評価指標として、$RMSE$を使う。
-\begin{eqnarray*}
- \rm{RMSE} &=& \frac{1}{n}\sum_{i=1}^n((y_i-\mu_y)-a(x_i-\mu_x))^2\\
- &=& \frac{1}{n}\sum_{i=1}^n((y_i-\mu_y)^2+a^2(x_i-\mu_x)^2-2a(x_i-\mu_x)(y_i-\mu_y))\\
-&=& \frac{1}{n}\sum_{i=1}^n (\sigma_y^2+a^2\sigma_x^2-2a\sigma_{xy})\\
-\end{eqnarray*}
-これは、$a$に関する二次方程式なので、$\rm{RMSE}$が最小になるのは、$a$が次のときである。
+
+
+
+
+\section{軸と重なる直線}
+二変量モデルの共分散係数の１つ$\sigma_x^2$は、このモデルにおいてバラツキかたを示していないことがある。例えば、共分散行列$\sigma_x^2=2,\sigma_y^2=1,\sigma_{xy}=0$とする。
+このとき、確率変数は平均を中心に$x$軸方向でのバラツキが大きく、また楕円形に広がる。
+
+\begin{figure}
+ \begin{center}
+  \includegraphics[width=10cm]{./image/16_/ellipse_x_axis_twice_angle_pi_6.pdf}
+  \label{fig:ellipse_x_axis_twice_angle_pi_6}
+  \caption{回転していない楕円（破線）と$\pi/6$回転した楕円（実線）。灰色の点は回転していない楕円上の点、黒色の点は$\pi/6$だけ原点を中心に灰色の点を回転させた点。}
+ \end{center}
+\end{figure}
+
+共分散が$0$より大きくなると、楕円が回転する。図\ref{fig:ellipse_x_axis_twice_angle_pi_6}はこの楕円の回転の様子を描画した。
+回転していない楕円上の点（灰色）を$\pi/6$回転した点を黒く描画している。
+灰色の点の$x$軸方向の分散は、灰色の矢印間の距離の二乗を平均したものであった。
+さまざまな確率変数を集め、矢印間の距離の二乗を平均を計算したものが、$\sigma_x^2=2$であった。
+同様の操作を$\pi/6$回転した楕円でおこなうと$\sigma_x^2$が得られるだろうか？
+黒色の点を$x$軸に射影した点と原点との距離を黒色の矢印でしめした。
+黒色の矢印は灰色の矢印と比べると小くなっている。
+これを回転させた楕円のなかでばらつく確率変数について計算すると、分散が小くなっている。
+単に$X$のばらつきを計算しただけでは、ばらつき方に関する量として不十分であることを示している。
+このことは、回転させた楕円のなかで散らばる確率変数については、ばらつきを工夫して計算する必要があることを示唆している。
+
+\begin{figure}
+ \begin{center}
+  \includegraphics[width=10cm]{./image/16_/ellipse_distributed_X_comparison.pdf}
+  \label{fig:ellipse_distributed_X_comparison}
+  \caption{回転していない楕円に従い広がるように生成した乱数の$|X|$の大きさ(黒)と、座標を$\pi/6$回転させた座標での$|X|$(灰色)。回転させた座標の$|X|$のほうが回転前の$|X|$よりも小くなっている。}
+ \end{center}
+\end{figure}
+
+
+そこで、単に$x$軸に射影したときのばらつきではなく、ばらつきがもっとも大きくなる軸を計算する方法を考える。
+ある直行する２つのベクトルに対し、そのベクトルが貼る空間を$U-V$空間と言う。これは、回転させたときの座標空間のことである。
+ここで、その基底ベクトルを$\vecc{e_u}=\tra (u_1,v_1),\vecc{e_v}=\tra (u_2,v_2)$と表記する。$X-Y$空間上の点$(x,y)$を$U-V$空間のベクトルで表すには、ベクトル$\vecc{k}=\tra(k_1,k_2)$を用いて、
 \begin{equation*}
- a = \frac{\sigma_{xy}}{\sigma_x^2}
+ \vecc{x} = P\vecc{k} = \begin{pmatrix}
+u_1 & u_2 \\
+v_1 & v_2 \\
+\end{pmatrix}\vecc{k}
 \end{equation*}
-この結果から、$X$をもとに$Y$を予測する直線$E[Y|X]$は、その直線の中では$RMSE$が最小である。
-同様に、$Y$をもとに$X$を予測する直線$E[X|Y]$は、その直線の中では$RMSE$が最小である。
+転置を行った表記では、$\tra x = \tra k \tra P$である。
+また、$X-Y$座標から、$U-V$空間への変換は$(k_1,k_2)=(x,y)P$と表記できる。
+
+\begin{figure}
+ \begin{center}
+  \includegraphics[width=10cm]{./image/16_/ellipse_U_V_plane.pdf}
+  \label{fig:ellipse_U_V_plane}
+  \caption{$U-V$平面上での座標点の表現。黒色の点$\vecc{x}$を単位ベクトル$\vecc{e_u},\vecc{e_v}$により表現するには、ベクトル$(k_1,k_2)$を用いることで実現できる。$\vecc{x}=k_1\vecc{e_u}+k_2\vecc{e_v}=P\vecc{k}$である。}
+ \end{center}
+\end{figure}
+
+楕円状に広がったデータを並べた$n\times 2$行列を$A$とする。
+\begin{equation*}
+ A =\begin{pmatrix}
+     x_1 & y_1 \\
+     x_2 & y_2 \\
+     \vdots & \vdots \\
+     x_n & y_n \\
+ \end{pmatrix}
+\end{equation*}
+$X-Y$空間での共分散行列は、$\tra A A$により計算できる。
+この行列$A$を$U-V$空間上で表すには、$A$に$P$を左から作用させればよい。これを$K=AP$とする。
+$U-V$空間上での共分散行列は、$\tra KK$を計算すれば求められる。
+\begin{equation*}
+ \tra KK = \tra (AP)(AP) = \tra P\Sigma P
+\end{equation*}
+この式において$\vecc{e_u}$が係る部分は、$\tra\vecc{e_u} \Sigma \vecc{e_u}$である。
+ラグランジュの未定乗数法を用いることで、$\tra\vecc{e_u} \Sigma \vecc{e_u}$を最大かつ$|\vecc{e_u}|=1$となる$\vecc{e_u}$を求めることができる。
+具体的には、
+\begin{eqnarray*}
+ F(\vecc{e_u}) = \tra\vecc{e_u} \Sigma \vecc{e_u}-\lambda(|\vecc{e_u}|-1)
+\end{eqnarray*}
+が最大となる点を求める。$\frac{\partial}{\partial \vecc{e_u}}F = \frac{\partial }{\partial \lambda}F = 0$となる$\vecc{e_u}$をさがす。
+\begin{eqnarray*}
+ \frac{\partial}{\partial \vecc{e_u}}F = 2\Sigma \vecc{e_u}-2\lambda \vecc{e_u} = 0
+\end{eqnarray*}
+これを満す$\vecc{e_u}$を求めればよい。整理すると次が得られる。
+\begin{equation*}
+ \Sigma \vecc{e_u} = \lambda \vecc{e_u}
+\end{equation*}
+これは明かに、$\Sigma$に対する固有値問題である。
+同様に、$\vecc{e_v}$についても$\Sigma$に関する固有値の計算を行えばよい。
 
 
+以上のことから、$U-V$空間上の共分散行列$\tra KK$が最大になる$\vecc{e_u},\vecc{e_v}$と固有値問題が対応付けられる。
+また、固有値はデータの固有ベクトル上でのばらつき方をしめしており、固有ベクトルはばらつきが最大になるようなベクトルである。また、固有値は、固有ベクトル空間上においてデータのばらつきかたを示している。
+この固有ベクトルの方向と一致する直線が主軸直線であり、この直線のまわりに実現値がばらつく。
 
-\section{誤差モデルII}
-$x$に対する予測値との差が正規分布にしたがうことを仮定したモデルも構築する。
-\begin{enumerate}
- \item $y_i$は、与えられた定数
- \item $a,b$を実数の定数
- \item $v_i = \frac{1}{a}(y_i-a x_i -b)$
- \item $v_i \sim N(0,\sigma^2)$
- %\item $E[u_i]=0$。平均は$0$。
- %\item $E[u_j u_i]=0$。無相関。
- %\item $Var[u_i]=0$。分散が均一。
-\end{enumerate}
+\section{マハラノビス距離}
+モデルの２つの実現値$\vecc{x},\vecc{y}\in \mathbb{R}^2$の間の距離$d$を次の様に定める。
+\begin{equation*}
+ d(\vecc{x},\vecc{y}) = \sqrt{\tra(\vecc{x}-\vecc{y})\Sigma^{-1} (\vecc{x}-\vecc{y})}
+\end{equation*}
+ここで、$\Sigma$は共分散行列である。
+
+また、2変量正規モデルにおける中心座標を$\vecc{\mu}$とし、中心とある実現値$\vecc{x}$の間の距離$D$を次の様に定める。
+\begin{equation*}
+ D_M(\vec{x}) = d(\vecc{x},\vecc{\mu})
+\end{equation*}
+この距離は、既に見たように2変量正規分布の確率密度関数の指数部分と一致していることから、楕円の式となることがわかる。
+
+この距離$D_M$は$D_M(\vecc{x})^2\sim \chi^2_2$であることが知られている。
+このことから、$D_M(\vecc{x})^2 = \chi^2_2(0.68)=2.27$となる楕円の内側に実現値のおおよそ$68\%$が含まれている。
+
+\subsubsection{数値計算}
+数値計算により検証した。
+\begin{lstlisting}
+sigma = np.array([[2**2,2.99],[2.99,2**2]])
+sample1 = multivariate_normal(mu,sigma).rvs(size=(10**5))
+def Mahalanobis_distance(sample_,mu_,sigma):
+    return np.sqrt(np.sum(((sample_-mu_)@np.linalg.inv(sigma))*(sample_-mu_),axis=1))
+D2 = Mahalanobis_distance(sample1,mu,sigma)**2
+np.sum(D2<chi2.ppf(0.68,df=2))/len(D2),np.sum(D2<chi2.ppf(0.95,df=2))/len(D2)
+
+Output: (0.68224, 0.95114)
+\end{lstlisting}
 
 
 
 \if 0
 \section{Model I}
-
-
-
-
 \begin{comment}
 これはちがう
  with pm.Model() as model1:  # model specifications in PyMC are wrapped in a with-statement
@@ -505,7 +742,7 @@ $x$に対する予測値との差が正規分布にしたがうことを仮定�
 \end{enumerate}
 このモデルの最尤推定量は、上記と同様のはずなので、詳しくは計算を行わない。
 \begin{eqnarray*}
- \hat{a} &=& \frac{Q_{yy}-\lambda Q_{xx}+\sqrt{(Q_{yy}-\lambda Q_{xx})^2+4\lambda Q_{xy}}}{2Q_{xy}} \\
+ \hat{a} &=& \frac{Q^2_{yy}-\lambda Q^2_{xx}+\sqrt{(Q^2_{yy}-\lambda Q^2_{xx})^2+4\lambda Q_{xy}}}{2Q_{xy}} \\
  \hat{b} &=& \bar{y}-\hat{a}\bar{x}
 \end{eqnarray*}
 ここで、$\lambda = \frac{\sigma_x^2}{\sigma_y^2}$である。
@@ -649,14 +886,14 @@ $AC$間の距離は、$\frac{|y-ax-b|}{\sqrt{a^2+1}}$である。
 \begin{eqnarray*}
  \sum_{i=1}^n (y_i-a x_i-b)^2 &=& \sum_{i=1}^n \{(y_i-\bar{y}) - a(x_i-\bar{x}) +(\bar{y}-b-a\bar{x})  \}^2\\
  & =& \sum_{i=1}^n \{ (y_i-\bar{y})-a(x_i-\bar{x})  \}^2+n(\bar{y}-b-a\bar{x})^2 \\
- &=& Q_{xx}a^2-2Q_{xy}a+Q_{yy}+n(\bar{y}-b-a\bar{x})^2
+ &=& Q^2_{xx}a^2-2Q_{xy}a+Q^2_{yy}+n(\bar{y}-b-a\bar{x})^2
 \end{eqnarray*}
 ここで、以下の式を定義しておく。
 \begin{eqnarray*}
  \bar{x} &=& \frac{1}{n}\sum_{i=1}^n x_i \\
  \bar{y}&=& \frac{1}{n}\sum_{i=1}^n y_i \\
- Q_{xx} &=& \sum_{i=1}^n (x_i-\bar{x})^2 \\
- Q_{yy} &=& \sum_{i=1}^n (y_i-\bar{y})^2 \\
+ Q^2_{xx} &=& \sum_{i=1}^n (x_i-\bar{x})^2 \\
+ Q^2_{yy} &=& \sum_{i=1}^n (y_i-\bar{y})^2 \\
  Q_{xy} &=& \sum_{i=1}^n (x_i-\bar{x})(y_i-\bar{y}) \\
 \end{eqnarray*}
 
@@ -672,18 +909,18 @@ $AC$間の距離は、$\frac{|y-ax-b|}{\sqrt{a^2+1}}$である。
 
 また、$E_1$を$a$について偏微分を行う。
 \begin{eqnarray*}
- \frac{\partial E_1}{\partial a} = 2aQ_{xx}-2Q_{xy}
+ \frac{\partial E_1}{\partial a} = 2aQ^2_{xx}-2Q_{xy}
 \end{eqnarray*}
 以上から、$a$が求められる。
 \begin{equation*}
- \hat{a} = \frac{Q_{xy}}{Q_{xx}}
+ \hat{a} = \frac{Q_{xy}}{Q^2_{xx}}
 \end{equation*}
 
 
 \paragraph{$E_2$}
 $a,b$に関係する部分は、以下の式である。
 \begin{equation*}
- E_2 = \frac{1}{a^2}(Q_{xx}a^2-2Q_{xy}a+Q_{yy}+n(\bar{y}-b-a\bar{x})^2)
+ E_2 = \frac{1}{a^2}(Q^2_{xx}a^2-2Q_{xy}a+Q^2_{yy}+n(\bar{y}-b-a\bar{x})^2)
 \end{equation*}
 $E_2$の$b$に関する偏微分が$0$になる点は、以下の式である。
 \begin{equation*}
@@ -691,12 +928,12 @@ $E_2$の$b$に関する偏微分が$0$になる点は、以下の式である。
 \end{equation*}
 また、$E_2$の$a$に関する偏微分を計算する。
 \begin{eqnarray*}
- \frac{\partial E_2}{\partial a} &=& -\frac{2}{a^3}(a^2Q_{xx}-2Q_{xy}a+Q_{yy}) \\
-& & +\frac{1}{a^2}(2aQ_{xx}-2Q_{xy})
+ \frac{\partial E_2}{\partial a} &=& -\frac{2}{a^3}(a^2Q^2_{xx}-2Q_{xy}a+Q^2_{yy}) \\
+& & +\frac{1}{a^2}(2aQ^2_{xx}-2Q_{xy})
 \end{eqnarray*}
 この式を$a$についてとくと、最尤推定量がもとめられる。
 \begin{equation*}
- \hat{a}= \frac{Q_{yy}}{Q_{xy}}
+ \hat{a}= \frac{Q^2_{yy}}{Q_{xy}}
 \end{equation*}
 
 \paragraph{$E_3$}
@@ -719,13 +956,13 @@ $E_1$との違いは、分母に$(1+a^2)$の項が加わったことである。
 \begin{eqnarray*}
  (1+a^2)E_3 &=& \sum_{i=1}^n \{ (y_i-\bar{y})-a(x_i-\bar{x})+(\bar{y}-a\bar{x}-b) \}^2 \\
  &=& \sum_{i=1}^n \{  (y_i-\bar{y})-a(x_i-\bar{x}) \}^2+n(\bar{y}-a\bar{x}-b)^2 \\
- &=& Q_{yy}+a^2 Q_{xx}-2aQ_{xy}+n(\bar{y}-a\bar{x}-b)^2 \\
+ &=& Q^2_{yy}+a^2 Q^2_{xx}-2aQ_{xy}+n(\bar{y}-a\bar{x}-b)^2 \\
 \end{eqnarray*} 
 \end{comment}
 
 
 \begin{equation*}
- (1+a^2)E_3 = Q_{yy}+a^2 Q_{xx}-2aQ_{xy}+n(\bar{y}-a\bar{x}-b)^2 \\
+ (1+a^2)E_3 = Q^2_{yy}+a^2 Q^2_{xx}-2aQ_{xy}+n(\bar{y}-a\bar{x}-b)^2 \\
 \end{equation*}
 この式を最小化する。まず$b$により偏微分を行う。
 \begin{eqnarray*}
@@ -737,16 +974,16 @@ $E_1$との違いは、分母に$(1+a^2)$の項が加わったことである。
 \end{equation*}
 次に、$a$について偏微分をおこなう\footnote{ $(f/g)'= \frac{f'g-fg'}{g^2}$ }。
 \begin{eqnarray*}
-\frac{\partial E_3}{\partial a} = \frac{(2aQ_{xx}-2Q_{xy})(1+a^2)-2a(Q_{yy}+a^2Q_{xx}-2aQ_{xy})}{(1+a^2)^2}
+\frac{\partial E_3}{\partial a} = \frac{(2aQ^2_{xx}-2Q_{xy})(1+a^2)-2a(Q^2_{yy}+a^2Q^2_{xx}-2aQ_{xy})}{(1+a^2)^2}
 \end{eqnarray*}
 分子を整理すると、次の式となる。
 \begin{equation*}
- Q_{xy}a^2-a(Q_{yy}-Q_{xx})-Q_{xy}
+ Q_{xy}a^2-a(Q^2_{yy}-Q^2_{xx})-Q_{xy}
 \end{equation*}
 $\frac{\partial E_3}{\partial a} =0$より、$a$について解く。
 上式は、$a$に関する二次方程式なので、$a$を解く。
 \begin{equation*}
- \hat{a} = \frac{Q_{yy}-Q_{xx}+\sqrt{(Q_{yy}-Q_{xx})^2+4Q_{xy}}}{2Q_{xy}}
+ \hat{a} = \frac{Q^2_{yy}-Q^2_{xx}+\sqrt{(Q^2_{yy}-Q^2_{xx})^2+4Q_{xy}}}{2Q_{xy}}
 \end{equation*}
 
 
@@ -755,7 +992,7 @@ $\frac{\partial E_3}{\partial a} =0$より、$a$について解く。
 \paragraph{$E_4$}
 \begin{eqnarray*}
  E_4=\sum_{i=1}^n u_i^2 &=& \sum_{i=1}^n \frac{1}{a}(y_i-a x_i-b)^2 \\
- &=& \frac{1}{a}(Q_{xx}a^2-2Q_{xy}a+Q_{yy}+n(\bar{y}-b-a\bar{x})^2)
+ &=& \frac{1}{a}(Q^2_{xx}a^2-2Q_{xy}a+Q^2_{yy}+n(\bar{y}-b-a\bar{x})^2)
 \end{eqnarray*}
 ここで、$E_4$の$b$に関する偏微分が$0$となる$b$を求める。
 \begin{equation*}
@@ -763,21 +1000,21 @@ $\frac{\partial E_3}{\partial a} =0$より、$a$について解く。
 \end{equation*}
 同様に、$E_4$の$a$に関する偏微分が$0$となる$a$を求める。
 \begin{eqnarray*}
- \frac{\partial E_4}{\partial b} &=& \frac{1}{a}(2aQ_{xx}-2Q_{xy})\\
-&& -\frac{1}{a^2}(Q_{xx}a^2-2Q_{xy}a+Q_{yy}) = 0 \\
-\rightarrow && a^2 Q_{xx}-Q_{yy} = 0
+ \frac{\partial E_4}{\partial b} &=& \frac{1}{a}(2aQ^2_{xx}-2Q_{xy})\\
+&& -\frac{1}{a^2}(Q^2_{xx}a^2-2Q_{xy}a+Q^2_{yy}) = 0 \\
+\rightarrow && a^2 Q^2_{xx}-Q^2_{yy} = 0
 \end{eqnarray*}
 以上から、最尤推定量が求められる。
 \begin{equation*}
- \hat{a}= \sqrt{\frac{Q_{yy}}{Q_{xx}}}
+ \hat{a}= \sqrt{\frac{Q^2_{yy}}{Q^2_{xx}}}
 \end{equation*}
-この式は、$\frac{Q_{xy}}{Q_{xx}}$と$\frac{Q_{yy}}{Q_{xy}}$の幾何平均と一致する。
+この式は、$\frac{Q_{xy}}{Q^2_{xx}}$と$\frac{Q^2_{yy}}{Q_{xy}}$の幾何平均と一致する。
 ここで、幾何平均は、$0$より大きな数$a_1,a_2,\cdots,a_n$について、次の量のことである。
 \begin{equation*}
  (a_1a_2\cdots a_n)^{\frac{1}{n}}
 \end{equation*}
 
-\subsection{まとめ}
+\subsection{傾きの大小関係}
 実際のところ、$E_1$の中にも$a$に係る項が入っているので、$a$がどのような値になるかは推測しにくい。気持ちとして以下のようになることが考えられる。
 $E_2,E_3$は、分母に傾き$a$が入っている。この項が$1$より大きければ、$E_2,E_3$を小くし、$1$より小ければ、$E_2,E_3$は大きくなる。
 このことから、$E_2,E_4$において$a$は$1$よりも大きくなりがちであることが予想される。
@@ -785,12 +1022,12 @@ $E_3$については、分母に$1+a^2$の項があるため、任意の$a$に�
 
 \paragraph{$a_1$と$a_2$の大小関係}
 \begin{eqnarray*}
- \frac{1}{a_2}a_1 &=& \frac{Q_{xy}}{Q_{yy}}\frac{Q_{xy}}{Q_{xx}} \\
- &=& \frac{Q^2_{xy}}{Q_{xx}Q_{yy}}
+ \frac{1}{a_2}a_1 &=& \frac{Q_{xy}}{Q^2_{yy}}\frac{Q_{xy}}{Q^2_{xx}} \\
+ &=& \frac{Q_{xy}}{Q^2_{xx}Q^2_{yy}}
 \end{eqnarray*}
 ここで、$r^2$を以下のように定める。
 \begin{equation*}
- r^2 = \frac{Q^2_{xy}}{Q_{xx}Q_{yy}}
+ r^2 = \frac{Q_{xy}}{Q^2_{xx}Q^2_{yy}}
 \end{equation*}
 この$r^2$は$1$以下であることから、
 \begin{equation*}
@@ -819,10 +1056,10 @@ $E_3$については、分母に$1+a^2$の項があるため、任意の$a$に�
  \begin{tabular}{lcc}
   & a & b\\
   \hline 
-  $E_1$ & $\frac{Q_{xy}}{Q_{xx}}$  &$\bar{y}-\hat{a}\bar{x}$ \\
-  $E_2=\frac{1}{a^2}E_1$ & $\frac{Q_{yy}}{Q_{xy}}$ & $\bar{y}-\hat{a}\bar{x}$ \\
-$E_3=\frac{1}{1+a^2}E_1$ & $\frac{Q_{yy}-Q_{xx}+\sqrt{(Q_{yy}-Q_{xx})^2+4Q_{xy}^2}}{2Q_{xy}}$ & $\bar{y}-\hat{a}\bar{x}$ \\
-  $E_4=\frac{1}{a}E_1$ & $\sqrt{\frac{Q_{yy}}{Q_{xx}}}$ & $\bar{y}-\hat{a}\bar{x}$
+  $E_1$ & $\frac{Q_{xy}}{Q^2_{xx}}$  &$\bar{y}-\hat{a}\bar{x}$ \\
+  $E_2=\frac{1}{a^2}E_1$ & $\frac{Q^2_{yy}}{Q_{xy}}$ & $\bar{y}-\hat{a}\bar{x}$ \\
+$E_3=\frac{1}{1+a^2}E_1$ & $\frac{Q^2_{yy}-Q^2_{xx}+\sqrt{(Q^2_{yy}-Q^2_{xx})^2+4Q_{xy}^2}}{2Q_{xy}}$ & $\bar{y}-\hat{a}\bar{x}$ \\
+  $E_4=\frac{1}{a}E_1$ & $\sqrt{\frac{Q^2_{yy}}{Q^2_{xx}}}$ & $\bar{y}-\hat{a}\bar{x}$
  \end{tabular}
 \end{table}
 
@@ -862,9 +1099,100 @@ https://work-in-progress.hatenablog.com/entry/2018/11/17/074452
 
 
 
-\chapter{親子の身長の関係}
+\chapter{親子の身長の関係／予測}
+\section{Galtonによる親子の身長の研究}
+Galtonは両親と子供の身長について計測をおこない、これを解析した。
+オリジナルのデータが残っており、2004年にノートから数値データが得られている\footnote{\url{https://vincentarelbundock.github.io/Rdatasets/doc/HistData/GaltonFamilies.html}}。
+各家庭の子供の個体数は$1-15$人であり、その分布は図\ref{fig:Galton_child_parent_num}に示した通りである。
+205家庭から、963人の子供の身長を計測した。男女の内分けは、486人が息子、476人が娘である。
+934人については、身長が数値で記録されており、残りの29人については言葉で、tallish,middle,deformed,idioticなどと記載されている。
+Galtonの論文から得られたデータは\footnote{\url{https://vincentarelbundock.github.io/Rdatasets/doc/HistData/Galton.html}}、親と子のペアは$928$点となっており、オリジナルデータからいくつかが抜かれている。Galtonがどのデータを省いたのかを特定するのは難しい。
+今回は、ノート記載されている934人の子供の身長を解析する。身長の単位はインチで記録されているので、$2.54$倍しセンチメートルに書き換えた。
+
+\begin{figure}
+ \begin{center}
+  \includegraphics[width=10cm]{./image/16_/Galton/Galton_data_num_child.pdf}
+  \label{fig:Galton_child_parent_num}
+  \caption{子供の数と家族の数に関する分布}
+ \end{center}
+\end{figure}
 
 
+\begin{table}[http]
+ \centering \caption{}
+\begin{tabular}{lrrrrrrr}
+ & 息子 & 娘 & 補正娘 & 補正子供 & 中間親 & 父親 & 母親 \\
+該当個数 & 481 & 453 & 453 & 934 & 205 & 205 & 205 \\
+平均 & 175.85 & 162.82 & 175.85 & 175.85 & 175.82 & 176.06 & 162.56 \\
+標準偏差 & 6.66 & 5.98 & 6.46 & 6.56 & 4.86 & 6.72 & 5.93 \\
+最小値 & 152.40 & 142.24 & 153.62 & 152.40 & 163.58 & 157.48 & 147.32 \\
+$25\%$ & 171.45 & 158.75 & 171.45 & 171.45 & 172.77 & 172.72 & 160.02 \\
+$50\%$ & 175.77 & 162.56 & 175.56 & 175.56 & 175.72 & 176.53 & 162.56 \\
+$75\%$ & 180.34 & 166.37 & 179.68 & 180.34 & 178.79 & 180.34 & 166.37 \\
+最大値 & 200.66 & 179.07 & 193.40 & 200.66 & 191.59 & 199.39 & 179.07 \\
+\end{tabular}
+\end{table}
+
+\subsection{データのモデルへの適合具合}
+
+図\ref{fig:Galton_midparent_cumhist},\ref{fig:Galton_male_female_cumhist}には、中間親の身長、子供の身長の経験累積分布を示した。
+それぞれの変量はそれなりに正規分布にしたがっていることがわかる。
+
+最尤推定モデルの中心と身長ペアの間のマハラノビス距離を計算し、その経験累積分布を図\ref{fig:Galton_Mahalanobis_distance_distribution}に示した。
+マハラノビス距離は理論通りであれば$t^2$分布にしたがい、経験分布をみるとそれなりに$t^2$分布にしたがっている。
+身長のペアが2変量モデルに適合的であることがわかる。
+
+
+\begin{figure}
+ \begin{center}
+  \includegraphics[width=10cm]{./image/16_/Galton/midparent_cumhist.pdf}
+  \label{fig:Galton_midparent_cumhist}
+  \caption{中間親の身長の累積度数分布}
+ \end{center}
+\end{figure}
+
+\begin{figure}
+ \begin{center}
+  \includegraphics[width=10cm]{./image/16_/Galton/male_female_cumhist.pdf}
+  \label{fig:Galton_male_female_cumhist}
+  \caption{男と女の身長の累積度数分布}
+ \end{center}
+\end{figure}
+
+
+\begin{figure}
+ \begin{center}
+  \includegraphics[width=10cm]{./image/16_/Galton/Galton_Mahalanobis_distance_distribution.pdf}
+  \label{fig:Galton_Mahalanobis_distance_distribution} \caption{中間親と規格化子供の間のマハラノビス距離}
+ \end{center}
+\end{figure}
+
+\subsection{回帰／主軸}
+
+
+\begin{figure}
+ \begin{center}
+  \includegraphics[width=10cm]{./image/16_/Galton/male_female_scatter.pdf}
+  \label{fig:Galton_male_female_scatter} \caption{男と女の身長の散布図。(A)息子（黒色の点）または娘（灰色の点）と中間親との散布図。(B)娘に1.08倍の補正をした身長と中間親の身長の散布図。一点鎖線が回帰直線、破線がPCAの直線。}
+ \end{center}
+\end{figure}
+
+\begin{table}[http]
+ \centering \caption{中間親と子供との相関係数($\rho$)、決定係数($R^2$)、誤差($RMSE$)、傾き($a_1,a_3$)}
+\begin{tabular}{lccccc}
+ & $\rho$ & $R^2(=\rho^2)$ & RMSE & $a_1$ &$a_3$ \\
+子供の男女区別無し & 0.32 & 0.10 & 8.61 & 0.64 & 4.83 \\
+子供の男女区別無し(娘の身長$\times 1.08$) & 0.50 & 0.25 & 5.69 & 0.71& 1.98 \\
+娘 & 0.51 & 0.26 & 5.13 & 0.66 & 1.61 \\
+息子 & 0.48 & 0.23 & 5.83 & 0.71 & 2.13 \\
+\end{tabular}
+\end{table}
+
+
+
+
+\if 0
+\section{PearsonとLee}
 PearsonとLeeらによる親と子供の身長に関するデータを利用した\footnote{\url{https://vincentarelbundock.github.io/Rdatasets/datasets.html}}。
 \begin{table}[http]
  \centering
@@ -893,7 +1221,7 @@ $E_3$ & 1.25 & -15.76 \\
 $E_4$ & 1.13 &  -7.18 \\
 \end{tabular}
 \end{table}
-
+\fi
 
 
 \chapter{回帰モデル}
@@ -914,7 +1242,7 @@ $E_4$ & 1.13 &  -7.18 \\
 また、最尤推定量を挿入した最尤モデルを$M_I(\hat{a},\hat{b})$と表記する。
 この最尤推定量は次の通りである。
 \begin{eqnarray*}
- \hat{a} &=& \frac{Q_{xy}}{Q_{xx}}\\
+ \hat{a} &=& \frac{Q_{xy}}{Q^2_{xx}}\\
  \hat{b} &=& \bar{y}-\hat{a}\bar{x}
 \end{eqnarray*}
 予測値と観測値の差分を残差$e_i$、またその二乗和を残差平方和とよぶ。それぞれ、以下の通り。
@@ -928,15 +1256,15 @@ $E_4$ & 1.13 &  -7.18 \\
 \end{eqnarray*}
 モデル$M_I(a,b)$において、次のことも解っている。
 \begin{equation*}
- \frac{(\hat{a}-a)}{ \left( \frac{\hat{\sigma}^2}{Q_{xx}} \right)^\frac{1}{2}} \sim t_{n-2}
+ \frac{(\hat{a}-a)}{ \left( \frac{\hat{\sigma}^2}{Q^2_{xx}} \right)^\frac{1}{2}} \sim t_{n-2}
 \end{equation*}
 また、このことから、$a$の信頼区間は、次の通り。
 \begin{equation*}
- |a| \leq \hat{a}\pm(\hat{\sigma}^2/Q_{xx})^{1/2}t_{n-2,\frac{\alpha}{2}}
+ |a| \leq \hat{a}\pm(\hat{\sigma}^2/Q^2_{xx})^{1/2}t_{n-2,\frac{\alpha}{2}}
 \end{equation*}
 $y$の予測区間は、以下の通りである。
 \begin{equation*}
- y_0\pm\left[\hat{\sigma}^2\left( 1+\frac{1}{n} +\frac{(x_0-\bar{x})^2}{Q_{xx}} \right)\right]^{1/2}t_{n-2,\alpha/2}
+ y_0\pm\left[\hat{\sigma}^2\left( 1+\frac{1}{n} +\frac{(x_0-\bar{x})^2}{Q^2_{xx}} \right)\right]^{1/2}t_{n-2,\alpha/2}
 \end{equation*}
 
 \subsection{解釈}
@@ -945,3 +1273,16 @@ $y$の予測区間は、以下の通りである。
 回帰モデルを使っているが、同じに二変量モデルも使い、その最尤推定量から相関係数を計算することがある。
 本書では、これら二つのモデルをなるべく使い分ける。言い替えれば、回帰モデルを使っているのに、相関係数を使い議論することを控える。
 
+
+
+\section{誤差モデルII}
+$x$に対する予測値との差が正規分布にしたがうことを仮定したモデルも構築する。
+\begin{enumerate}
+ \item $y_i$は、与えられた定数
+ \item $a,b$を実数の定数
+ \item $v_i = \frac{1}{a}(y_i-a x_i -b)$
+ \item $v_i \sim N(0,\sigma^2)$
+ %\item $E[u_i]=0$。平均は$0$。
+ %\item $E[u_j u_i]=0$。無相関。
+ %\item $Var[u_i]=0$。分散が均一。
+\end{enumerate}
