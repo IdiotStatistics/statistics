@@ -1,11 +1,13 @@
 \chapter{空想統計教程}
 本書は統計学を使って科学的な推論・予測を行うプロセスを説明したものである。
-ただし、このプロセスを通して研究を行っている人は少なく、認められていない方法である。
-ゆえに本書が説明する全ては、空想である。
-なぜこのような空想が必要であるのかを本章で説明する。
 
-%私が知りたいことを知るためにどのような統計量が必要なのかを説明している。
+%ただし、このプロセスを通して研究を行っている人は少なく、認められていない方法である。
+%ゆえに本書が説明する全ては、空想である。
+%なぜこのような空想が必要であるのかを本章で説明する。
 
+
+
+\if 0
 \section{生物統計学の問題点}
 一般的な生物統計学の書籍には、論文を査読プロセスに耐えるための方法論が記載されてる。そのため、生物学の各分野に特化したものが多く、それぞれ独自の特徴を持っている。
 例えば、以下が問題がある。
@@ -18,7 +20,6 @@
  \item 何のために行っているのか不明な解析
 \end{enumerate}
 これらの特色は統計を理解している科学者から否定的に批判されており、生物学者たちもよく理解していると考えられる。しかし、なぜこれらの特色が使い続けられているのだろうか？
-
 一般的に、生物統計学の書籍を執筆するのは、多くの論文を学術誌に投稿し、掲載された研究者たちである。掲載には2人程度の査読者が割り当てられ、論文を査読され、そこで使われている統計がその学術において妥当であるかどうかが調査される。この査読プロセスに耐えられるように統計を使うことが必要であり、その経験を元にして一般的な生物統計学の書籍が執筆されているのだと考えられる。
 
 ただし、このような目的が論文の掲載になっているため、科学的に何をすべきかを考えることは二の次になってしまっているのではないだろうか。
@@ -30,7 +31,7 @@
 
 一方で、業界内で認められた統計解析を行い、その結果に基づいて論文を出版した研究者は、研究者としてのキャリアを築いていくことができる。このような研究者は、査読プロセスで得られた知見を元に、その業界内での適切な解析方法を学び、その後、生物統計学の本を執筆することなる。
 言い換えれば、推奨されない方法を学んだ科学者は生き残りやすく、そうではないものは生き残りにくいというバイアスが働きやすくなる。
-
+\fi
 %生物統計学においては、妥当とされる方法論も、常に見直しと改善の余地があることを忘れずに、書籍を執筆することが重要である。
 
 
@@ -47,7 +48,21 @@
 \fi
 
 
-
+\section{研究活動の不正行為等}
+\begin{quote}
+「研究の提案、実施、審査および研究結果の報告における捏造、改ざん、盗用」\footnote{\url{https://www.jsps.go.jp/file/storage/general/j-kousei/data/2022/4_symposium_document.pdf}}
+\end{quote}
+\if 0
+\footnote{\url{https://www.mext.go.jp/b_menu/shingi/gijyutu/gijyutu12/houkoku/attach/1334660.htm}}
+\begin{quote}
+ 
+ \begin{enumerate}
+  \item (捏造)　存在しないデータ、研究結果等を作成すること。
+  \item (改ざん)　研究資料・機器・過程を変更する操作を行い、データ、研究活動によって得られた結果等を真正でないものに加工すること。
+  \item (盗用)　他の研究者のアイディア、分析・解析方法、データ、研究結果、論文又は用語を、当該研究者の了解もしくは適切な表示なく流用すること。
+ \end{enumerate}
+\end{quote}
+\fi
 
 
 \section{生物統計学と本書の違い}
@@ -145,10 +160,10 @@ $p$値を使ったモデル選択は、仮説検定と数学的に同じであ�
  生物学の先生は、統計学の先生に御礼を言い、そのおかげもあり、次の年も統計学の先生が学生たちを叱咤しに卒論発表会にくる。
  統計学の先生が行っていることは本当に良い行為であろうか？彼らの言うことを聞いていれば、我々にとって知りたいことがより理解できるのだろうか。
 
- この統計学の先生は、日本以外にも出没しているように思える。
+ このような行動を行う統計学の先生は、日本以外にも出没しているようだ。
  \begin{quote}
-  A lot can go wrong with statistical inference, and this is one reason that beginners are so anxious about it. When the framework is to choose a pre-made test from a flowchart, then the anxiety can mount as one worries about choosing the “correct” test. Statisticians, for their part, can derive pleasure from scolding scientists, making the psychological battle worse.
- \end{quote}\footnote{Statistical Rethinking 2nd Edition Chapter.1 P.4より}
+  A lot can go wrong with statistical inference, and this is one reason that beginners are so anxious about it. When the framework is to choose a pre-made test from a flowchart, then the anxiety can mount as one worries about choosing the “correct” test. Statisticians, for their part, can derive pleasure from scolding scientists, making the psychological battle worse.\footnote{Statistical Rethinking 2nd Edition Chapter.1 P.4より}
+ \end{quote}
 
 \end{SMbox}
 
@@ -512,15 +527,15 @@ $f(x)$の累積分布関数を$F(x)$とする。$F(x)$は、値域を$[0,1]$に�
 
 \paragraph{Box-Muller法}
 $x_1,y_1$を区間$[0,1]$に分布する一様乱数とする。
-次の、$U,V$は$U,V,i.i.d\sim N(0,1)$である。
+次の、$u,v$は$N(0,1)$に従う。
 \begin{eqnarray*}
- U &=& \sqrt{-2\ln x_1}\cos(2\pi y_1) \\
- V &=& \sqrt{-2\ln x_1}\sin(2\pi y_1)
+ u &=& \sqrt{-2\ln x_1}\cos(2\pi y_1) \\
+ v &=& \sqrt{-2\ln x_1}\sin(2\pi y_1)
 \end{eqnarray*}
 
 このことから、平均$\mu$分散$\sigma^2$に従う乱数を得るには、以下のように変換すればよい。
 \begin{eqnarray*}
- U\times \sigma+\mu \\
-  V\times \sigma+\mu
+ u\times \sigma+\mu \\
+  v\times \sigma+\mu
 \end{eqnarray*}
 
